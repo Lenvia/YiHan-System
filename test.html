@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+	<head>
+		<title>test</title>
+		<link rel="stylesheet" type="text/css" href="./main.css">
+
+		<meta charset="utf-8">
+
+		
+		<!-- 共享文件 -->
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.5.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdn.bootcdn.net/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://cdn.staticfile.org/echarts/5.0.2/echarts.min.js"></script>
+
+        <script type="text/javascript" src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g6-3.5.10/dist/g6.min.js"></script>
+        
+        <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+		<div id="network-container"></div>
+		<div id="container"></div>
+		<div id="container2"></div>
+
+		<div class="search">
+            <input type="text" placeholder="请输入药材/药名/药效..." name="" id="search-text" value="" />
+            <div id="search-button"></div>
+        </div>
+
+		<!-- 监听变量绑定 -->
+		<input id="toClickSign" style="display:none;" value="0"/>
+
+        <!-- 全局变量 -->
+		<script type="text/javascript" src="./utils.js"></script>
+        <script type="text/javascript" src="./global_definer.js"></script>
+        <script type="text/javascript" src="./global_controller.js"></script>
+
+		
+
+
+	</head>
+	<body style="height: 100%; margin: 0">
+
+        
+        <script src="./g6_network.js"></script>
+        <!-- <script src="./geo-organ.js"></script> -->
+		<script src="./line-chart.js"></script>
+		<script src="./body.js"></script>
+		
+	</body>
+</html>

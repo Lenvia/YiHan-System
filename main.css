@@ -1,0 +1,143 @@
+:root {
+    font-size: 14px;
+    --viewHeight: 100vh;
+    --viewWidth: 100vw;
+
+    --systemContainerWidth: calc(0.2 *(var(--viewWidth)));
+    --mainContainerWidth: calc(0.5 *(var(--viewWidth)));
+    --analysisContainerWidth: calc(0.3 *(var(--viewWidth)));
+
+    --marginTop: 10px;
+    --marginLeft: 10px;
+    --borderWidth: 1.5px;
+
+    --lineViewHeightRatio: 0.4;
+    --actionViewHeightRatio: 0.4;
+
+    /* pointer-events: auto; */
+}
+
+/* 
+    container
+    ├── system_container
+    │   └── system_view
+    ├── main_container
+    │   ├── line_view
+    │   └── bar_view
+    └── analysis_container
+        ├── action_view
+        └── info_view
+*/
+
+.view {
+    border-style: solid;
+    border-width: var(--borderWidth);
+    border-color: black;
+}
+
+#container {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    width: var(--viewWidth);
+    height: var(--viewHeight);
+    /* background-color: #1dbd17; */
+}
+
+#system_container {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: var(--systemContainerWidth);
+    background-color: #1dbd17;
+}
+
+#system_view {
+    position: absolute;
+    margin-top: var(--marginTop);
+    margin-bottom: var(--marginTop);
+    margin-left: var(--marginLeft);
+    margin-right: var(--marginLeft);
+
+    width: calc(var(--systemContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
+    height: calc(var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+
+    background-color: white;
+}
+
+
+#main_container {
+    position: absolute;
+    left: var(--systemContainerWidth);
+    top: 0px;
+    height: 100%;
+    width: var(--mainContainerWidth);
+    background-color: aqua;
+}
+
+#line_view {
+    position: absolute;
+    margin-top: var(--marginTop);
+    margin-bottom: var(--marginTop);
+    margin-left: var(--marginLeft);
+    margin-right: var(--marginLeft);
+
+    width: calc(var(--mainContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
+    height: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+
+    background-color: white;
+}
+
+#bar_view {
+    position: absolute;
+    top: calc(var(--lineViewHeightRatio)*var(--viewHeight));
+
+    margin-top: var(--marginTop);
+    margin-bottom: var(--marginTop);
+    margin-left: var(--marginLeft);
+    margin-right: var(--marginLeft);
+
+    width: calc(var(--mainContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
+    height: calc((1 - var(--lineViewHeightRatio))*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+
+    background-color: white;
+}
+
+#analysis_container {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    height: 100%;
+    width: var(--analysisContainerWidth);
+    background-color: antiquewhite;
+}
+
+
+#action_view {
+    position: absolute;
+    margin-top: var(--marginTop);
+    margin-bottom: var(--marginTop);
+    margin-left: var(--marginLeft);
+    margin-right: var(--marginLeft);
+
+    width: calc(var(--analysisContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
+    height: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+
+    background-color: white;
+}
+
+#info_view {
+    position: absolute;
+    top: calc(var(--actionViewHeightRatio)*var(--viewHeight));
+
+    margin-top: var(--marginTop);
+    margin-bottom: var(--marginTop);
+    margin-left: var(--marginLeft);
+    margin-right: var(--marginLeft);
+
+    width: calc(var(--analysisContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
+    height: calc((1 - var(--actionViewHeightRatio))*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+
+    background-color: white;
+}
