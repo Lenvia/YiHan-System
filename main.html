@@ -7,7 +7,6 @@
         <link rel="stylesheet" type="text/css" href="./main.css">
 		<meta charset="utf-8">
 
-		
         <!-- react -->
         <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
@@ -28,27 +27,44 @@
         <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 
         <div id="container">
+            <!-- 最左视图 -->
             <div id="system_container">
-                <div class="custom_view" id="system_view">
-                    <div class="text_container" id="system_name_container">
-                        <p class="text-left font-weight-bold" id="system_name">系统名称</p>
-                        
+                <!-- custom_view 是外框线 -->
+                <div class="custom_view" id="description_view">
+
+                    <div id="system_name_container">
+                        <p class="text-left font-weight-bold" id="system_name">EOPVis</p>
                     </div>
 
-                    <div id="dataset_container">
-                        
+                    <!-- Simulation Description View -->
+                    <div class="text_container" id="description_name_container">
+                        <p class="text-left font-weight-bold" id="description_name">Simulation Description View</p>
                     </div>
+                    <!-- 数据集描述，其内部组件通过react构建 -->
+                    <div id="description_container"></div>
 
-                    <div id="attribute_container"></div>
+                    <!-- Region Selection View -->
+                    <div class="text_container" id="region_name_container">
+                        <p class="text-left font-weight-bold" id="region_name">Region Selection View</p>
+                    </div>
+                    <!-- 区域选择，其内部组件通过react构建 -->
+                    <div id="region_container"></div>
 
-                    <div class="text_container" id="parameter_setting_container"></div>
+                    <!-- Object Drifting Setting -->
+                    <div class="text_container" id="setting_name_container">
+                        <p class="text-left font-weight-bold" id="setting_name">Object Drifting Setting</p>
+                    </div>
+                    <!-- 漂移设置，其内部组件通过react构建 -->
+                    <div id="setting_container"></div>
 
                 </div>
             </div>
+            <!-- 中间视图 -->
             <div id="main_container">
                 <div class="custom_view" id="line_view"></div>
                 <div class="custom_view" id="bar_view"></div>
             </div>
+            <!-- 最右视图 -->
             <div id="analysis_container">
                 <div class="custom_view" id="action_view"></div>
                 <div class="custom_view" id="info_view"></div>

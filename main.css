@@ -15,18 +15,22 @@
     --actionViewHeightRatio: 0.4;
 
     /* pointer-events: auto; */
+
+    --systemNameContainerHeight: 6vh;
+
+    --classTextContainerHeight: 4vh;
+    --descriptionHeight: 15vh;
+    --simulationDescriptionViewHeight: calc(var(--classTextContainerHeight) + var(--descriptionHeight));
+
+    --regionHeight: 30vh;
+    --regionSelectionViewHeight: calc(var(--classTextContainerHeight) + var(--regionHeight));
+
+    --driftingSettingHeight: 30vh;
+    --driftingSettingViewHeight: calc(var(--classTextContainerHeight) + var(--driftingSettingHeight));
 }
 
 /* 
-    container
-    ├── system_container
-    │   └── system_view
-    ├── main_container
-    │   ├── line_view
-    │   └── bar_view
-    └── analysis_container
-        ├── action_view
-        └── info_view
+
 */
 
 .custom_view {
@@ -36,10 +40,31 @@
 }
 
 .text_container {
-
     width: 100%;
-    height: 5%;
+    height: var(--classTextContainerHeight);
     background-color: aquamarine;
+}
+
+.dataset_intro_line {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+}
+
+.dataset_intro_key {
+    position: absolute;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    background-color: aqua;
+}
+
+.dataset_intro_value {
+    position: absolute;
+    right: 0px;
+    width: 45%;
+    height: 100%;
+    /* background-color: blue; */
 }
 
 #container {
@@ -60,7 +85,14 @@
     /* background-color: #1dbd17; */
 }
 
-#system_view {
+#system_name_container {
+    top: 0;
+    width: 100%;
+    height: var(--systemNameContainerHeight);
+    background-color: cadetblue;
+}
+
+#description_view {
     position: absolute;
     margin-top: var(--marginTop);
     margin-bottom: var(--marginTop);
@@ -73,33 +105,53 @@
     /* background-color: white; */
 }
 
-#system_name_container {
+#description_name_container {
     position: absolute;
-    top: 0;
+    top: var(--systemNameContainerHeight);
 }
 
-#dataset_container {
+#description_container {
     position: absolute;
-    top: 5%;
+    top: calc(var(--classTextContainerHeight) + var(--systemNameContainerHeight));
     width: 100%;
-    height: 20%;
+    height: var(--descriptionHeight);
     background-color: bisque;
 }
 
-#dataset_info {}
 
-#attribute_container {
+#region_name_container {
     position: absolute;
-    top: 30%;
-    width: 100%;
-    height: 30%;
-    background-color: bisque;
+    top: calc(var(--simulationDescriptionViewHeight) + var(--systemNameContainerHeight));
 }
 
-#attribute_info {
+#region_container {
+    position: absolute;
+    top: calc(var(--simulationDescriptionViewHeight) + var(--classTextContainerHeight) + var(--systemNameContainerHeight));
     width: 100%;
-    height: 100%;
+    height: var(--regionHeight);
+    /* background-color: blueviolet; */
 }
+
+
+#setting_name_container {
+    position: absolute;
+    top: calc(var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--systemNameContainerHeight));
+}
+
+#setting_container {
+    position: absolute;
+    top: calc(var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--classTextContainerHeight) + var(--systemNameContainerHeight));
+    width: 100%;
+    height: var(--driftingSettingHeight);
+    background-color: blueviolet;
+}
+
+
+
+/* -------------------------------------------------------------------- */
+
+
+
 
 #main_container {
     position: absolute;
