@@ -1,6 +1,6 @@
 
 
-// let attr_arr = dataset_info["Attributes"]["attr"]
+
 var back_img_src = dataset_info["back_img_src"];
 class DatasetIntro extends React.Component {
     render() {

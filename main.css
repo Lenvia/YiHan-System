@@ -16,6 +16,8 @@
 
     /* pointer-events: auto; */
 
+    --leftViewHeight: calc(var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+
     --systemNameContainerHeight: 6vh;
 
     --classTextContainerHeight: 4vh;
@@ -92,7 +94,7 @@
     background-color: cadetblue;
 }
 
-#description_view {
+#left_view {
     position: absolute;
     margin-top: var(--marginTop);
     margin-bottom: var(--marginTop);
@@ -100,7 +102,7 @@
     margin-right: var(--marginLeft);
 
     width: calc(var(--systemContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
-    height: calc(var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+    height: var(--leftViewHeight);
 
     /* background-color: white; */
 }
@@ -146,6 +148,24 @@
     background-color: blueviolet;
 }
 
+#apply_button_container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    height: calc(var(--leftViewHeight) - var(--systemNameContainerHeight) - var(--simulationDescriptionViewHeight) - var(--regionSelectionViewHeight) - var(--driftingSettingViewHeight));
+    background-color: chartreuse;
+}
+
+#apply_button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    height: 90%;
+    /* 居中 */
+    transform: translate(-50%, -50%);
+}
 
 
 /* -------------------------------------------------------------------- */
