@@ -8,7 +8,6 @@
 		<meta charset="utf-8">
 
 		
-		<!-- 外部包 -->
         <!-- react -->
         <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
         <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
@@ -19,29 +18,52 @@
         <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.bootcdn.net/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
         <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.1/js/bootstrap.min.js"></script>
+        <!-- bulma -->
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> -->
+        <!-- purecss -->
+        <link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/pure-min.css" integrity="sha384-yHIFVG6ClnONEA5yB5DJXfW2/KC173DIQrYoZMEtBvGzmf0PKiGyNEqe9N6BNDBH" crossorigin="anonymous">
 
+
+        <!-- jQuery -->
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
 
         <div id="container">
             <div id="system_container">
-                <div class="view" id="system_view"></div>
+                <div class="custom_view" id="system_view">
+                    <div class="text_container" id="system_name_container">
+                        <p class="text-left font-weight-bold" id="system_name">系统名称</p>
+                        
+                    </div>
+
+                    <div id="dataset_container">
+                        
+                    </div>
+
+                    <div id="attribute_container"></div>
+
+                    <div class="text_container" id="parameter_setting_container"></div>
+
+                </div>
             </div>
             <div id="main_container">
-                <div class="view" id="line_view"></div>
-                <div class="view" id="bar_view"></div>
+                <div class="custom_view" id="line_view"></div>
+                <div class="custom_view" id="bar_view"></div>
             </div>
             <div id="analysis_container">
-                <div class="view" id="action_view"></div>
-                <div class="view" id="info_view"></div>
+                <div class="custom_view" id="action_view"></div>
+                <div class="custom_view" id="info_view"></div>
             </div>
         </div>
         
 
         <!-- 全局变量 -->
-		<!-- <script type="text/javascript" src="./utils.js"></script>
+		<script type="text/javascript" src="./utils.js"></script>
         <script type="text/javascript" src="./global_definer.js"></script>
-        <script type="text/javascript" src="./global_controller.js"></script> -->
+        <!-- <script type="text/javascript" src="./global_controller.js"></script> -->
 
         <!-- <script type="text/babel" src="index.js"></script> -->
+
+        <script type="text/babel" src="./system_view.js"></script>
 
 
 	</head>
