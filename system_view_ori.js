@@ -1,31 +1,28 @@
 var back_img_src = dataset_info["back_img_src"];
-
-
-class DatasetIntroLine extends React.Component {
-    render() {
-        return (
-            <div className="dataset_intro_line" style={{ top: this.props.value['top'] }}>
-                <div className="dataset_intro_key">{this.props.value['k']}</div>
-                <div className="dataset_intro_value">{this.props.value['v']}</div>
-            </div>
-        )
-    }
-}
-
 class DatasetIntro extends React.Component {
-    renderDatasetIntroLine(k, v, top) {
-        return <DatasetIntroLine
-            value={{ 'k': k, 'v_text': v, 'top': top }}
-        />
-    }
     render() {
         return (
             <div id="dataset_intro" style={{ width: '100%', height: '100%' }}>
-                {this.renderDatasetIntroLine("Dataset Name: ", dataset_info["name"], '0')}
-                {this.renderDatasetIntroLine("Member Number: ", dataset_info["member_number"], '20%')}
-                {this.renderDatasetIntroLine("Location Range: ", String(dataset_info["location_range"]), '40%')}
-                {this.renderDatasetIntroLine("Time Range: ", String(dataset_info["time_range"]), '60%')}
-                {this.renderDatasetIntroLine("Object Name: ", dataset_info["Object_name"], '80%')}
+                <div className="dataset_intro_line" id="dataset_name" style={{ top: '0' }}>
+                    <div className="dataset_intro_key">Dataset Name: </div>
+                    <div className="dataset_intro_value">{dataset_info["name"]}</div>
+                </div>
+                <div className="dataset_intro_line" id="member_number" style={{ top: '20%' }}>
+                    <div className="dataset_intro_key">Member Number: </div>
+                    <div className="dataset_intro_value">{dataset_info["member_number"]}</div>
+                </div>
+                <div className="dataset_intro_line" id="location_range" style={{ top: '40%' }}>
+                    <div className="dataset_intro_key">Location Range: </div>
+                    <div className="dataset_intro_value">{String(dataset_info["location_range"])}</div>
+                </div>
+                <div className="dataset_intro_line" id="time_range" style={{ top: '60%' }}>
+                    <div className="dataset_intro_key">Time Range: </div>
+                    <div className="dataset_intro_value">{String(dataset_info["time_range"])}</div>
+                </div>
+                <div className="dataset_intro_line" id="object_name" style={{ top: '80%' }}>
+                    <div className="dataset_intro_key">Object Name: </div>
+                    <div className="dataset_intro_value">{dataset_info["Object_name"]}</div>
+                </div>
             </div>
         );
     }
