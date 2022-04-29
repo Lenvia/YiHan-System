@@ -5,7 +5,7 @@ var back_img_src = dataset_info["back_img_src"];
 class DatasetIntro extends React.Component {
     render() {
         return (
-            <div id="dataset_intro" style={{ weight: '100%', height: '100%' }}>
+            <div id="dataset_intro" style={{ width: '100%', height: '100%' }}>
                 <div className="dataset_intro_line" id="dataset_name" style={{ top: '0' }}>
                     <div className="dataset_intro_key">Dataset Name: </div>
                     <div className="dataset_intro_value">{dataset_info["name"]}</div>
@@ -36,8 +36,6 @@ class RegionBg extends React.Component {
         return (
             <div id="region_background"
                 style={{
-                    weight: '100%', height: '60%',
-
                     backgroundImage: "url(" + back_img_src + ")",
                     backgroundRepeat: 'no-repeat',
                     backgroundPositionX: 'center',
@@ -52,8 +50,10 @@ class RegionBg extends React.Component {
 class RegionPara extends React.Component {
     render() {
         return (
-            <div style={{ weight: '100%', height: '40%', backgroundColor: 'red' }}>
-
+            <div id="region_para">
+                <div id="xrange" className="range_line" style={{ top: '8%' }}></div>
+                <div id="yrange" className="range_line" style={{ top: '38%' }}></div>
+                <div id="layer_box" className="range_line" style={{ top: '70%' }}></div>
             </div>
         )
     }

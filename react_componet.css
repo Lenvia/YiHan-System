@@ -1,0 +1,44 @@
+.dataset_intro_line {
+    position: absolute;
+    width: 100%;
+    height: 20%;
+}
+
+.dataset_intro_key {
+    position: absolute;
+    left: 0;
+    width: 55%;
+    height: 100%;
+    background-color: aqua;
+}
+
+.dataset_intro_value {
+    position: absolute;
+    right: 0px;
+    width: 45%;
+    height: 100%;
+    /* background-color: blue; */
+}
+
+.range_line {
+    position: absolute;
+    left: 3%;
+    width: 70%;
+    height: 25%;
+    background-color: aqua;
+}
+
+#region_background {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 60%;
+}
+
+#region_para {
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    height: 40%;
+    background-color: red;
+}
