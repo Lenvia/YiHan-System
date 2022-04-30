@@ -48,4 +48,10 @@
     width: 100%;
 }
 
-.custom_col {}
+.drifting_line {
+    position: absolute;
+    width: 30%;
+    height: 10%;
+    left: 3%;
+    background-color: gold;
+}

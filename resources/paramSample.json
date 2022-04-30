@@ -101,7 +101,7 @@
                 365
             ],
             "Object_name": "Pathline",
-            "back_img_src": "./data/bg2.jpg",
+            "back_img_src": "./resources/sample/bg2.jpg",
             "layer": [
                 0,
                 1,
