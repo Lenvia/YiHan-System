@@ -14,12 +14,13 @@ class DatasetIntroLine extends React.Component {
 
 // Simulation Description View 数据集介绍
 class DatasetIntro extends React.Component {
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         dataset_info: this.props.dataset_info,
-    //     }
-    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataset_info: dataset,
+            update_flag: true,  // 为了在外部强制刷新，只能改变state
+        }
+    }
 
     renderDatasetIntroLine(k, v, top) {
         return <DatasetIntroLine
@@ -28,10 +29,9 @@ class DatasetIntro extends React.Component {
     }
 
     datasetChange(event) {
-        dataset = json_data["simulation"][event.target.selectedIndex];
-        this.props.updateDataset();
-        // console.log(dataset)
-
+        this.state.dataset_info = json_data["simulation"][event.target.selectedIndex];
+        dataset = this.state.dataset_info;
+        renderAll();
     }
 
     render() {
@@ -49,10 +49,10 @@ class DatasetIntro extends React.Component {
                         }
                     </select>
                 </div>
-                {this.renderDatasetIntroLine("Member Number: ", this.props.dataset_info["member_number"], '20%')}
-                {this.renderDatasetIntroLine("Location Range: ", String(this.props.dataset_info["location_range"]), '40%')}
-                {this.renderDatasetIntroLine("Time Range: ", String(this.props.dataset_info["time_range"]), '60%')}
-                {this.renderDatasetIntroLine("Object Name: ", this.props.dataset_info["Object_name"], '80%')}
+                {this.renderDatasetIntroLine("Member Number: ", this.state.dataset_info["member_number"], '20%')}
+                {this.renderDatasetIntroLine("Location Range: ", String(this.state.dataset_info["location_range"]), '40%')}
+                {this.renderDatasetIntroLine("Time Range: ", String(this.state.dataset_info["time_range"]), '60%')}
+                {this.renderDatasetIntroLine("Object Name: ", this.state.dataset_info["Object_name"], '80%')}
             </div>
         );
     }
@@ -62,13 +62,17 @@ class DatasetIntro extends React.Component {
 class RegionBg extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            back_img_src: dataset["back_img_src"],
+        }
+
     }
 
     render() {
         return (
             <div id="region_background"
                 style={{
-                    backgroundImage: "url(" + this.props.back_img_src + ")",
+                    backgroundImage: "url(" + this.state.back_img_src + ")",
                     backgroundRepeat: 'no-repeat',
                     backgroundPositionX: 'center',
                     backgroundPositionY: 'center',
@@ -83,6 +87,9 @@ class RegionBg extends React.Component {
 class RegionPara extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            layers: dataset['layer'],
+        }
     }
 
     render() {
@@ -123,7 +130,7 @@ class RegionPara extends React.Component {
                 <div id="layer_box" className="region_para_line" style={{ top: '70%', left: '25%', width: '25%' }}>
                     <select>
                         {
-                            this.props.layer.map((item, index) => {
+                            this.state.layers.map((item, index) => {
                                 return (
                                     <option key={'option' + index} value={item}>{item}</option>
                                 )
@@ -142,8 +149,8 @@ class Region extends React.Component {
     render() {
         return (
             <div id="region" style={{ weight: '100%', height: '100%' }}>
-                <RegionBg back_img_src={this.props.dataset_info['back_img_src']} />
-                <RegionPara layer={this.props.dataset_info['layer']} />
+                <RegionBg />
+                <RegionPara />
             </div>
 
         )
@@ -156,10 +163,22 @@ class Drifting extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            curObject: this.props.dataset_info["Objects"][0]
+            object_list: dataset["Objects"],
+            curObject: dataset["Objects"][0],
+            attribute_list: dataset["Attribute"],
+            update_flag: true,  // 为了在外部强制刷新，只能改变state
         }
     }
 
+    refresh() {
+        this.state = {
+            object_list: dataset["Objects"],
+            curObject: dataset["Objects"][0],
+            attribute_list: dataset["Attribute"],
+        }
+        console.log(this.state)
+        this.forceUpdate();
+    }
 
     objectChange(event) {
         this.setState({
@@ -174,7 +193,7 @@ class Drifting extends React.Component {
                 <div className="drifting_line" style={{ top: '8%', left: '35%', width: '40%' }}>
                     <select onChange={(event) => this.objectChange(event)} >
                         {
-                            this.props.dataset_info["Objects"].map((item, index) => {
+                            this.state.object_list.map((item, index) => {
                                 return (
                                     <option key={'option' + index} value={item}>{item}</option>
                                 )
@@ -188,7 +207,7 @@ class Drifting extends React.Component {
                 <div className="drifting_line" style={{ top: '28%', left: '35%', width: '40%' }}>
                     <select>
                         {
-                            this.props.dataset_info["Attribute"][this.state.curObject].map((item, index) => {
+                            this.state.attribute_list[this.state.curObject].map((item, index) => {
                                 return (
                                     <option key={'option' + index} value={item}>{item}</option>
                                 )
@@ -232,86 +251,26 @@ class Drifting extends React.Component {
 }
 
 
-
-
-class Container extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            dataset_info: dataset,
-            update_flag: true,  // 为了在外部强制刷新，只能改变state
-        }
-    }
-
-    updateDataset() {
-        this.setState({
-            dataset_info: dataset
-        });
-        this.forceUpdate();
-    }
-
-    render() {
-        return (
-            <div id="container">
-                <div id="system_container">
-                    <div className="custom_view" id="left_view">
-                        <div id="system_name_container">
-                            <p className="text-left font-weight-bold" id="system_name">EOPVis</p>
-                        </div>
-
-
-                        <div className="text_container" id="description_name_container">
-                            <p className="text-left font-weight-bold" id="description_name">Simulation Description View</p>
-                        </div>
-
-                        <div id="description_container">
-                            <DatasetIntro dataset_info={this.state.dataset_info} updateDataset={this.updateDataset.bind(this)} />
-
-                        </div>
-
-
-                        <div className="text_container" id="region_name_container">
-                            <p className="text-left font-weight-bold" id="region_name">Region Selection View</p>
-                        </div>
-
-                        <div id="region_container">
-                            <Region dataset_info={this.state.dataset_info} />
-                        </div>
-
-
-                        <div className="text_container" id="setting_name_container">
-                            <p className="text-left font-weight-bold" id="setting_name">Object Drifting Setting</p>
-                        </div>
-
-                        <div id="setting_container">
-                            <Drifting dataset_info={this.state.dataset_info} />
-                        </div>
-
-
-
-                        <div id="apply_button_container">
-                            <button id="apply_button" type="button" className="btn btn-success">Apply</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="main_container">
-                    <div className="custom_view" id="line_view"></div>
-                    <div className="custom_view" id="bar_view"></div>
-                </div>
-
-                <div id="analysis_container">
-                    <div className="custom_view" id="action_view"></div>
-                    <div className="custom_view" id="info_view"></div>
-                </div>,
-            </div>
-        )
-    }
-}
-
-
-ReactDOM.render(
-    <Container />,
-    document.getElementById("root")
+var datasetIntroElement = ReactDOM.render(
+    <DatasetIntro />,
+    document.getElementById('description_container')
 );
+
+
+var regionElement = ReactDOM.render(
+    <Region />,
+    document.getElementById('region_container')
+);
+
+
+var driftingElement = ReactDOM.render(
+    <Drifting />,
+    document.getElementById('setting_container')
+);
+
+function renderAll() {
+    datasetIntroElement.setState({
+        update_flag: true,
+    });
+}
 
