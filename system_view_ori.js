@@ -48,9 +48,9 @@ class RegionPara extends React.Component {
     render() {
         return (
             <div id="region_para">
-                <div id="xrange" className="range_line" style={{ top: '8%' }}></div>
-                <div id="yrange" className="range_line" style={{ top: '38%' }}></div>
-                <div id="layer_box" className="range_line" style={{ top: '70%' }}></div>
+                <div id="xrange" className="region_para_line" style={{ top: '8%' }}></div>
+                <div id="yrange" className="region_para_line" style={{ top: '38%' }}></div>
+                <div id="layer_box" className="region_para_line" style={{ top: '70%' }}></div>
             </div>
         )
     }

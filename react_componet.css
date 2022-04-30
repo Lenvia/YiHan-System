@@ -20,10 +20,10 @@
     /* background-color: blue; */
 }
 
-.range_line {
+.region_para_line {
     position: absolute;
     left: 3%;
-    width: 70%;
+    width: 60%;
     height: 25%;
     background-color: aqua;
 }
@@ -42,3 +42,10 @@
     height: 40%;
     background-color: red;
 }
+
+.custom_form-control {
+    height: 75%;
+    width: 100%;
+}
+
+.custom_col {}
