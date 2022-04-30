@@ -24,17 +24,16 @@ class Container extends React.Component {
                         </div>
 
 
-                        <div className="text_container" id="description_name_container">
+                        <div className="title_container system_view_title_container" id="description_name_container">
                             <p className="text-left font-weight-bold" id="description_name">Simulation Description View</p>
                         </div>
 
                         <div id="description_container">
                             <DatasetIntro dataset_info={this.state.dataset_info} updateDataset={this.updateDataset.bind(this)} />
-
                         </div>
 
 
-                        <div className="text_container" id="region_name_container">
+                        <div className="title_container system_view_title_container" id="region_name_container">
                             <p className="text-left font-weight-bold" id="region_name">Region Selection View</p>
                         </div>
 
@@ -43,7 +42,7 @@ class Container extends React.Component {
                         </div>
 
 
-                        <div className="text_container" id="setting_name_container">
+                        <div className="title_container system_view_title_container" id="setting_name_container">
                             <p className="text-left font-weight-bold" id="setting_name">Object Drifting Setting</p>
                         </div>
 
@@ -60,7 +59,16 @@ class Container extends React.Component {
                 </div>
 
                 <div id="main_container">
-                    <div className="custom_view" id="line_view"></div>
+                    <div className="custom_view" id="line_view">
+                        <div className="title_container main_view_titile_container" id="ensemble_statistic_name_container">
+                            <p className="text-left font-weight-bold" id="ensemble_statistic_name">Ensemble Statistic View</p>
+                        </div>
+
+                        <div id="ensemble_chart_container">
+
+                        </div>
+
+                    </div>
                     <div className="custom_view" id="bar_view"></div>
                 </div>
 

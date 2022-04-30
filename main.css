@@ -14,21 +14,31 @@
     --lineViewHeightRatio: 0.4;
     --actionViewHeightRatio: 0.4;
 
-    /* pointer-events: auto; */
+    /* ---------------------------------------------------------------------------------- */
 
+    /* 注：border 的宽度是包含在view里的 */
+
+    /* Left View */
     --leftViewHeight: calc(var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
 
     --systemNameContainerHeight: 6vh;
 
-    --classTextContainerHeight: 4vh;
+    --classSystemViewTitleContainerHeight: 4vh;
+
     --descriptionHeight: 15vh;
-    --simulationDescriptionViewHeight: calc(var(--classTextContainerHeight) + var(--descriptionHeight));
+    --simulationDescriptionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--descriptionHeight));
 
     --regionHeight: 33vh;
-    --regionSelectionViewHeight: calc(var(--classTextContainerHeight) + var(--regionHeight));
+    --regionSelectionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--regionHeight));
 
     --driftingSettingHeight: 27vh;
-    --driftingSettingViewHeight: calc(var(--classTextContainerHeight) + var(--driftingSettingHeight));
+    --driftingSettingViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--driftingSettingHeight));
+
+    /* Main View */
+    --upMainViewHeight: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
+    --classMainViewTitleContainerHeight: 6vh;
+
+    /* Right View */
 }
 
 /* 
@@ -41,13 +51,20 @@
     border-color: black;
 }
 
-.text_container {
+.title_container {
     width: 100%;
-    height: var(--classTextContainerHeight);
     background-color: aquamarine;
 }
 
+.system_view_title_container {
+    height: var(--classSystemViewTitleContainerHeight);
+}
 
+.main_view_titile_container {
+    height: var(--classMainViewTitleContainerHeight);
+}
+
+/* ------------------------------------------------------------- */
 
 #container {
     position: absolute;
@@ -81,7 +98,7 @@
     margin-left: var(--marginLeft);
     margin-right: var(--marginLeft);
 
-    width: calc(var(--systemContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
+    width: calc(var(--systemContainerWidth) - 2*(var(--marginLeft)));
     height: var(--leftViewHeight);
 
     /* background-color: white; */
@@ -94,7 +111,7 @@
 
 #description_container {
     position: absolute;
-    top: calc(var(--classTextContainerHeight) + var(--systemNameContainerHeight));
+    top: calc(var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
     width: 100%;
     height: var(--descriptionHeight);
     background-color: bisque;
@@ -108,7 +125,7 @@
 
 #region_container {
     position: absolute;
-    top: calc(var(--simulationDescriptionViewHeight) + var(--classTextContainerHeight) + var(--systemNameContainerHeight));
+    top: calc(var(--simulationDescriptionViewHeight) + var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
     width: 100%;
     height: var(--regionHeight);
     /* background-color: blueviolet; */
@@ -122,7 +139,7 @@
 
 #setting_container {
     position: absolute;
-    top: calc(var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--classTextContainerHeight) + var(--systemNameContainerHeight));
+    top: calc(var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
     width: 100%;
     height: var(--driftingSettingHeight);
     background-color: blueviolet;
@@ -169,11 +186,23 @@
     margin-left: var(--marginLeft);
     margin-right: var(--marginLeft);
 
-    width: calc(var(--mainContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
-    height: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+    width: calc(var(--mainContainerWidth) - 2 * (var(--marginLeft)));
+    height: var(--upMainViewHeight);
 
-    /* background-color: white; */
+    background-color: darkgoldenrod;
 }
+
+
+#ensemble_chart_container {
+    position: absolute;
+    top: var(--classMainViewTitleContainerHeight);
+    width: 100%;
+    height: calc(var(--upMainViewHeight) - var(--classMainViewTitleContainerHeight) - 2*var(--borderWidth));
+    background-color: bisque;
+}
+
+
+
 
 #bar_view {
     position: absolute;
