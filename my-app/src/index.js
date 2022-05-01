@@ -66,11 +66,6 @@ class Container extends React.Component {
 
                         <div id="setting_container">
                             <Drifting dataset_info={this.state.dataset_info} />
-
-                            <div id="drifting_button_container">
-                                <button id="lock_button" type="button" className="btn btn-primary">Lock</button>
-                                <button id="apply_button" type="button" className="btn btn-success">Apply</button>
-                            </div>
                         </div>
 
 

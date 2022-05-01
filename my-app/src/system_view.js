@@ -142,41 +142,146 @@ class Region extends React.Component {
     }
 }
 
+class DriftingExp extends React.Component {
+    render() {
+        // console.log(this.props.config["readOnly"])
+        if (this.props.config["readOnly"] === true)
+            return (
+                <div>
+                    <label key={"label" + this.props.config["index"]} className="drifting_line"
+                        style={{
+                            visibility: this.props.config["visibility"],
+                            top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
+                            width: '60%',
+                            fontWeight: 'bold'
+                        }}>{this.props.config["exp"]}</label>
+                    <input id={"input" + this.props.config["index"]} key={"input" + this.props.config["index"]} value={this.props.config["value"]} className="drifting_line" readOnly={true}
+                        style={{
+                            visibility: this.props.config["visibility"],
+                            position: 'absolute',
+                            left: '70%',
+                            top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
+                            width: '20%',
+                            fontSize: '12px',
+                            // backgroundColor: 'red'
+                        }}
+                    />
+                </div>
+            )
+        else return (
+            <div>
+                <label key={"label" + this.props.config["index"]} className="drifting_line"
+                    style={{
+                        visibility: this.props.config["visibility"],
+                        top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
+                        width: '60%',
+                        fontWeight: 'bold'
+                    }}>{this.props.config["exp"]}</label>
+                <input id={"input" + this.props.config["index"]} key={"input" + this.props.config["index"]} className="drifting_line"
+                    style={{
+                        visibility: this.props.config["visibility"],
+                        position: 'absolute',
+                        left: '70%',
+                        top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
+                        width: '20%',
+                        fontSize: '12px',
+                        // backgroundColor: 'red'
+                    }}
+                // onChange={(e) => { $(e.target.id).val(e.target.value) }}
+                />
+            </div>
+        )
+    }
+}
 
 // Object Drifting Setting
 class Drifting extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            locked_list: []
+            cur_option: this.props.dataset_info["Objects"][0],
+            locked_list: ['null'],
+            locked_input: [0],
         }
     }
 
+    makeExp(attr, sta, op) {
+        return sta + "(" + attr + ")" + op;
+    }
+
+    // 渲染 exp label
+    renderDriftingExp(i, roof, gap) {
+        let vis, readOnly;
+        readOnly = true;  // 默认都是只读，只有当前的可写
+
+        if (i < this.state.locked_list.length) {
+            vis = 'visable';
+            if (i === this.state.locked_list.length - 1) {
+                readOnly = false
+            }
+        }
+
+        else
+            vis = 'hidden';
+
+        let config = {
+            'visibility': vis,
+            'roof': roof,
+            'index': i,
+            "gap": gap,
+            "exp": this.state.locked_list[i],
+            "value": this.state.locked_input[i],
+            "readOnly": readOnly
+        };
+
+        // console.log(config);
+
+        return <DriftingExp
+            config={config}
+        />
+    }
+
+    //props发生变化时触发
+    componentWillReceiveProps(props) {
+        this.setState({
+            cur_option: this.props.dataset_info["Objects"][0],
+            locked_list: ['null'],
+            locked_input: [undefined],
+        })
+        // 其它下拉框归零
+        $("#objects_selector").prop('selectedIndex', 0);
+        $("#attribute_selector").prop('selectedIndex', 0);
+    }
+
+    // 响应
     objectChange(event) {
+        this.setState({
+            cur_option: event.target.value,
+        })
         this.forceUpdate()
     }
 
-    lockButtonClick(event) {
+    lockButtonClick(para) {
+
         // TODO 检查数字有没有写
-        // locked_list 放进去
+        // 添加策略：替换当前 lock_list 和 lock_input 末尾的值，再append（同时判断是否越界）
+        let attr = $("#attribute_selector").val();
+        let sta = $("#statistic_selector").val();
+        let op = $("#operator_selector").val();
+        let inputId = para.state.locked_list.length - 1;
+        let value = $("#input" + inputId).val();
+
+        console.log(attr, sta, op, value);
     }
 
     render() {
-        let curOption = $('#objects_selector option:selected').val();
-        if (curOption === undefined) {  // 刚加载数据集时
-            curOption = this.props.dataset_info["Objects"][0];
-        }
-        // 中途更换了数据集，将selector归位
-        if (this.props.dataset_info["Attribute"][curOption] === undefined) {
-            $('#objects_selector').val(this.props.dataset_info["Objects"][0]);
-            curOption = this.props.dataset_info["Objects"][0];
-        }
-        // console.log(curOption)
-
+        let roof = 5;  // 最顶部的top
+        let gap = 12;  // 两行间距
+        // console.log(this.state.locked_list)
         return (
             <div id="drifting_setting" style={{ width: '100%', height: '100%' }}>
-                <div className="drifting_line" style={{ top: '5%', fontWeight: 'bold' }}>Object: </div>
-                <div className="drifting_line" style={{ top: '5%', left: '35%', width: '40%' }}>
+                <div className="drifting_line" style={{ top: String(roof) + '%', fontWeight: 'bold' }}>Object: </div>
+                <div className="drifting_line" style={{ top: String(roof) + '%', left: '35%', width: '40%' }}>
                     <select id="objects_selector" onChange={(event) => this.objectChange(event)} >
                         {
                             this.props.dataset_info["Objects"].map((item, index) => {
@@ -189,26 +294,26 @@ class Drifting extends React.Component {
                 </div>
 
 
-                <div className="drifting_line" style={{ top: '20%', fontWeight: 'bold' }}>Attribute: </div>
-                <div className="drifting_line" style={{ top: '20%', left: '35%', width: '40%' }}>
-                    <select>
+                <div className="drifting_line" style={{ top: String(roof + gap) + '%', fontWeight: 'bold' }}>Attribute: </div>
+                <div className="drifting_line" style={{ top: String(roof + gap) + '%', left: '35%', width: '40%' }}>
+                    <select id="attribute_selector">
                         {
-                            this.props.dataset_info["Attribute"][curOption].map((item, index) => {
+                            this.props.dataset_info["Attribute"][this.state.cur_option].map((item, index) => {
                                 return (
-                                    <option key={'option' + index} value={item}>{item}</option>
+                                    <option key={'aOption' + index} value={item}>{item}</option>
                                 )
                             })
                         }
                     </select>
                 </div>
 
-                <div className="drifting_line" style={{ top: '35%', fontWeight: 'bold' }}>Statistic: </div>
-                <div className="drifting_line" style={{ top: '35%', left: '35%', width: '40%' }}>
-                    <select>
+                <div className="drifting_line" style={{ top: String(roof + 2 * gap) + '%', fontWeight: 'bold' }}>Statistic: </div>
+                <div className="drifting_line" style={{ top: String(roof + 2 * gap) + '%', left: '35%', width: '40%' }}>
+                    <select id="statistic_selector">
                         {
                             case_unrelated_data["statistic"].map((item, index) => {
                                 return (
-                                    <option key={'option' + index} value={item}>{item}</option>
+                                    <option key={'sOption' + index} value={item}>{item}</option>
                                 )
                             })
                         }
@@ -216,20 +321,29 @@ class Drifting extends React.Component {
                 </div>
 
 
-                <div className="drifting_line" style={{ top: '50%', fontWeight: 'bold' }}>Operator: </div>
-                <div className="drifting_line" style={{ top: '50%', left: '35%', width: '40%' }}>
-                    <select>
+                <div className="drifting_line" style={{ top: String(roof + 3 * gap) + '%', fontWeight: 'bold' }}>Operator: </div>
+                <div className="drifting_line" style={{ top: String(roof + 3 * gap) + '%', left: '35%', width: '40%' }}>
+                    <select id="operator_selector">
                         {
                             case_unrelated_data["operator"].map((item, index) => {
                                 return (
-                                    <option key={'option' + index} value={item}>{item}</option>
+                                    <option key={'oOption' + index} value={item}>{item}</option>
                                 )
                             })
                         }
                     </select>
                 </div>
 
+                {
+                    this.state.locked_list.map((item, index) => {
+                        return this.renderDriftingExp(index, roof, gap)
+                    })
+                }
 
+                <div id="drifting_button_container">
+                    <button id="lock_button" onClick={(e) => this.lockButtonClick(this)} type="button" className="btn btn-primary">Lock</button>
+                    <button id="apply_button" type="button" className="btn btn-success">Apply</button>
+                </div>
             </div>
         )
 
