@@ -1,18 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import LineMarkerEcharts from './main_view.js'
-
-import { json_data } from "./global_definer.js"
-import { DatasetIntro, Region, Drifting } from "./system_view.js"
 
 import 'bootstrap';  //  引入 Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';  //  引入 Bootstrap 的 css
 import 'bootstrap/dist/js/bootstrap.min.js'
-
 // import { base, buttons, formsNr, forms, gridsNr, grids, menus, tables } from 'pure-css'
+
+
+import { json_data } from "./global_definer.js"
+import { DatasetIntro, Region, Drifting } from "./system_view.js"
+import { EnsembleEchart } from "./main_view.js"
 
 import "./main.css"
 import "./react_componet.css"
+
 
 class Container extends React.Component {
     constructor(props) {
@@ -81,7 +82,7 @@ class Container extends React.Component {
                         </div>
 
                         <div id="ensemble_chart_container">
-
+                            <EnsembleEchart dataset_info={this.state.dataset_info} />
                         </div>
 
                     </div>
