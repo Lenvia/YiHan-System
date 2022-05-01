@@ -1,5 +1,5 @@
 import React from 'react';
-import { json_data, dataset, case_unrelated_data } from "./global_definer.js"
+import { json_data, case_unrelated_data } from "./global_definer.js"
 
 
 
@@ -25,8 +25,8 @@ class DatasetIntro extends React.Component {
     }
 
     datasetChange(event) {
-        dataset = json_data["simulation"][event.target.selectedIndex];
-        this.props.updateDataset();
+        // dataset = json_data["simulation"][event.target.selectedIndex];
+        this.props.updateDataset(event.target.selectedIndex);
         // console.log(dataset)
 
     }

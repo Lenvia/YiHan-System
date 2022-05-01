@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 // import LineMarkerEcharts from './main_view.js'
 
-import { dataset } from "./global_definer.js"
+import { json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
 
 import 'bootstrap';  //  引入 Bootstrap
@@ -18,14 +18,14 @@ class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataset_info: dataset,
+            dataset_info: json_data["simulation"][0],
             update_flag: true,  // 为了在外部强制刷新，只能改变state
         }
     }
 
-    updateDataset() {
+    updateDataset(selectedIndex) {
         this.setState({
-            dataset_info: dataset
+            dataset_info: json_data["simulation"][selectedIndex]
         });
         this.forceUpdate();
     }
