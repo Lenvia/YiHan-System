@@ -1,4 +1,4 @@
-import $ from 'jquery';
+
 
 import data from './resources/sample/paramSample.json';
 

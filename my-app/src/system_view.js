@@ -1,6 +1,6 @@
 import React from 'react';
 import { json_data, case_unrelated_data } from "./global_definer.js"
-
+import $ from 'jquery';
 
 
 // Simulation Description View 中的每一行
@@ -138,7 +138,6 @@ class Region extends React.Component {
                 <RegionBg back_img_src={this.props.dataset_info['back_img_src']} />
                 <RegionPara layer={this.props.dataset_info['layer']} />
             </div>
-
         )
     }
 }
@@ -146,26 +145,27 @@ class Region extends React.Component {
 
 // Object Drifting Setting
 class Drifting extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            curObject: this.props.dataset_info["Objects"][0]
-        }
-    }
-
-
     objectChange(event) {
-        this.setState({
-            curObject: event.target.value,
-        });
+        this.forceUpdate()
     }
 
     render() {
+        let curOption = $('#objects_selector option:selected').val();
+        if (curOption === undefined) {  // 刚加载数据集时
+            curOption = this.props.dataset_info["Objects"][0];
+        }
+        // 中途更换了数据集，将selector归位
+        if (this.props.dataset_info["Attribute"][curOption] === undefined) {
+            $('#objects_selector').val(this.props.dataset_info["Objects"][0]);
+            curOption = this.props.dataset_info["Objects"][0];
+        }
+        // console.log(curOption)
+
         return (
             <div id="drifting_setting" style={{ width: '100%', height: '100%' }}>
                 <div className="drifting_line" style={{ top: '8%', fontWeight: 'bold' }}>Object: </div>
                 <div className="drifting_line" style={{ top: '8%', left: '35%', width: '40%' }}>
-                    <select onChange={(event) => this.objectChange(event)} >
+                    <select id="objects_selector" onChange={(event) => this.objectChange(event)} >
                         {
                             this.props.dataset_info["Objects"].map((item, index) => {
                                 return (
@@ -181,7 +181,7 @@ class Drifting extends React.Component {
                 <div className="drifting_line" style={{ top: '28%', left: '35%', width: '40%' }}>
                     <select>
                         {
-                            this.props.dataset_info["Attribute"][this.state.curObject].map((item, index) => {
+                            this.props.dataset_info["Attribute"][curOption].map((item, index) => {
                                 return (
                                     <option key={'option' + index} value={item}>{item}</option>
                                 )

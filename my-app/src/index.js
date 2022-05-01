@@ -21,12 +21,13 @@ class Container extends React.Component {
         this.state = {
             dataset_info: json_data["simulation"][0],
             update_flag: true,  // 为了在外部强制刷新，只能改变state
+            dataset_change_sign: false,  // 指示dataset是否被重载
         }
     }
 
     updateDataset(selectedIndex) {
         this.setState({
-            dataset_info: json_data["simulation"][selectedIndex]
+            dataset_info: json_data["simulation"][selectedIndex],
         });
         this.forceUpdate();
     }
@@ -79,6 +80,8 @@ class Container extends React.Component {
                     <div className="custom_view" id="line_view">
                         <div className="title_container main_view_titile_container" id="ensemble_statistic_name_container">
                             <p className="text-left font-weight-bold" id="ensemble_statistic_name">Ensemble Statistic View</p>
+
+
                         </div>
 
                         <div id="ensemble_chart_container">
