@@ -19,7 +19,7 @@
     /* 注：border 的宽度是包含在view里的 */
 
     /* Left View */
-    --leftViewHeight: calc(var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+    --leftViewHeight: calc(var(--viewHeight) - 2*(var(--marginTop)));
 
     --systemNameContainerHeight: 6vh;
 
@@ -31,7 +31,7 @@
     --regionHeight: 33vh;
     --regionSelectionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--regionHeight));
 
-    --driftingSettingHeight: 27vh;
+    --driftingSettingHeight: calc(var(--leftViewHeight) - var(--systemNameContainerHeight) - var(--simulationDescriptionViewHeight) - var(--regionSelectionViewHeight) - var(--classSystemViewTitleContainerHeight) - 2*var(--borderWidth));
     --driftingSettingViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--driftingSettingHeight));
 
     /* Main View */
@@ -145,24 +145,35 @@
     background-color: blueviolet;
 }
 
-#apply_button_container {
+#drifting_button_container {
     position: absolute;
     bottom: 0;
     width: 100%;
 
-    height: calc(var(--leftViewHeight) - var(--systemNameContainerHeight) - var(--simulationDescriptionViewHeight) - var(--regionSelectionViewHeight) - var(--driftingSettingViewHeight));
+    height: 15%;
     background-color: chartreuse;
 }
 
-#apply_button {
+#lock_button {
     position: absolute;
-    left: 50%;
+    left: 30%;
     top: 50%;
 
     height: 90%;
     /* 居中 */
     transform: translate(-50%, -50%);
 }
+
+#apply_button {
+    position: absolute;
+    left: 70%;
+    top: 50%;
+
+    height: 90%;
+    /* 居中 */
+    transform: translate(-50%, -50%);
+}
+
 
 
 /* -------------------------------------------------------------------- */

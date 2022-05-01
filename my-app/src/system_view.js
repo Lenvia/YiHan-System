@@ -124,7 +124,7 @@ class RegionPara extends React.Component {
                         }
                     </select>
                 </div>
-                <button className="btn btn-primary" type="submit" style={{ position: 'absolute', top: '68%', left: '60%', width: '25%' }}>Apply</button>
+                <button className="btn btn-success" type="submit" style={{ position: 'absolute', top: '68%', left: '60%', width: '25%' }}>Apply</button>
             </div>
         )
     }
@@ -145,8 +145,20 @@ class Region extends React.Component {
 
 // Object Drifting Setting
 class Drifting extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            locked_list: []
+        }
+    }
+
     objectChange(event) {
         this.forceUpdate()
+    }
+
+    lockButtonClick(event) {
+        // TODO 检查数字有没有写
+        // locked_list 放进去
     }
 
     render() {
@@ -163,8 +175,8 @@ class Drifting extends React.Component {
 
         return (
             <div id="drifting_setting" style={{ width: '100%', height: '100%' }}>
-                <div className="drifting_line" style={{ top: '8%', fontWeight: 'bold' }}>Object: </div>
-                <div className="drifting_line" style={{ top: '8%', left: '35%', width: '40%' }}>
+                <div className="drifting_line" style={{ top: '5%', fontWeight: 'bold' }}>Object: </div>
+                <div className="drifting_line" style={{ top: '5%', left: '35%', width: '40%' }}>
                     <select id="objects_selector" onChange={(event) => this.objectChange(event)} >
                         {
                             this.props.dataset_info["Objects"].map((item, index) => {
@@ -177,8 +189,8 @@ class Drifting extends React.Component {
                 </div>
 
 
-                <div className="drifting_line" style={{ top: '28%', fontWeight: 'bold' }}>Attribute: </div>
-                <div className="drifting_line" style={{ top: '28%', left: '35%', width: '40%' }}>
+                <div className="drifting_line" style={{ top: '20%', fontWeight: 'bold' }}>Attribute: </div>
+                <div className="drifting_line" style={{ top: '20%', left: '35%', width: '40%' }}>
                     <select>
                         {
                             this.props.dataset_info["Attribute"][curOption].map((item, index) => {
@@ -190,8 +202,8 @@ class Drifting extends React.Component {
                     </select>
                 </div>
 
-                <div className="drifting_line" style={{ top: '48%', fontWeight: 'bold' }}>Statistic: </div>
-                <div className="drifting_line" style={{ top: '48%', left: '35%', width: '40%' }}>
+                <div className="drifting_line" style={{ top: '35%', fontWeight: 'bold' }}>Statistic: </div>
+                <div className="drifting_line" style={{ top: '35%', left: '35%', width: '40%' }}>
                     <select>
                         {
                             case_unrelated_data["statistic"].map((item, index) => {
@@ -204,8 +216,8 @@ class Drifting extends React.Component {
                 </div>
 
 
-                <div className="drifting_line" style={{ top: '68%', fontWeight: 'bold' }}>Operator: </div>
-                <div className="drifting_line" style={{ top: '68%', left: '35%', width: '40%' }}>
+                <div className="drifting_line" style={{ top: '50%', fontWeight: 'bold' }}>Operator: </div>
+                <div className="drifting_line" style={{ top: '50%', left: '35%', width: '40%' }}>
                     <select>
                         {
                             case_unrelated_data["operator"].map((item, index) => {
