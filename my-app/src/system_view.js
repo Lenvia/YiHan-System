@@ -1,3 +1,6 @@
+import React from 'react';
+import { json_data, dataset, case_unrelated_data } from "./global_definer.js"
+
 
 
 // Simulation Description View 中的每一行
@@ -54,15 +57,14 @@ class DatasetIntro extends React.Component {
 
 // Region Selection View 图片面板
 class RegionBg extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
+        let bg = require("./resources/sample/" + this.props.back_img_src);
         return (
             <div id="region_background"
                 style={{
-                    backgroundImage: "url(" + this.props.back_img_src + ")",
+                    backgroundImage: "url(" + bg + ")",
+                    // backgroundImage: 'url(require(./resources/sample/bg1.jpg)',
                     backgroundRepeat: 'no-repeat',
                     backgroundPositionX: 'center',
                     backgroundPositionY: 'center',
@@ -75,9 +77,6 @@ class RegionBg extends React.Component {
 
 // Region Selection View 参数面板
 class RegionPara extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         return (
@@ -88,11 +87,11 @@ class RegionPara extends React.Component {
                     <form >
                         <div className="form-row">
                             <div className={("col")}>
-                                <input type="text" id="xrange_left" className={("form-control", "custom_form-control")} placeholder="" />
+                                <input type="text" id="xrange_left" className={("form-control", "custom_form-control")} style={{ top: '0', left: '0%' }} placeholder="" />
                             </div>
-                            <p>-</p>
+                            <p style={{ position: 'absolute', top: '0', left: '35%' }} >-</p>
                             <div className={("col")}>
-                                <input type="text" id="xrange_right" className={("form-control", "custom_form-control")} placeholder="" />
+                                <input type="text" id="xrange_right" className={("form-control", "custom_form-control")} style={{ top: '0', left: '45%' }} placeholder="" />
                             </div>
                         </div>
                     </form>
@@ -103,11 +102,11 @@ class RegionPara extends React.Component {
                     <form >
                         <div className="form-row">
                             <div className={("col")} style={{ left: '0%' }}>
-                                <input type="text" id="yrange_left" className={("form-control", "custom_form-control")} placeholder="" />
+                                <input type="text" id="yrange_left" className={("form-control", "custom_form-control")} style={{ top: '0', left: '0%' }} placeholder="" />
                             </div>
-                            <p>-</p>
+                            <p style={{ position: 'absolute', top: '0', left: '35%' }} >-</p>
                             <div className={("col")} style={{ left: '0%' }}>
-                                <input type="text" id="yange_right" className={("form-control", "custom_form-control")} placeholder="" />
+                                <input type="text" id="yange_right" className={("form-control", "custom_form-control")} style={{ top: '0', left: '45%' }} placeholder="" />
                             </div>
                         </div>
                     </form>
@@ -225,3 +224,6 @@ class Drifting extends React.Component {
     }
 }
 
+
+
+export { DatasetIntro, Region, Drifting }

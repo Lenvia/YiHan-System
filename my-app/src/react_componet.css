@@ -25,7 +25,7 @@
     left: 3%;
     width: 60%;
     height: 25%;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 #region_background {
@@ -44,8 +44,9 @@
 }
 
 .custom_form-control {
-    height: 75%;
-    width: 100%;
+    position: absolute;
+    height: 80%;
+    width: 30%;
 }
 
 .drifting_line {

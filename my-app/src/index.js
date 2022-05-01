@@ -1,3 +1,19 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+// import LineMarkerEcharts from './main_view.js'
+
+import { dataset } from "./global_definer.js"
+import { DatasetIntro, Region, Drifting } from "./system_view.js"
+
+import 'bootstrap';  //  引入 Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';  //  引入 Bootstrap 的 css
+import 'bootstrap/dist/js/bootstrap.min.js'
+
+// import { base, buttons, formsNr, forms, gridsNr, grids, menus, tables } from 'pure-css'
+
+import "./main.css"
+import "./react_componet.css"
+
 class Container extends React.Component {
     constructor(props) {
         super(props);
@@ -81,8 +97,7 @@ class Container extends React.Component {
     }
 }
 
-
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
     <Container />,
-    document.getElementById("root")
 );
