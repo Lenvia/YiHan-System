@@ -143,9 +143,13 @@ class Region extends React.Component {
 }
 
 class DriftingExp extends React.Component {
+    makeExp(attr, sta, op) {
+        return sta + "(" + attr + ")" + op;
+    }
+
     render() {
         // console.log(this.props.config["readOnly"])
-        if (this.props.config["readOnly"] === true)
+        if (this.props.config["readOnly"] === true)  // 原始的
             return (
                 <div>
                     <label key={"label" + this.props.config["index"]} className="drifting_line"
@@ -168,29 +172,32 @@ class DriftingExp extends React.Component {
                     />
                 </div>
             )
-        else return (
-            <div>
-                <label key={"label" + this.props.config["index"]} className="drifting_line"
-                    style={{
-                        visibility: this.props.config["visibility"],
-                        top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
-                        width: '60%',
-                        fontWeight: 'bold'
-                    }}>{this.props.config["exp"]}</label>
-                <input id={"input" + this.props.config["index"]} key={"input" + this.props.config["index"]} className="drifting_line"
-                    style={{
-                        visibility: this.props.config["visibility"],
-                        position: 'absolute',
-                        left: '70%',
-                        top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
-                        width: '20%',
-                        fontSize: '12px',
-                        // backgroundColor: 'red'
-                    }}
-                // onChange={(e) => { $(e.target.id).val(e.target.value) }}
-                />
-            </div>
-        )
+        else {  // 最新的
+            let label_text = 'null';
+            return (
+                <div>
+                    <label key={"label" + this.props.config["index"]} className="drifting_line"
+                        style={{
+                            visibility: this.props.config["visibility"],
+                            top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
+                            width: '60%',
+                            fontWeight: 'bold'
+                        }}>{label_text}</label>
+                    <input id={"input" + this.props.config["index"]} key={"input" + this.props.config["index"]} className="drifting_line"
+                        style={{
+                            visibility: this.props.config["visibility"],
+                            position: 'absolute',
+                            left: '70%',
+                            top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
+                            width: '20%',
+                            fontSize: '12px',
+                            // backgroundColor: 'red'
+                        }}
+                    // onChange={(e) => { $(e.target.id).val(e.target.value) }}
+                    />
+                </div>
+            )
+        }
     }
 }
 
@@ -223,6 +230,10 @@ class Drifting extends React.Component {
 
         else
             vis = 'hidden';
+
+        if (this.state.locked_list[i] !== 'null') {  // 最后一个已锁定
+            readOnly = true;
+        }
 
         let config = {
             'visibility': vis,
@@ -265,13 +276,40 @@ class Drifting extends React.Component {
 
         // TODO 检查数字有没有写
         // 添加策略：替换当前 lock_list 和 lock_input 末尾的值，再append（同时判断是否越界）
-        let attr = $("#attribute_selector").val();
-        let sta = $("#statistic_selector").val();
-        let op = $("#operator_selector").val();
+        let attr = $("#attribute_selector").find(":selected").val();
+        let sta = $("#statistic_selector option:selected").val();
+        let op = $("#operator_selector").find(":selected").val();
         let inputId = para.state.locked_list.length - 1;
         let value = $("#input" + inputId).val();
 
-        console.log(attr, sta, op, value);
+        // 更新 locked_list
+        let label_text = this.makeExp(attr, sta, op);
+        let new_locked_list = para.state.locked_list.slice()
+        new_locked_list[new_locked_list.length - 1] = label_text;
+
+        if (new_locked_list.length < 3) {
+            new_locked_list.push('null');
+        }
+
+
+        // 更新 locked_input
+        let new_locked_input = para.state.locked_input.slice();
+        new_locked_input[new_locked_input.length - 1] = value;
+
+        if (new_locked_input.length < 3) {
+            new_locked_input.push(0);
+        }
+
+
+        para.setState({
+            locked_list: new_locked_list,
+            locked_input: new_locked_input,
+        })
+        this.forceUpdate()
+    }
+
+    applyButtonClick(para) {
+        console.log(this.state);
     }
 
     render() {
@@ -285,9 +323,18 @@ class Drifting extends React.Component {
                     <select id="objects_selector" onChange={(event) => this.objectChange(event)} >
                         {
                             this.props.dataset_info["Objects"].map((item, index) => {
-                                return (
-                                    <option key={'option' + index} value={item}>{item}</option>
-                                )
+                                if (index === 0) {
+                                    return (
+                                        <option key={'option' + index} value={item}>{item}</option>
+
+                                    )
+                                }
+                                else {
+                                    return (
+                                        <option key={'option' + index} value={item}>{item}</option>
+                                    )
+                                }
+
                             })
                         }
                     </select>
@@ -296,7 +343,7 @@ class Drifting extends React.Component {
 
                 <div className="drifting_line" style={{ top: String(roof + gap) + '%', fontWeight: 'bold' }}>Attribute: </div>
                 <div className="drifting_line" style={{ top: String(roof + gap) + '%', left: '35%', width: '40%' }}>
-                    <select id="attribute_selector">
+                    <select id="attribute_selector" >
                         {
                             this.props.dataset_info["Attribute"][this.state.cur_option].map((item, index) => {
                                 return (
@@ -342,7 +389,7 @@ class Drifting extends React.Component {
 
                 <div id="drifting_button_container">
                     <button id="lock_button" onClick={(e) => this.lockButtonClick(this)} type="button" className="btn btn-primary">Lock</button>
-                    <button id="apply_button" type="button" className="btn btn-success">Apply</button>
+                    <button id="apply_button" onClick={(e) => this.applyButtonClick(this)} type="button" className="btn btn-success">Apply</button>
                 </div>
             </div>
         )
