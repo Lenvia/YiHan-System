@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 import { para_json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
 import { EnsembleEchart, ConstrainBox, Bar } from "./ensemble_view.js"
-import { DisplayBox, SortByBox, MemberChart } from "./member_view.js"
+import { DisplayBox, SortByBox, MemberPic } from "./member_view.js"
 
 import "./main.css"
 import "./react_componet.css"
@@ -32,6 +32,11 @@ class Container extends React.Component {
 
             // ensemble 图中选择的 xIndex
             selected_xAxis_index: undefined,
+
+            // Member View 中 下拉框 Display 名字
+            current_display_way: 'rendering',
+            // sort by 索引
+            current_sort_index: 0,
         }
     }
 
@@ -63,6 +68,22 @@ class Container extends React.Component {
             selected_xAxis_index: selected_xAxis_index,
         }, () => {
             // console.log(this.state.selected_xAxis_index);
+        })
+    }
+
+    updateDisplay(display_way) {
+        this.setState({
+            display_way: display_way,
+        }, () => {
+            // console.log(this.state.display_way);
+        })
+    }
+
+    updateSortIndex(current_sort_index) {
+        this.setState({
+            current_sort_index: current_sort_index,
+        }, () => {
+            // console.log(this.state.current_sort_index);
         })
     }
 
@@ -142,18 +163,22 @@ class Container extends React.Component {
                     <div className="custom_view" id="down_main_view">
                         <div className="title_container main_view_titile_container" id="member_view_name_container">
                             <p className="text-left font-weight-bold" id="member_view_name">Member View</p>
-                            <DisplayBox />
+                            <DisplayBox updateDisplay={this.updateDisplay.bind(this)} />
                             <SortByBox
                                 constrain_list={this.state.constrain_list}
+                                updateSortIndex={this.updateSortIndex.bind(this)}
                             />
                         </div>
                         <div id="member_pic_container">
-                            <MemberChart
+                            <MemberPic
                                 dataset_name={this.state.dataset_info["name"]}
                                 constrain={this.state.constrain_list[this.state.current_constrain_index]}
                                 constrain_value={this.state.constrain_values[this.state.current_constrain_index]}
                                 operator={this.state.operator_list[this.state.current_constrain_index]}
                                 selected_xAxis_index={this.state.selected_xAxis_index}
+
+                                display_way={this.state.display_way}
+                                current_sort_index={this.state.current_sort_index}
                             />
                         </div>
                     </div>

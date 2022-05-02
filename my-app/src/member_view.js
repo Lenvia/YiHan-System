@@ -5,7 +5,7 @@ import { ensemble_json_data } from './global_definer.js'
 
 class DisplayBox extends Component {
     displayChange(event) {
-
+        this.props.updateDisplay(event.target.value);  // 下拉框选中的值
     }
 
     render() {
@@ -23,7 +23,8 @@ class DisplayBox extends Component {
 
 class SortByBox extends Component {
     sortByChange(event) {
-
+        // console.log(event);
+        this.props.updateSortIndex(event.target.selectedIndex);  // 下拉框选中的索引
     }
 
     render() {
@@ -33,11 +34,11 @@ class SortByBox extends Component {
                 <select id="sort_by_selector" onChange={(event) => this.sortByChange(event)} className="drifting_line" style={{ top: '5%', left: '80%', width: '15%', height: '10%' }}>
                     <option key={'option0'} value='member_id'>member_id</option>
                     {
-                        // this.props.constrain_list.map((item, index) => {
-                        //     return (
-                        //         <option key={'option' + index} value={item}>{item}</option>
-                        //     )
-                        // })
+                        this.props.constrain_list.map((item, index) => {
+                            return (
+                                <option key={'option' + index} value={item}>{item}</option>
+                            )
+                        })
                     }
                 </select>
             </div>
@@ -45,12 +46,15 @@ class SortByBox extends Component {
     }
 }
 
-class MemberChart extends Component {
+class MemberPic extends Component {
     render() {
+        console.log(this.props);
         return (
-            <div />
+            <div>
+
+            </div>
         )
     }
 }
 
-export { DisplayBox, SortByBox, MemberChart }
+export { DisplayBox, SortByBox, MemberPic }

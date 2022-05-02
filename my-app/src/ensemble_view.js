@@ -7,7 +7,7 @@ import { ensemble_json_data } from './global_definer.js'
 class ConstrainBox extends Component {
     constrainChange(event) {
 
-        this.props.updateEnsembleChart(event.target.selectedIndex);  // 下拉框选中的值
+        this.props.updateEnsembleChart(event.target.selectedIndex);  // 下拉框选中的索引
     }
 
     render() {
@@ -117,7 +117,7 @@ class Bar extends Component {
         }
         else {
             let option = this.setBarOption(dataset_name, constrain, operator, constrain_value, selected_xAxis_index)
-            console.log(option);
+            // console.log(option);
             return (
                 <div id="bar_chart" >
                     <ReactECharts option={option}
