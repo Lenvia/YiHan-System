@@ -38,6 +38,8 @@
     --upMainViewHeight: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
     --classMainViewTitleContainerHeight: 6vh;
 
+    --downMainViewHeight: calc((1 - var(--lineViewHeightRatio)) * var(--viewHeight) - 2*var(--marginTop));
+
     /* Right View */
 }
 
@@ -190,7 +192,7 @@
     /* background-color: aqua; */
 }
 
-#line_view {
+#up_main_view {
     position: absolute;
     margin-top: var(--marginTop);
     margin-bottom: var(--marginTop);
@@ -224,7 +226,8 @@
 
 
 
-#bar_view {
+
+#down_main_view {
     position: absolute;
     top: calc(var(--lineViewHeightRatio)*var(--viewHeight));
 
@@ -234,10 +237,19 @@
     margin-right: var(--marginLeft);
 
     width: calc(var(--mainContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
-    height: calc((1 - var(--lineViewHeightRatio))*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+    height: calc(var(--downMainViewHeight) - 2*var(--borderWidth));
 
-    /* background-color: white; */
+    /* background-color:blueviolet; */
 }
+
+#member_pic_container {
+    position: absolute;
+    top: var(--classMainViewTitleContainerHeight);
+    width: 100%;
+    height: calc(var(--downMainViewHeight) - var(--classMainViewTitleContainerHeight) - 4*var(--borderWidth));
+    background-color: burlywood;
+}
+
 
 #analysis_container {
     position: absolute;

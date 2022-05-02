@@ -9,7 +9,8 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 
 import { para_json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
-import { EnsembleEchart, ConstrainBox, Bar } from "./main_view.js"
+import { EnsembleEchart, ConstrainBox, Bar } from "./ensemble_view.js"
+import { DisplayBox, SortByBox, MemberChart } from "./member_view.js"
 
 import "./main.css"
 import "./react_componet.css"
@@ -107,11 +108,12 @@ class Container extends React.Component {
                 </div>
 
                 <div id="main_container">
-                    <div className="custom_view" id="line_view">
+                    <div className="custom_view" id="up_main_view">
                         <div className="title_container main_view_titile_container" id="ensemble_statistic_name_container">
                             <p className="text-left font-weight-bold" id="ensemble_statistic_name">Ensemble Statistic View</p>
 
-                            <ConstrainBox constrain_list={this.state.constrain_list} updateEnsembleChart={this.updateEnsembleChart.bind(this)} />
+                            <ConstrainBox constrain_list={this.state.constrain_list}
+                                updateEnsembleChart={this.updateEnsembleChart.bind(this)} />
                         </div>
 
                         <div id="ensemble_chart_container">
@@ -137,7 +139,24 @@ class Container extends React.Component {
                         </div>
 
                     </div>
-                    <div className="custom_view" id="bar_view"></div>
+                    <div className="custom_view" id="down_main_view">
+                        <div className="title_container main_view_titile_container" id="member_view_name_container">
+                            <p className="text-left font-weight-bold" id="member_view_name">Member View</p>
+                            <DisplayBox />
+                            <SortByBox
+                                constrain_list={this.state.constrain_list}
+                            />
+                        </div>
+                        <div id="member_pic_container">
+                            <MemberChart
+                                dataset_name={this.state.dataset_info["name"]}
+                                constrain={this.state.constrain_list[this.state.current_constrain_index]}
+                                constrain_value={this.state.constrain_values[this.state.current_constrain_index]}
+                                operator={this.state.operator_list[this.state.current_constrain_index]}
+                                selected_xAxis_index={this.state.selected_xAxis_index}
+                            />
+                        </div>
+                    </div>
                 </div>
 
                 <div id="analysis_container">

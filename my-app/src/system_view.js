@@ -267,7 +267,7 @@ class Drifting extends React.Component {
 
         // console.log(config);
 
-        return <DriftingExp
+        return <DriftingExp key={'driftingExp' + String(i)}
             config={config}
         />
     }
