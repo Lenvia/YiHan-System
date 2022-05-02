@@ -21,7 +21,9 @@ class Container extends React.Component {
         this.state = {
             dataset_info: para_json_data["simulation"][0],
             constrain_list: [],
-            current_constrain: undefined,  // 当前图标显示的约束
+            constrain_values: [],
+            // current_constrain: undefined,  // 当前图标显示的约束
+            current_constrain_index: undefined,
         }
     }
 
@@ -32,17 +34,19 @@ class Container extends React.Component {
 
     }
 
-    updateConstrain(constrain_list) {
+    updateConstrain(constrain_list, constrain_values) {
         this.setState({
             constrain_list: constrain_list,
+            constrain_values: constrain_values,
             flush: false,
         });
 
     }
 
-    updateEnsembleChart(current_constrain) {
+    updateEnsembleChart(selectedIndex) {
         this.setState({
-            current_constrain: current_constrain,
+            // current_constrain: current_constrain,
+            current_constrain_index: selectedIndex,
             flush_flag: false,
         });
 
@@ -100,8 +104,9 @@ class Container extends React.Component {
 
                         <div id="ensemble_chart_container">
                             <EnsembleEchart
-                                current_constrain={this.state.current_constrain}
+                                current_constrain_index={this.state.current_constrain_index}
                                 constrain_list={this.state.constrain_list}
+                                constrain_values={this.state.constrain_values}
                                 dataset_name={this.state.dataset_info["name"]}
 
                             />

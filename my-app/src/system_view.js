@@ -298,7 +298,7 @@ class Drifting extends React.Component {
 
     //props发生变化时触发
     componentWillReceiveProps(props) {
-        console.log(this.props);
+        // console.log(this.props);
         if (this.judgeDatasetChange()) {  // 如果这次更新不是apply触发的
             this.setState({
                 cur_option: this.props.dataset_info["Objects"][0],
@@ -369,6 +369,7 @@ class Drifting extends React.Component {
     }
 
     applyButtonClick(para) {
+
         let current_locked_list = this.state.locked_list;
         // 先去掉末尾的null
         while (current_locked_list[current_locked_list.length - 1] === null_str) {  // 去掉末尾的 null
@@ -378,13 +379,15 @@ class Drifting extends React.Component {
             return item = item.slice(0, item.indexOf(' '))
         })
 
+        let constrain_values = this.state.locked_input.slice(0, constrain_list.length);
+
         // 必须设置后再更新
         // this.setState({ apply_button_flag: true, }, () => {
         //     // console.log(this.state.apply_button_flag);
         //     this.props.updateConstrain(constrain_list);
         // })
 
-        this.props.updateConstrain(constrain_list);
+        this.props.updateConstrain(constrain_list, constrain_values);
 
 
     }

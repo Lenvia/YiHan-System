@@ -7,9 +7,9 @@ import { time } from 'echarts';
 // 注：这个 ConstrainBox 的大小是相对于整个容器
 class ConstrainBox extends Component {
     constrainChange(event) {
-        let str = event.target.value;
-        // console.log(str);
-        this.props.updateEnsembleChart(str);
+        // let str = event.target.value;
+
+        this.props.updateEnsembleChart(event.target.selectedIndex);
     }
 
     render() {
@@ -36,7 +36,7 @@ class EnsembleEchart extends Component {
         this.forceUpdate();
     }
 
-    setOption(dataset_name, current_constrain) {
+    setOption(dataset_name, current_constrain, current_constrain_value) {
 
         let members_data = ensemble_json_data[dataset_name][current_constrain];
         var series_data = []
@@ -56,6 +56,11 @@ class EnsembleEchart extends Component {
                     width: 1.5,
                     opacity: 0.7,
                 },
+                markLine: {
+                    symbol: ['none', 'none'],
+                    label: { show: false },
+                    data: [{ yAxis: parseFloat(current_constrain_value) }]
+                },
 
             })
         }
@@ -64,7 +69,12 @@ class EnsembleEchart extends Component {
 
         let option = {
             title: {
-                text: "",
+            },
+            grid: {
+                top: '15%',
+                left: '8%',
+                right: '8%',
+                bootom: '5%',
             },
             xAxis: {
                 type: 'category',
@@ -77,6 +87,7 @@ class EnsembleEchart extends Component {
                 //     formatter: '{value} °C'
                 // }
             },
+
             dataZoom: [
                 {
                     show: true,
@@ -106,9 +117,14 @@ class EnsembleEchart extends Component {
 
 
     render() {
-        let current_constrain = this.props.current_constrain;
+        let current_constrain_index = this.props.current_constrain_index;
+
         let constrain_list = this.props.constrain_list;
+        let constrain_values = this.props.constrain_values;
         let dataset_name = this.props.dataset_name;
+
+        let current_constrain;
+        let current_constrain_value;
 
         let option;
         if (constrain_list.length === 0) {  // 还没有设置约束
@@ -126,10 +142,19 @@ class EnsembleEchart extends Component {
                 series: []
             }
         }
-        else {
-            if (current_constrain === undefined) current_constrain = constrain_list[0];
-            option = this.setOption(dataset_name, current_constrain);
+        else {  // 约束已经设置
+            if (current_constrain_index === undefined) {  // 默认情况
+                current_constrain_index = 0;
+
+            }
+            current_constrain = constrain_list[current_constrain_index];
+            current_constrain_value = constrain_values[current_constrain_index];
+            current_constrain_value = parseFloat(current_constrain_value);
+
+            option = this.setOption(dataset_name, current_constrain, current_constrain_value);
         }
+
+
 
         console.log(option);
         return (
