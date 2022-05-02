@@ -7,7 +7,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 // import { base, buttons, formsNr, forms, gridsNr, grids, menus, tables } from 'pure-css'
 
 
-import { json_data } from "./global_definer.js"
+import { para_json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
 import { EnsembleEchart, ConstrainBox } from "./main_view.js"
 
@@ -19,25 +19,33 @@ class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataset_info: json_data["simulation"][0],
-            update_flag: true,  // 为了在外部强制刷新，只能改变state
-            dataset_change_sign: false,  // 指示dataset是否被重载
+            dataset_info: para_json_data["simulation"][0],
             constrain_list: [],
+            current_constrain: undefined,  // 当前图标显示的约束
         }
     }
 
     updateDataset(selectedIndex) {
         this.setState({
-            dataset_info: json_data["simulation"][selectedIndex],
+            dataset_info: para_json_data["simulation"][selectedIndex],
         });
-        this.forceUpdate();
+
     }
 
     updateConstrain(constrain_list) {
         this.setState({
             constrain_list: constrain_list,
+            flush: false,
         });
-        this.forceUpdate()
+
+    }
+
+    updateEnsembleChart(current_constrain) {
+        this.setState({
+            current_constrain: current_constrain,
+            flush_flag: false,
+        });
+
     }
 
     render() {
@@ -86,12 +94,17 @@ class Container extends React.Component {
                         <div className="title_container main_view_titile_container" id="ensemble_statistic_name_container">
                             <p className="text-left font-weight-bold" id="ensemble_statistic_name">Ensemble Statistic View</p>
 
-                            <ConstrainBox constrain_list={this.state.constrain_list} />
+                            <ConstrainBox constrain_list={this.state.constrain_list} updateEnsembleChart={this.updateEnsembleChart.bind(this)} />
 
                         </div>
 
                         <div id="ensemble_chart_container">
-                            <EnsembleEchart dataset_info={this.state.dataset_info} />
+                            <EnsembleEchart
+                                current_constrain={this.state.current_constrain}
+                                constrain_list={this.state.constrain_list}
+                                dataset_name={this.state.dataset_info["name"]}
+
+                            />
                         </div>
 
                     </div>

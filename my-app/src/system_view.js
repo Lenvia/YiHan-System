@@ -1,5 +1,5 @@
 import React from 'react';
-import { json_data, case_unrelated_data } from "./global_definer.js"
+import { para_json_data, case_unrelated_data } from "./global_definer.js"
 import $ from 'jquery';
 
 var null_str = 'null';  // 临时定义的空字符串标识
@@ -26,7 +26,7 @@ class DatasetIntro extends React.Component {
     }
 
     datasetChange(event) {
-        // dataset = json_data["simulation"][event.target.selectedIndex];
+        // dataset = para_json_data["simulation"][event.target.selectedIndex];
         this.props.updateDataset(event.target.selectedIndex);
         // console.log(dataset)
 
@@ -39,7 +39,7 @@ class DatasetIntro extends React.Component {
                     <div className="dataset_intro_key">Dataset Name: </div>
                     <select className="dataset_intro_value" onChange={(event) => this.datasetChange(event)}>
                         {
-                            json_data["simulation"].map((item, index) => {
+                            para_json_data["simulation"].map((item, index) => {
                                 return (
                                     <option key={'option' + index} value={item["name"]}>{item["name"]}</option>
                                 )
@@ -220,22 +220,11 @@ class Drifting extends React.Component {
         super(props);
         this.state = {
             cur_option: this.props.dataset_info["Objects"][0],
+            dataset_name: this.props.dataset_info["name"],
             locked_list: [null_str],
             locked_input: [0],
             apply_button_flag: false,  // apply_button_flag 为 true 时，系统不会刷新约束框 
         }
-    }
-
-    getCurrentSelectorValue() {
-        return [$("#attribute_selector").find(":selected").val(),
-        $("#statistic_selector").find(":selected").val(),
-        $("#operator_selector").find(":selected").val()]
-    }
-
-
-
-    makeExp(attr, sta, op) {
-        return sta + "(" + attr + ")     " + op;
     }
 
     // 渲染 exp label
@@ -283,9 +272,34 @@ class Drifting extends React.Component {
         />
     }
 
+    getCurrentSelectorValue() {
+        return [$("#attribute_selector").find(":selected").val(),
+        $("#statistic_selector").find(":selected").val(),
+        $("#operator_selector").find(":selected").val()]
+    }
+
+    makeExp(attr, sta, op) {
+        return sta + "(" + attr + ")     " + op;
+    }
+
+    // 检查数据集是否发生变化，如果发生变化，返回true 并改变数据集名
+    judgeDatasetChange() {
+        if (this.state.dataset_name === this.props.dataset_info["name"])
+            return false;
+        else {
+            this.setState({
+                dataset_name: this.props.dataset_info["name"],
+            })
+            return true;
+        }
+    }
+
+
+
     //props发生变化时触发
     componentWillReceiveProps(props) {
-        if (!this.state.apply_button_flag) {  // 如果这次更新不是apply触发的
+        console.log(this.props);
+        if (this.judgeDatasetChange()) {  // 如果这次更新不是apply触发的
             this.setState({
                 cur_option: this.props.dataset_info["Objects"][0],
                 locked_list: [null_str],
@@ -295,10 +309,9 @@ class Drifting extends React.Component {
             $("#objects_selector").prop('selectedIndex', 0);
             $("#attribute_selector").prop('selectedIndex', 0);
         }
-        this.setState({
-            apply_button_flag: false,
-        })
-
+        // this.setState({
+        //     apply_button_flag: false,
+        // })
     }
 
     // 响应
@@ -366,10 +379,12 @@ class Drifting extends React.Component {
         })
 
         // 必须设置后再更新
-        this.setState({ apply_button_flag: true, }, () => {
-            // console.log(this.state.apply_button_flag);
-            this.props.updateConstrain(constrain_list);
-        })
+        // this.setState({ apply_button_flag: true, }, () => {
+        //     // console.log(this.state.apply_button_flag);
+        //     this.props.updateConstrain(constrain_list);
+        // })
+
+        this.props.updateConstrain(constrain_list);
 
 
     }

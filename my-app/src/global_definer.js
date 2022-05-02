@@ -1,17 +1,22 @@
 
 
-import data from './resources/sample/paramSample.json';
+import data1 from './resources/sample/paramSample.json';
+import data2 from './resources/sample/ensembleStatisticViewSample.json';
 
-const loadData = () => JSON.parse(JSON.stringify(data));
-var json_data = loadData()
+
+var para_json_data = JSON.parse(JSON.stringify(data1));
+var ensemble_json_data = JSON.parse(JSON.stringify(data2));
+
+// console.log(ensemble_json_data)
+
 
 // var dataset;  // 某一个数据集的信息
 var case_unrelated_data;  // json 文件中与数据无关的信息
 
 case_unrelated_data = {
-    "statistic": json_data["statistic"],
-    "operator": json_data["operator"]
+    "statistic": para_json_data["statistic"],
+    "operator": para_json_data["operator"]
 }
 
 
-export { json_data, case_unrelated_data }
+export { para_json_data, case_unrelated_data, ensemble_json_data }
