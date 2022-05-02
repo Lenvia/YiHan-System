@@ -379,6 +379,10 @@ class Drifting extends React.Component {
             return item = item.slice(0, item.indexOf(' '))
         })
 
+        let operator_list = current_locked_list.map((item, index) => {
+            return item = item.slice(item.lastIndexOf(' ') + 1, item.length)
+        })
+
         let constrain_values = this.state.locked_input.slice(0, constrain_list.length);
 
         // 必须设置后再更新
@@ -387,7 +391,7 @@ class Drifting extends React.Component {
         //     this.props.updateConstrain(constrain_list);
         // })
 
-        this.props.updateConstrain(constrain_list, constrain_values);
+        this.props.updateConstrain(constrain_list, constrain_values, operator_list);
 
 
     }

@@ -24,9 +24,10 @@ class Container extends React.Component {
             // 左下角约束框的信息
             constrain_list: [],
             constrain_values: [],
+            operator_list: [],
 
             // 约束下拉框的选择索引
-            current_constrain_index: undefined,
+            current_constrain_index: 0,
 
             // ensemble 图中选择的 xIndex
             selected_xAxis_index: undefined,
@@ -40,10 +41,11 @@ class Container extends React.Component {
 
     }
 
-    updateConstrain(constrain_list, constrain_values) {
+    updateConstrain(constrain_list, constrain_values, operator_list) {
         this.setState({
             constrain_list: constrain_list,
             constrain_values: constrain_values,
+            operator_list: operator_list,
         });
 
     }
@@ -59,7 +61,7 @@ class Container extends React.Component {
         this.setState({
             selected_xAxis_index: selected_xAxis_index,
         }, () => {
-            console.log(this.state.selected_xAxis_index);
+            // console.log(this.state.selected_xAxis_index);
         })
     }
 
@@ -125,7 +127,13 @@ class Container extends React.Component {
                         </div>
 
                         <div>
-                            <Bar />
+                            <Bar
+                                dataset_name={this.state.dataset_info["name"]}
+                                constrain={this.state.constrain_list[this.state.current_constrain_index]}
+                                constrain_value={this.state.constrain_values[this.state.current_constrain_index]}
+                                operator={this.state.operator_list[this.state.current_constrain_index]}
+                                selected_xAxis_index={this.state.selected_xAxis_index}
+                            />
                         </div>
 
                     </div>

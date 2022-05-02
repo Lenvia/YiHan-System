@@ -2,21 +2,6 @@ import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { ensemble_json_data } from './global_definer.js'
 
-function arraysEqual(a, b) {
-    if (a === b) return true;
-    if (a == null || b == null) return false;
-    if (a.length !== b.length) return false;
-
-    // If you don't care about the order of the elements inside
-    // the array, you should sort both arrays here.
-    // Please note that calling sort on an array will modify that array.
-    // you might want to clone your array first.
-
-    for (var i = 0; i < a.length; ++i) {
-        if (a[i] !== b[i]) return false;
-    }
-    return true;
-}
 
 // 注：这个 ConstrainBox 的大小是相对于整个容器
 class ConstrainBox extends Component {
@@ -44,12 +29,109 @@ class ConstrainBox extends Component {
 }
 
 class Bar extends Component {
-    render() {
-        return (
-            <div id="bar_chart">
 
-            </div>
-        )
+    // 判断是否满足 cur op constrain_value
+    judgeAnswer(cur, operator, constrain_value) {
+        cur = parseFloat(cur);
+        constrain_value = parseFloat(constrain_value);
+        switch (operator) {
+            case ">":
+                return cur > constrain_value;
+            case "<":
+                return cur < constrain_value;
+            case ">=":
+                return cur >= constrain_value;
+            case "<=":
+                return cur <= constrain_value;
+            case "=":
+                return cur === constrain_value;
+            default:
+                return false;
+        }
+    }
+
+    setBarOption(dataset_name, constrain, operator, constrain_value, selected_xAxis_index) {
+        let members_data = ensemble_json_data[dataset_name][constrain];
+        let xAxis_data = [];
+        let yAxis_data = [];
+        let members_num = Object.keys(members_data).length;
+
+        for (let i = 1; i <= members_num; i++) {
+            let name = "member" + String(i);
+            // 如果满足条件
+            let cur = members_data[name][selected_xAxis_index];
+            if (this.judgeAnswer(cur, operator, constrain_value)) {
+                xAxis_data.push('m' + String(i));
+                yAxis_data.push(cur);
+            }
+        }
+
+        let option = {
+            tooltip: {
+                trigger: 'axis',
+            },
+            grid: {
+                top: '10%',
+                left: '15%',
+                right: '10%',
+                bootom: '0',
+            },
+            xAxis: {
+                type: 'category',
+                data: xAxis_data,
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: yAxis_data,
+                    type: 'bar'
+                }
+            ]
+        };
+
+
+        return option;
+    }
+
+    render() {
+
+        let constrain = this.props.constrain;
+        let constrain_value = this.props.constrain_value;
+        let dataset_name = this.props.dataset_name;
+        let operator = this.props.operator;
+        let selected_xAxis_index = this.props.selected_xAxis_index;
+
+        if (constrain === undefined || constrain_value === undefined || operator === undefined || selected_xAxis_index === undefined) {
+            return (
+                <div id="bar_chart" style={{ display: 'none' }}>
+                    <ReactECharts option={{}}
+                        style={{
+                            positoin: 'absolute',
+                            width: '0',
+                            height: '0',
+                        }} />
+                </div>
+            )
+        }
+        else {
+            let option = this.setBarOption(dataset_name, constrain, operator, constrain_value, selected_xAxis_index)
+            console.log(option);
+            return (
+                <div id="bar_chart" >
+                    <ReactECharts option={option}
+                        style={{
+                            positoin: 'absolute',
+                            width: '100%',
+                            height: '140%',
+                        }} />
+                </div>
+            )
+        }
+
+
+
     }
 }
 
@@ -59,18 +141,13 @@ class EnsembleEchart extends Component {
         super(props);
         this.state = {
             selected_xAxis_index: undefined,
-
-
             select_flag: false,
-
 
         }
     }
 
 
-
     componentWillReceiveProps(props) {
-
         if (!this.state.select_flag) {
             this.setState({
                 selected_xAxis_index: undefined,
@@ -81,13 +158,10 @@ class EnsembleEchart extends Component {
             select_flag: false,
         })
 
-
-
         this.forceUpdate();
     }
 
     setOption(dataset_name, current_constrain, current_constrain_value, selected_xAxis_index) {
-
         let members_data = ensemble_json_data[dataset_name][current_constrain];
         var series_data = []
 
@@ -236,7 +310,6 @@ class EnsembleEchart extends Component {
 
     render() {
         let current_constrain_index = this.props.current_constrain_index;
-
         let constrain_list = this.props.constrain_list;
         let constrain_values = this.props.constrain_values;
         let dataset_name = this.props.dataset_name;
@@ -269,7 +342,7 @@ class EnsembleEchart extends Component {
                         positoin: 'absolute',
                         top: '5%',
                         width: '100%',
-                        height: '100%',
+                        height: '95%',
                     }} />
             </div>
         )
