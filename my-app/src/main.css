@@ -200,7 +200,7 @@
     width: calc(var(--mainContainerWidth) - 2 * (var(--marginLeft)));
     height: var(--upMainViewHeight);
 
-    background-color: darkgoldenrod;
+    /* background-color: darkgoldenrod; */
 }
 
 
@@ -209,6 +209,15 @@
     top: var(--classMainViewTitleContainerHeight);
     width: 100%;
     height: calc(var(--upMainViewHeight) - var(--classMainViewTitleContainerHeight) - 2*var(--borderWidth));
+    /* background-color: bisque; */
+}
+
+#bar_chart {
+    position: absolute;
+    top: var(--classMainViewTitleContainerHeight);
+    right: 0;
+    width: 30%;
+    height: 30%;
     background-color: bisque;
 }
 

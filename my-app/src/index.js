@@ -9,7 +9,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 
 import { para_json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
-import { EnsembleEchart, ConstrainBox } from "./main_view.js"
+import { EnsembleEchart, ConstrainBox, Bar } from "./main_view.js"
 
 import "./main.css"
 import "./react_componet.css"
@@ -20,10 +20,16 @@ class Container extends React.Component {
         super(props);
         this.state = {
             dataset_info: para_json_data["simulation"][0],
+
+            // 左下角约束框的信息
             constrain_list: [],
             constrain_values: [],
-            // current_constrain: undefined,  // 当前图标显示的约束
+
+            // 约束下拉框的选择索引
             current_constrain_index: undefined,
+
+            // ensemble 图中选择的 xIndex
+            selected_xAxis_index: undefined,
         }
     }
 
@@ -38,7 +44,6 @@ class Container extends React.Component {
         this.setState({
             constrain_list: constrain_list,
             constrain_values: constrain_values,
-            flush: false,
         });
 
     }
@@ -47,9 +52,15 @@ class Container extends React.Component {
         this.setState({
             // current_constrain: current_constrain,
             current_constrain_index: selectedIndex,
-            flush_flag: false,
         });
+    }
 
+    updateSelectedEnsembleXAxisIndex(selected_xAxis_index) {
+        this.setState({
+            selected_xAxis_index: selected_xAxis_index,
+        }, () => {
+            console.log(this.state.selected_xAxis_index);
+        })
     }
 
     render() {
@@ -99,7 +110,6 @@ class Container extends React.Component {
                             <p className="text-left font-weight-bold" id="ensemble_statistic_name">Ensemble Statistic View</p>
 
                             <ConstrainBox constrain_list={this.state.constrain_list} updateEnsembleChart={this.updateEnsembleChart.bind(this)} />
-
                         </div>
 
                         <div id="ensemble_chart_container">
@@ -109,7 +119,13 @@ class Container extends React.Component {
                                 constrain_values={this.state.constrain_values}
                                 dataset_name={this.state.dataset_info["name"]}
 
+                                updateSelectedEnsembleXAxisIndex={this.updateSelectedEnsembleXAxisIndex.bind(this)}
+
                             />
+                        </div>
+
+                        <div>
+                            <Bar />
                         </div>
 
                     </div>

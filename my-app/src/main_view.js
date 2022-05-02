@@ -2,7 +2,21 @@ import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { ensemble_json_data } from './global_definer.js'
 
+function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length !== b.length) return false;
 
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    // Please note that calling sort on an array will modify that array.
+    // you might want to clone your array first.
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
+}
 
 // 注：这个 ConstrainBox 的大小是相对于整个容器
 class ConstrainBox extends Component {
@@ -29,25 +43,50 @@ class ConstrainBox extends Component {
     }
 }
 
+class Bar extends Component {
+    render() {
+        return (
+            <div id="bar_chart">
+
+            </div>
+        )
+    }
+}
+
 
 class EnsembleEchart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected_axis_index: undefined,
+            selected_xAxis_index: undefined,
+
+
+            select_flag: false,
+
+
         }
     }
 
+
+
     componentWillReceiveProps(props) {
-        console.log(props);
+
+        if (!this.state.select_flag) {
+            this.setState({
+                selected_xAxis_index: undefined,
+            })
+        }
 
         this.setState({
-            selected_axis_index: undefined,
+            select_flag: false,
         })
+
+
+
         this.forceUpdate();
     }
 
-    setOption(dataset_name, current_constrain, current_constrain_value, selected_axis_index) {
+    setOption(dataset_name, current_constrain, current_constrain_value, selected_xAxis_index) {
 
         let members_data = ensemble_json_data[dataset_name][current_constrain];
         var series_data = []
@@ -85,9 +124,9 @@ class EnsembleEchart extends Component {
 
             })
         }
-        if (selected_axis_index !== undefined) {
+        if (selected_xAxis_index !== undefined) {
             series_data[0]["markLine"]["data"].push({
-                xAxis: selected_axis_index,
+                xAxis: selected_xAxis_index,
                 lineStyle: {
                     color: 'rgb(0,0,255)',
                     width: 2,
@@ -131,10 +170,10 @@ class EnsembleEchart extends Component {
 
             },
             grid: {
-                top: '10%',
+                top: '5%',
                 left: '8%',
                 right: '8%',
-                bootom: '5%',
+                bootom: '8%',
             },
             xAxis: {
                 type: 'category',
@@ -182,10 +221,16 @@ class EnsembleEchart extends Component {
     clickAxis(e) {  // 点击坐标轴x
         let x_index = e.dataIndex;  // 注意是索引，而不是第几天
         this.setState({
-            selected_axis_index: x_index,
+            selected_xAxis_index: x_index,
         }, () => {
             this.forceUpdate();
+        });
+
+        this.setState({ select_flag: true, }, () => {
+            this.props.updateSelectedEnsembleXAxisIndex(x_index);
         })
+
+
     }
 
 
@@ -211,10 +256,10 @@ class EnsembleEchart extends Component {
             current_constrain_value = constrain_values[current_constrain_index];
             current_constrain_value = parseFloat(current_constrain_value);
 
-            option = this.setOption(dataset_name, current_constrain, current_constrain_value, this.state.selected_axis_index);
+            option = this.setOption(dataset_name, current_constrain, current_constrain_value, this.state.selected_xAxis_index);
         }
 
-        console.log(option);
+        // console.log(option);
 
         return (
             <div style={{ width: '100%', height: '100%', }}>
@@ -231,4 +276,4 @@ class EnsembleEchart extends Component {
     }
 }
 
-export { EnsembleEchart, ConstrainBox };
+export { EnsembleEchart, ConstrainBox, Bar };
