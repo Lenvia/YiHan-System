@@ -50,10 +50,17 @@ class EnsembleEchart extends Component {
                 name: name,
                 type: "line",
                 data: members_data[name],
+                smooth: true,
+                symbolSize: 1.5, // 设置节点大小
+                lineStyle: {
+                    width: 1.5,
+                    opacity: 0.7,
+                },
+
             })
         }
 
-        let xAxis_data = Array.from(Array(time_num).keys());
+        let xAxis_data = Array.from({ length: time_num }).map((v, k) => k + 1)
 
         let option = {
             title: {
@@ -70,6 +77,26 @@ class EnsembleEchart extends Component {
                 //     formatter: '{value} °C'
                 // }
             },
+            dataZoom: [
+                {
+                    show: true,
+                    realtime: true,
+                    filterMode: 'filter',
+                    // start: xAxis_data[0],
+                    // end: xAxis_data[xAxis_data.length - 1],
+                    xAxisIndex: 0,
+                    orient: "horizontal",
+                    height: 20,
+                },
+                {
+                    type: 'inside',
+                    realtime: true,
+
+                    xAxisIndex: 0,
+                    zoomOnMouseWheel: true,
+                    moveOnMouseMove: true,
+                }
+            ],
             series: series_data,
         };
 
@@ -92,7 +119,6 @@ class EnsembleEchart extends Component {
                 xAxis: {
                     type: 'category',
                     boundaryGap: false,
-                    data: [1, 2, 3, 4, 5, 6, 7],
                 },
                 yAxis: {
                     type: 'value',
@@ -105,10 +131,16 @@ class EnsembleEchart extends Component {
             option = this.setOption(dataset_name, current_constrain);
         }
 
-        // console.log(option);
+        console.log(option);
         return (
-            <div>
-                <ReactECharts option={option} />
+            <div style={{ width: '100%', height: '100%', }}>
+                <ReactECharts option={option}
+                    style={{
+                        positoin: 'absolute',
+                        top: '5%',
+                        width: '100%',
+                        height: '100%',
+                    }} />
             </div>
         )
     }
