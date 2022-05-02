@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { ensemble_json_data } from './global_definer.js'
-import { time } from 'echarts';
+
 
 
 // 注：这个 ConstrainBox 的大小是相对于整个容器
 class ConstrainBox extends Component {
     constrainChange(event) {
-        // let str = event.target.value;
 
-        this.props.updateEnsembleChart(event.target.selectedIndex);
+        this.props.updateEnsembleChart(event.target.selectedIndex);  // 下拉框选中的值
     }
 
     render() {
@@ -32,11 +31,23 @@ class ConstrainBox extends Component {
 
 
 class EnsembleEchart extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selected_axis_index: undefined,
+        }
+    }
+
     componentWillReceiveProps(props) {
+        console.log(props);
+
+        this.setState({
+            selected_axis_index: undefined,
+        })
         this.forceUpdate();
     }
 
-    setOption(dataset_name, current_constrain, current_constrain_value) {
+    setOption(dataset_name, current_constrain, current_constrain_value, selected_axis_index) {
 
         let members_data = ensemble_json_data[dataset_name][current_constrain];
         var series_data = []
@@ -59,10 +70,30 @@ class EnsembleEchart extends Component {
                 markLine: {
                     symbol: ['none', 'none'],
                     label: { show: false },
-                    data: [{ yAxis: parseFloat(current_constrain_value) }]
+                    data: [
+                        {
+                            yAxis: parseFloat(current_constrain_value),
+                            lineStyle: {
+                                color: 'rgb(255,0,0)',
+                                width: 2,
+                                type: 'solid',
+                            }
+                        }
+                    ],
+
                 },
 
             })
+        }
+        if (selected_axis_index !== undefined) {
+            series_data[0]["markLine"]["data"].push({
+                xAxis: selected_axis_index,
+                lineStyle: {
+                    color: 'rgb(0,0,255)',
+                    width: 2,
+                    type: 'dash',
+                }
+            });
         }
 
         let xAxis_data = Array.from({ length: time_num }).map((v, k) => k + 1)
@@ -70,8 +101,37 @@ class EnsembleEchart extends Component {
         let option = {
             title: {
             },
+            tooltip: {
+                // show: false,
+                trigger: 'axis',
+                confine: true,
+                textStyle: {
+                    fontSize: '12',
+                    extraCssText: 'white-space: normal; word-break: break-all;'
+                },
+                formatter: function (obj_array) {
+                    // if (obj_array instanceof Array) {
+                    //     let str = '';
+                    //     str += obj_array[0].axisValue + '<br/>';
+
+                    //     obj_array.forEach((obj, index) => {
+                    //         str += '<span style=\"display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:' + obj.color + ';\"></span>'
+                    //         str += obj.seriesName + ':&nbsp&nbsp' + obj.value;
+                    //         if (index % 2 !== 0)
+                    //             str += '<br/>';
+                    //         else {
+                    //             str += '&nbsp&nbsp&nbsp&nbsp&nbsp';
+                    //         }
+
+                    //     });
+                    //     return str;
+                    // }
+                    return "";
+                }
+
+            },
             grid: {
-                top: '15%',
+                top: '10%',
                 left: '8%',
                 right: '8%',
                 bootom: '5%',
@@ -80,6 +140,7 @@ class EnsembleEchart extends Component {
                 type: 'category',
                 boundaryGap: false,
                 data: xAxis_data,
+                triggerEvent: true,
             },
             yAxis: {
                 type: 'value',
@@ -114,6 +175,18 @@ class EnsembleEchart extends Component {
         return option;
     }
 
+    onclick = {
+        'click': this.clickAxis.bind(this)
+    }
+
+    clickAxis(e) {  // 点击坐标轴x
+        let x_index = e.dataIndex;  // 注意是索引，而不是第几天
+        this.setState({
+            selected_axis_index: x_index,
+        }, () => {
+            this.forceUpdate();
+        })
+    }
 
 
     render() {
@@ -128,38 +201,25 @@ class EnsembleEchart extends Component {
 
         let option;
         if (constrain_list.length === 0) {  // 还没有设置约束
-            option = {
-                title: {
-                    text: "",
-                },
-                xAxis: {
-                    type: 'category',
-                    boundaryGap: false,
-                },
-                yAxis: {
-                    type: 'value',
-                },
-                series: []
-            }
+            option = {}
         }
         else {  // 约束已经设置
             if (current_constrain_index === undefined) {  // 默认情况
                 current_constrain_index = 0;
-
             }
             current_constrain = constrain_list[current_constrain_index];
             current_constrain_value = constrain_values[current_constrain_index];
             current_constrain_value = parseFloat(current_constrain_value);
 
-            option = this.setOption(dataset_name, current_constrain, current_constrain_value);
+            option = this.setOption(dataset_name, current_constrain, current_constrain_value, this.state.selected_axis_index);
         }
 
-
-
         console.log(option);
+
         return (
             <div style={{ width: '100%', height: '100%', }}>
                 <ReactECharts option={option}
+                    onEvents={this.onclick}
                     style={{
                         positoin: 'absolute',
                         top: '5%',
