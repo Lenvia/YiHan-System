@@ -2,6 +2,27 @@ import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 
 
+// 注：这个 ConstrainBox 的大小是相对于整个容器
+class ConstrainBox extends Component {
+    render() {
+        return (
+            <div>
+                <div className="drifting_line" style={{ top: '5%', left: '60%', width: '10%', height: '10%' }}>Value: </div>
+                <select id="constrain_selector" className="drifting_line" style={{ top: '5%', left: '70%', width: '15%', height: '10%' }}>
+                    {
+                        this.props.constrain_list.map((item, index) => {
+                            return (
+                                <option key={'option' + index} value={item}>{item}</option>
+                            )
+                        })
+                    }
+                </select>
+            </div>
+        )
+    }
+}
+
+
 class EnsembleEchart extends Component {
     // 返回配置对象
     option = {
@@ -59,4 +80,4 @@ class EnsembleEchart extends Component {
     }
 }
 
-export { EnsembleEchart };
+export { EnsembleEchart, ConstrainBox };

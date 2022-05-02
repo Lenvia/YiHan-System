@@ -2,6 +2,7 @@ import React from 'react';
 import { json_data, case_unrelated_data } from "./global_definer.js"
 import $ from 'jquery';
 
+var null_str = 'null';  // 临时定义的空字符串标识
 
 // Simulation Description View 中的每一行
 class DatasetIntroLine extends React.Component {
@@ -144,7 +145,7 @@ class Region extends React.Component {
 
 class DriftingExp extends React.Component {
     makeExp(attr, sta, op) {
-        return sta + "(" + attr + ")" + op;
+        return sta + "(" + attr + ")     " + op;
     }
 
     render() {
@@ -157,7 +158,8 @@ class DriftingExp extends React.Component {
                             visibility: this.props.config["visibility"],
                             top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
                             width: '60%',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            whiteSpace: 'pre'
                         }}>{this.props.config["exp"]}</label>
                     <input id={"dirfting_input" + String(this.props.config["index"])} key={"input" + this.props.config["index"]} value={this.props.config["value"]} className="drifting_line" readOnly={true}
                         style={{
@@ -191,7 +193,8 @@ class DriftingExp extends React.Component {
                             visibility: this.props.config["visibility"],
                             top: String(this.props.config["roof"] + 4 * this.props.config["gap"] + this.props.config["index"] * 10) + '%',
                             width: '60%',
-                            fontWeight: 'bold'
+                            fontWeight: 'bold',
+                            whiteSpace: 'pre'
                         }}>{label_text}</label>
                     <input id={"dirfting_input" + String(this.props.config["index"])} key={"input" + this.props.config["index"]} className="drifting_line"
                         style={{
@@ -217,8 +220,9 @@ class Drifting extends React.Component {
         super(props);
         this.state = {
             cur_option: this.props.dataset_info["Objects"][0],
-            locked_list: ['null'],
+            locked_list: [null_str],
             locked_input: [0],
+            apply_button_flag: false,  // apply_button_flag 为 true 时，系统不会刷新约束框 
         }
     }
 
@@ -231,7 +235,7 @@ class Drifting extends React.Component {
 
 
     makeExp(attr, sta, op) {
-        return sta + "(" + attr + ")" + op;
+        return sta + "(" + attr + ")     " + op;
     }
 
     // 渲染 exp label
@@ -249,7 +253,7 @@ class Drifting extends React.Component {
         else
             vis = 'hidden';
 
-        if (this.state.locked_list[i] !== 'null') {  // 最后一个已锁定
+        if (this.state.locked_list[i] !== null_str) {  // 最后一个已锁定
             readOnly = true;
         }
 
@@ -281,14 +285,20 @@ class Drifting extends React.Component {
 
     //props发生变化时触发
     componentWillReceiveProps(props) {
+        if (!this.state.apply_button_flag) {  // 如果这次更新不是apply触发的
+            this.setState({
+                cur_option: this.props.dataset_info["Objects"][0],
+                locked_list: [null_str],
+                locked_input: [undefined],
+            })
+            // 其它下拉框归零
+            $("#objects_selector").prop('selectedIndex', 0);
+            $("#attribute_selector").prop('selectedIndex', 0);
+        }
         this.setState({
-            cur_option: this.props.dataset_info["Objects"][0],
-            locked_list: ['null'],
-            locked_input: [undefined],
+            apply_button_flag: false,
         })
-        // 其它下拉框归零
-        $("#objects_selector").prop('selectedIndex', 0);
-        $("#attribute_selector").prop('selectedIndex', 0);
+
     }
 
     // 响应
@@ -300,7 +310,6 @@ class Drifting extends React.Component {
     }
 
     updateLabel(event) {
-
         let label_id = "#dirfting_label" + String(this.state.locked_input.length - 1);
         let attr, sta, op;
         [attr, sta, op] = this.getCurrentSelectorValue();  // 获取当前 selector 的值
@@ -326,7 +335,7 @@ class Drifting extends React.Component {
         new_locked_list[new_locked_list.length - 1] = label_text;
 
         if (new_locked_list.length < 3) {
-            new_locked_list.push('null');
+            new_locked_list.push(null_str);
         }
 
 
@@ -347,7 +356,22 @@ class Drifting extends React.Component {
     }
 
     applyButtonClick(para) {
-        console.log(this.state);
+        let current_locked_list = this.state.locked_list;
+        // 先去掉末尾的null
+        while (current_locked_list[current_locked_list.length - 1] === null_str) {  // 去掉末尾的 null
+            current_locked_list = current_locked_list.slice(0, current_locked_list.length - 1);
+        }
+        let constrain_list = current_locked_list.map((item, index) => {
+            return item = item.slice(0, item.indexOf(' '))
+        })
+
+        // 必须设置后再更新
+        this.setState({ apply_button_flag: true, }, () => {
+            // console.log(this.state.apply_button_flag);
+            this.props.updateConstrain(constrain_list);
+        })
+
+
     }
 
     render() {
@@ -361,18 +385,9 @@ class Drifting extends React.Component {
                     <select id="objects_selector" onChange={(event) => this.objectChange(event)} >
                         {
                             this.props.dataset_info["Objects"].map((item, index) => {
-                                if (index === 0) {
-                                    return (
-                                        <option key={'option' + index} value={item}>{item}</option>
-
-                                    )
-                                }
-                                else {
-                                    return (
-                                        <option key={'option' + index} value={item}>{item}</option>
-                                    )
-                                }
-
+                                return (
+                                    <option key={'option' + index} value={item}>{item}</option>
+                                )
                             })
                         }
                     </select>

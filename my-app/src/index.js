@@ -9,7 +9,7 @@ import 'bootstrap/dist/js/bootstrap.min.js'
 
 import { json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
-import { EnsembleEchart } from "./main_view.js"
+import { EnsembleEchart, ConstrainBox } from "./main_view.js"
 
 import "./main.css"
 import "./react_componet.css"
@@ -22,6 +22,7 @@ class Container extends React.Component {
             dataset_info: json_data["simulation"][0],
             update_flag: true,  // 为了在外部强制刷新，只能改变state
             dataset_change_sign: false,  // 指示dataset是否被重载
+            constrain_list: [],
         }
     }
 
@@ -30,6 +31,13 @@ class Container extends React.Component {
             dataset_info: json_data["simulation"][selectedIndex],
         });
         this.forceUpdate();
+    }
+
+    updateConstrain(constrain_list) {
+        this.setState({
+            constrain_list: constrain_list,
+        });
+        this.forceUpdate()
     }
 
     render() {
@@ -65,7 +73,7 @@ class Container extends React.Component {
                         </div>
 
                         <div id="setting_container">
-                            <Drifting dataset_info={this.state.dataset_info} />
+                            <Drifting dataset_info={this.state.dataset_info} updateConstrain={this.updateConstrain.bind(this)} />
                         </div>
 
 
@@ -78,6 +86,7 @@ class Container extends React.Component {
                         <div className="title_container main_view_titile_container" id="ensemble_statistic_name_container">
                             <p className="text-left font-weight-bold" id="ensemble_statistic_name">Ensemble Statistic View</p>
 
+                            <ConstrainBox constrain_list={this.state.constrain_list} />
 
                         </div>
 
