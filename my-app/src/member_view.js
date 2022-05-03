@@ -50,7 +50,15 @@ class SortByBox extends Component {
 class RadarChart extends Component {
     render() {
         console.log(this.props);
+        return (
+            <div></div>
+        )
+    }
+}
 
+class RenderingPicture extends Component {
+    render() {
+        console.log(this.props);
         return (
             <div></div>
         )
@@ -72,10 +80,19 @@ class MemberPic extends Component {
     renderRadar(item, is_valid) {
         // console.log(item, is_valid)
         return (
-            <RadarChart key={'rd' + item['name']} object={item} is_valid={is_valid} />
+            <RadarChart key={'rdc' + item['name']} object={item} is_valid={is_valid} />
 
         )
     }
+
+    renderRendering(item, is_valid) {
+        // console.log(item, is_valid)
+        return (
+            <RenderingPicture key={'rdp' + item['name']} object={item} is_valid={is_valid} />
+
+        )
+    }
+
 
     componentDidUpdate(props) {  // props 是之前的参数，this.props是刚传来的参数
 
@@ -327,29 +344,40 @@ class MemberPic extends Component {
             if (this.state.display_way === 'rendering') {
                 return (
 
-                    <div style={{ width: "100%", height: "100%", backgroundColor: 'gold' }}>
-                        11111111
+                    // <div style={{ width: "100%", height: "100%", backgroundColor: 'gold' }}>
+                    //     11111111
+                    // </div>
+                    <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
+                        {
+                            this.state.data_list.map((item, index) => {
+                                let is_valid = false;
+                                if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
+                                    is_valid = true;
+                                }
+                                return this.renderRendering(item, is_valid);
+                            })
+                        }
                     </div>
 
                 )
             }
             else if (this.state.display_way === 'radar') {
                 return (
-                    <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
-                        11111111
-                    </div>
-
                     // <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
-                    //     {
-                    //         this.state.data_list.map((item, index) => {
-                    //             let is_valid = false;
-                    //             if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
-                    //                 is_valid = true;
-                    //             }
-                    //             return this.renderRadar(item, is_valid);
-                    //         })
-                    //     }
+                    //     11111111
                     // </div>
+
+                    <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
+                        {
+                            this.state.data_list.map((item, index) => {
+                                let is_valid = false;
+                                if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
+                                    is_valid = true;
+                                }
+                                return this.renderRadar(item, is_valid);
+                            })
+                        }
+                    </div>
 
                 )
             }

@@ -145,6 +145,8 @@ class Container extends React.Component {
                                 dataset_name={this.state.dataset_info["name"]}
                                 member_num={this.state.dataset_info["member_number"]}
 
+                                selected_xAxis_index={this.state.selected_xAxis_index}
+
                                 updateSelectedEnsembleXAxisIndex={this.updateSelectedEnsembleXAxisIndex.bind(this)}
 
                             />

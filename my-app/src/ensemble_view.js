@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { ensemble_json_data } from './global_definer.js'
+import { timers } from 'jquery';
 
 
 // 注：这个 ConstrainBox 的大小是相对于整个容器
@@ -137,26 +138,57 @@ class EnsembleEchart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selected_xAxis_index: undefined,
-            select_flag: false,
+            ready: false,
+            option: {}
 
         }
     }
+    componentDidUpdate(props) {  // props 是之前的参数，this.props是刚传来的参数
+        // 不更新的条件
+        // 一定要写全！！！不然死循环
+        if (props.dataset_name === this.props.dataset_name
+            && props.current_constrain_index === this.props.current_constrain_index
+            && props.constrain_list[props.current_constrain_index] === this.props.constrain_list[this.props.current_constrain_index]
+            && props.constrain_values[props.current_constrain_index] === this.props.constrain_values[this.props.current_constrain_index]
+            && props.selected_xAxis_index === this.props.selected_xAxis_index
+        )
+            return;
 
 
-    componentWillReceiveProps(props) {
-        if (!this.state.select_flag) {
-            this.setState({
-                selected_xAxis_index: undefined,
-            })
+        this.setState({
+            ready: false,
+        })
+
+        let current_constrain_index = this.props.current_constrain_index;
+        if (current_constrain_index === undefined) {  // 默认情况
+            current_constrain_index = 0;
+        }
+
+        let constrain_list = this.props.constrain_list;
+        let constrain_values = this.props.constrain_values;
+        let dataset_name = this.props.dataset_name;
+
+        let current_constrain;
+        let current_constrain_value;
+
+        let option;
+        if (constrain_list.length === 0)   // 还没有设置约束
+            option = {}
+        else {  // 约束已经设置
+            current_constrain = constrain_list[current_constrain_index];
+            current_constrain_value = constrain_values[current_constrain_index];
+            current_constrain_value = parseFloat(current_constrain_value);
+
+            option = this.setOption(dataset_name, current_constrain, current_constrain_value, this.state.selected_xAxis_index);
         }
 
         this.setState({
-            select_flag: false,
+            ready: true,
+            option: option,
         })
 
-        this.forceUpdate();
     }
+
 
     setOption(dataset_name, current_constrain, current_constrain_value, selected_xAxis_index) {
         let members_data = ensemble_json_data[dataset_name][current_constrain];
@@ -300,49 +332,32 @@ class EnsembleEchart extends Component {
         this.setState({ select_flag: true, }, () => {
             this.props.updateSelectedEnsembleXAxisIndex(x_index);
         })
-
-
     }
 
 
     render() {
-        let current_constrain_index = this.props.current_constrain_index;
-        let constrain_list = this.props.constrain_list;
-        let constrain_values = this.props.constrain_values;
-        let dataset_name = this.props.dataset_name;
-
-        let current_constrain;
-        let current_constrain_value;
-
-        let option;
-        if (constrain_list.length === 0) {  // 还没有设置约束
-            option = {}
+        if (this.state.ready) {
+            return (
+                <div style={{ width: '100%', height: '100%', }}>
+                    <ReactECharts option={this.state.option}
+                        onEvents={this.onclick}
+                        style={{
+                            positoin: 'absolute',
+                            top: '5%',
+                            width: '100%',
+                            height: '95%',
+                        }} />
+                </div>
+            )
         }
-        else {  // 约束已经设置
-            if (current_constrain_index === undefined) {  // 默认情况
-                current_constrain_index = 0;
-            }
-            current_constrain = constrain_list[current_constrain_index];
-            current_constrain_value = constrain_values[current_constrain_index];
-            current_constrain_value = parseFloat(current_constrain_value);
+        else {
+            return (
+                <div style={{ width: '100%', height: '100%', }}>
 
-            option = this.setOption(dataset_name, current_constrain, current_constrain_value, this.state.selected_xAxis_index);
+                </div>
+            )
         }
 
-        // console.log(option);
-
-        return (
-            <div style={{ width: '100%', height: '100%', }}>
-                <ReactECharts option={option}
-                    onEvents={this.onclick}
-                    style={{
-                        positoin: 'absolute',
-                        top: '5%',
-                        width: '100%',
-                        height: '95%',
-                    }} />
-            </div>
-        )
     }
 }
 
