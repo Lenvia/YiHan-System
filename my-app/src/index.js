@@ -176,11 +176,16 @@ class Container extends React.Component {
                             }
                             <MemberPic
                                 dataset_name={this.state.dataset_info["name"]}
-                                current_sort_index={this.state.current_sort_index}
 
+                                current_sort_index={this.state.current_sort_index}
                                 sort_constrain={this.state.constrain_list[this.state.current_sort_index - 1]}
                                 sort_constrain_value={this.state.constrain_values[this.state.current_sort_index - 1]}
                                 sort_operator={this.state.operator_list[this.state.current_sort_index - 1]}
+
+                                current_constrain_index={this.state.current_constrain_index}
+                                constrain={this.state.constrain_list[this.state.current_constrain_index]}
+                                constrain_value={this.state.constrain_values[this.state.current_constrain_index]}
+                                operator={this.state.operator_list[this.state.current_constrain_index]}
 
                                 selected_xAxis_index={this.state.selected_xAxis_index}
 
