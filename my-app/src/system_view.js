@@ -149,7 +149,6 @@ class DriftingExp extends React.Component {
     }
 
     render() {
-        // console.log(this.props.config["readOnly"])
         if (this.props.config["readOnly"] === true)  // 原始的
             return (
                 <div>

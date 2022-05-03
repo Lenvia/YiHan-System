@@ -34,7 +34,7 @@ class Container extends React.Component {
             selected_xAxis_index: undefined,
 
             // Member View 中 下拉框 Display 名字
-            current_display_way: 'rendering',
+            display_way: 'rendering',
             // sort by 索引
             current_sort_index: 0,
         }
@@ -170,15 +170,22 @@ class Container extends React.Component {
                             />
                         </div>
                         <div id="member_pic_container">
+                            {
+                                // 注：这里传入的是 sort的约束，sort的下拉框比constrain 要多一项
+                                // 所以 如果sortBy 选择 index = 0时，sort_constrain, sort_constrain_value, sort_operator 都是空的
+                            }
                             <MemberPic
                                 dataset_name={this.state.dataset_info["name"]}
-                                constrain={this.state.constrain_list[this.state.current_constrain_index]}
-                                constrain_value={this.state.constrain_values[this.state.current_constrain_index]}
-                                operator={this.state.operator_list[this.state.current_constrain_index]}
+                                current_sort_index={this.state.current_sort_index}
+
+                                sort_constrain={this.state.constrain_list[this.state.current_sort_index - 1]}
+                                sort_constrain_value={this.state.constrain_values[this.state.current_sort_index - 1]}
+                                sort_operator={this.state.operator_list[this.state.current_sort_index - 1]}
+
                                 selected_xAxis_index={this.state.selected_xAxis_index}
 
                                 display_way={this.state.display_way}
-                                current_sort_index={this.state.current_sort_index}
+
                             />
                         </div>
                     </div>

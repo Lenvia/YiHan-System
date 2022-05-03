@@ -247,7 +247,7 @@
     top: var(--classMainViewTitleContainerHeight);
     width: 100%;
     height: calc(var(--downMainViewHeight) - var(--classMainViewTitleContainerHeight) - 4*var(--borderWidth));
-    background-color: burlywood;
+    /* background-color: burlywood; */
 }
 
 
