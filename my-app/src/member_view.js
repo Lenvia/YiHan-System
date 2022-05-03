@@ -77,7 +77,7 @@ class MemberPic extends Component {
         )
     }
 
-    componentDidUpdate(props) {
+    componentDidUpdate(props) {  // props 是之前的参数，this.props是刚传来的参数
 
         // 如果状态没有改变，就不修改
         if (props.current_sort_index === this.props.current_sort_index
@@ -101,6 +101,7 @@ class MemberPic extends Component {
         let current_sort_index = this.props.current_sort_index;  // 排序索引
         let sort_constrain = this.props.sort_constrain;
         let dataset_name = this.props.dataset_name;
+        let member_num = this.props.member_num;
 
 
         let t_index = this.props.selected_xAxis_index;  // 选择的时间索引
@@ -113,70 +114,75 @@ class MemberPic extends Component {
             sort_constrain = 'member_id';
 
 
-        let radar_json_path = 'MemberRadar/memberViewSample_t' + t_index + '.json';
+        // 无论何种显示方式，无论怎么排序，符合约束的member是固定的
+        var valid_members = this.getValidList(
+            dataset_name,
+            member_num,
+            constrain,
+            operator,
+            constrain_value,
+            t_index);
 
-        var _this = this;
+        if (display_way === 'radar') {
+            let radar_json_path = 'MemberRadar/memberViewSample_t' + t_index + '.json';
 
-        fetch(radar_json_path, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-            .then(function (response) {
-                return response.json();
+            var _this = this;
+
+            fetch(radar_json_path, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
             })
-            .then(function (radar_json) {
-                // 获取到了radar_json
-                // console.log(radar_json)
-                console.log(sort_constrain);
-
-
-                var data_list = _this.getSortedRadarDataList(
-                    dataset_name,
-                    current_sort_index,
-                    sort_constrain,
-                    t_index,
-                    radar_json);
-                var valid_members = _this.getValidList(
-                    dataset_name,
-                    constrain,
-                    operator,
-                    constrain_value,
-                    t_index)
-
-                _this.setState({
-                    isLoad: true,
-                    data_list: data_list,
-                    valid_members: valid_members,
+                .then(function (response) {
+                    return response.json();
                 })
+                .then(function (radar_json) {
+                    // 获取到了radar_json
+                    // console.log(radar_json)
+                    // console.log(sort_constrain);
+
+
+                    var data_list = _this.getSortedRadarDataList(
+                        dataset_name,
+                        member_num,
+                        current_sort_index,
+                        sort_constrain,
+                        t_index,
+                        radar_json);
+
+
+                    _this.setState({
+                        isLoad: true,
+                        display_way: display_way,
+                        data_list: data_list,
+                        valid_members: valid_members,
+                    })
+                })
+        }
+        else if (display_way === 'rendering') {
+
+            var data_list = this.getSortedRenderingDataList(
+                dataset_name,
+                member_num,
+                current_sort_index,
+                sort_constrain,
+                t_index)
+
+            this.setState({
+                isLoad: true,
+                display_way: display_way,
+                data_list: data_list,
+                valid_members: valid_members,
             })
+        }
+
     }
 
 
     // componentDidMount() 方法在组件挂载后（插入 DOM 树中）立即调用。
     // 第一次挂载
     componentDidMount() {
-        // // 约束计算相关变量
-        // let constrain = this.props.constrain;
-        // let constrain_value = this.props.constrain_value;
-        // let operator = this.props.operator;
-
-        // // sort相关变量，只需约束名就行了
-        // let current_sort_index = this.props.current_sort_index;  // 排序索引
-        // let sort_constrain = this.props.sort_constrain;
-        // let dataset_name = this.props.dataset_name;
-
-
-        // let t_index = this.props.selected_xAxis_index;  // 选择的时间索引
-
-        // let display_way = this.props.display_way;  // 显示方式
-
-
-        // 如果 display_way 是 'rendering'，那就从 './resources/sample/MemberRendering/t' + t_index + '/' 下读数据
-        // 如果 display_way 是 'radar'，那就从 './resources/sample/MemberRadar/memberViewSample_t' + t_index + '.json' 读数据
-
-        // console.log(this.state);
 
     }
 
@@ -202,12 +208,11 @@ class MemberPic extends Component {
     }
 
     // 根据 ensemble 下拉框的约束，得到合法的member，等会用黑线框起来
-    getValidList(dataset_name, constrain, operator, constrain_value, t_index) {
+    getValidList(dataset_name, member_num, constrain, operator, constrain_value, t_index) {
         let valid_members = [];  // 满足约束的
         let members_data = ensemble_json_data[dataset_name][constrain];
-        let members_num = Object.keys(members_data).length;
 
-        for (let i = 1; i <= members_num; i++) {
+        for (let i = 1; i <= member_num; i++) {
             let name = "member" + String(i);
             // 如果满足条件
             let cur = members_data[name][t_index];
@@ -220,11 +225,10 @@ class MemberPic extends Component {
         return valid_members;
     }
 
-    getSortedRadarDataList(dataset_name, current_sort_index, sort_constrain, t_index, radar_json) {
+    getSortedRadarDataList(dataset_name, member_num, current_sort_index, sort_constrain, t_index, radar_json) {
         var data_list = [];
         if (current_sort_index === 0) {  // 根据member_id sort
-            let members_num = Object.keys(radar_json).length;
-            for (let i = 1; i <= members_num; i++) {
+            for (let i = 1; i <= member_num; i++) {
                 let name = "member" + String(i);
 
                 data_list.push({
@@ -239,11 +243,9 @@ class MemberPic extends Component {
 
         let raw_data = [];
         let members_data = ensemble_json_data[dataset_name][sort_constrain];
-        let members_num = Object.keys(members_data).length;
 
-        for (let i = 1; i <= members_num; i++) {
+        for (let i = 1; i <= member_num; i++) {
             let name = "member" + String(i);
-
             let cur = members_data[name][t_index];
             raw_data.push([name, cur]);  // 把 name 和 cur 放进去，用于排序
         }
@@ -265,29 +267,102 @@ class MemberPic extends Component {
         return data_list;
     }
 
+    getSortedRenderingDataList(dataset_name, member_num, current_sort_index, sort_constrain, t_index) {
+        var data_list = [];
+        if (current_sort_index === 0) {  // 根据member_id sort
+
+
+            for (let i = 1; i <= member_num; i++) {
+                let name = "member" + String(i);
+                let path = 'MemberRendering/t' + t_index + '/m' + String(i) + '.png';
+
+                data_list.push({
+                    "name": name,
+                    "path": path,
+                })
+
+            }
+            return data_list;
+        }
+
+
+        let raw_data = [];
+        let members_data = ensemble_json_data[dataset_name][sort_constrain];
+
+        for (let i = 1; i <= member_num; i++) {
+            let name = "member" + String(i);
+            let cur = members_data[name][t_index];
+            raw_data.push([name, cur]);  // 把 name 和 cur 放进去，用于排序
+        }
+
+
+        // 根据 current_sort_constrain 排序
+        raw_data.sort(function (a, b) {  // [name, cur]，比较 cur1 和 cur2的大小
+            return a[1] - b[1];
+        })
+        // 此时图的顺序就是 raw_data的第一维度
+        // 把所有的数据装入到 data_list = [] 中
+        raw_data.forEach(function (item) {
+            let name = item[0];
+            let i = name.slice(6, name.length)  // 序号
+
+            let path = 'MemberRendering/t' + t_index + '/m' + String(i) + '.png';
+            data_list.push({
+                "name": item[0],
+                "path": path,
+            });
+        })
+
+        return data_list;
+    }
+
+
+
 
 
     render() {
         if (this.state.isLoad) {
-            // console.log(this.state.data_list)
-            // console.log(this.state.valid_members)
-            return (
+            console.log(this.state.data_list)
+            console.log(this.state.valid_members)
+            if (this.state.display_way === 'rendering') {
+                return (
 
-                // <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
-                //     11111111
-                // </div>
-                <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
-                    {
-                        this.state.data_list.map((item, index) => {
-                            let is_valid = false;
-                            if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
-                                is_valid = true;
-                            }
-                            return this.renderRadar(item, is_valid);
-                        })
-                    }
-                </div>
-            )
+                    <div style={{ width: "100%", height: "100%", backgroundColor: 'gold' }}>
+                        11111111
+                    </div>
+
+                )
+            }
+            else if (this.state.display_way === 'radar') {
+                return (
+                    <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
+                        11111111
+                    </div>
+
+                    // <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
+                    //     {
+                    //         this.state.data_list.map((item, index) => {
+                    //             let is_valid = false;
+                    //             if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
+                    //                 is_valid = true;
+                    //             }
+                    //             return this.renderRadar(item, is_valid);
+                    //         })
+                    //     }
+                    // </div>
+
+                )
+            }
+            else {
+                return (
+
+                    <div style={{ width: "100%", height: "100%", backgroundColor: 'aqua' }}>
+                        22222
+                    </div>
+
+                )
+            }
+
         }
         else {
             return (

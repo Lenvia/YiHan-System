@@ -143,6 +143,7 @@ class Container extends React.Component {
                                 constrain_list={this.state.constrain_list}
                                 constrain_values={this.state.constrain_values}
                                 dataset_name={this.state.dataset_info["name"]}
+                                member_num={this.state.dataset_info["member_number"]}
 
                                 updateSelectedEnsembleXAxisIndex={this.updateSelectedEnsembleXAxisIndex.bind(this)}
 
@@ -152,10 +153,12 @@ class Container extends React.Component {
                         <div>
                             <Bar
                                 dataset_name={this.state.dataset_info["name"]}
+                                member_num={this.state.dataset_info["member_number"]}
                                 constrain={this.state.constrain_list[this.state.current_constrain_index]}
                                 constrain_value={this.state.constrain_values[this.state.current_constrain_index]}
                                 operator={this.state.operator_list[this.state.current_constrain_index]}
                                 selected_xAxis_index={this.state.selected_xAxis_index}
+
                             />
                         </div>
 
@@ -176,6 +179,7 @@ class Container extends React.Component {
                             }
                             <MemberPic
                                 dataset_name={this.state.dataset_info["name"]}
+                                member_num={this.state.dataset_info["member_number"]}
 
                                 current_sort_index={this.state.current_sort_index}
                                 sort_constrain={this.state.constrain_list[this.state.current_sort_index - 1]}
