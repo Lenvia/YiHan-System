@@ -141,7 +141,7 @@ class MemberPic extends Component {
             t_index);
 
         if (display_way === 'radar') {
-            let radar_json_path = 'MemberRadar/memberViewSample_t' + t_index + '.json';
+            let radar_json_path = dataset_name + '/MemberRadar/memberViewSample_t' + t_index + '.json';
 
             var _this = this;
 
@@ -291,7 +291,7 @@ class MemberPic extends Component {
 
             for (let i = 1; i <= member_num; i++) {
                 let name = "member" + String(i);
-                let path = 'MemberRendering/t' + t_index + '/m' + String(i) + '.png';
+                let path = dataset_name + '/MemberRendering/t' + t_index + '/m' + String(i) + '.png';
 
                 data_list.push({
                     "name": name,
@@ -323,7 +323,7 @@ class MemberPic extends Component {
             let name = item[0];
             let i = name.slice(6, name.length)  // 序号
 
-            let path = 'MemberRendering/t' + t_index + '/m' + String(i) + '.png';
+            let path = dataset_name + '/MemberRendering/t' + t_index + '/m' + String(i) + '.png';
             data_list.push({
                 "name": item[0],
                 "path": path,

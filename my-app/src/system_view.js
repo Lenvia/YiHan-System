@@ -219,10 +219,10 @@ class Drifting extends React.Component {
         super(props);
         this.state = {
             cur_option: this.props.dataset_info["Objects"][0],
-            dataset_name: this.props.dataset_info["name"],
+            // dataset_name: this.props.dataset_info["name"],
             locked_list: [null_str],
             locked_input: [0],
-            apply_button_flag: false,  // apply_button_flag 为 true 时，系统不会刷新约束框 
+            // apply_button_flag: false,  // apply_button_flag 为 true 时，系统不会刷新约束框 
         }
     }
 
@@ -282,35 +282,34 @@ class Drifting extends React.Component {
     }
 
     // 检查数据集是否发生变化，如果发生变化，返回true 并改变数据集名
-    judgeDatasetChange() {
-        if (this.state.dataset_name === this.props.dataset_info["name"])
-            return false;
-        else {
-            this.setState({
-                dataset_name: this.props.dataset_info["name"],
-            })
-            return true;
-        }
-    }
+    // judgeDatasetChange() {
+    //     if (this.state.dataset_name === this.props.dataset_info["name"])
+    //         return false;
+    //     else {
+    //         this.setState({
+    //             dataset_name: this.props.dataset_info["name"],
+    //         })
+    //         return true;
+    //     }
+    // }
 
 
 
     //props发生变化时触发
     componentWillReceiveProps(props) {
-        // console.log(this.props);
-        if (this.judgeDatasetChange()) {  // 如果这次更新不是apply触发的
-            this.setState({
-                cur_option: this.props.dataset_info["Objects"][0],
-                locked_list: [null_str],
-                locked_input: [undefined],
-            })
-            // 其它下拉框归零
-            $("#objects_selector").prop('selectedIndex', 0);
-            $("#attribute_selector").prop('selectedIndex', 0);
-        }
-        // this.setState({
-        //     apply_button_flag: false,
-        // })
+        if (props.dataset_info["name"] === this.props.dataset_info["name"]) // 不更新
+            return;
+
+
+        this.setState({
+            cur_option: this.props.dataset_info["Objects"][0],
+            locked_list: [null_str],
+            locked_input: [undefined],
+        })
+        // 其它下拉框归零
+        $("#objects_selector").prop('selectedIndex', 0);
+        $("#attribute_selector").prop('selectedIndex', 0);
+
     }
 
     // 响应
