@@ -206,7 +206,7 @@ class EnsembleEchart extends Component {
             });
         }
 
-        let xAxis_data = Array.from({ length: time_num }).map((v, k) => k + 1)
+        let xAxis_data = Array.from({ length: time_num }).map((v, k) => k)
 
         let option = {
             title: {
