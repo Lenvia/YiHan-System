@@ -54,15 +54,15 @@ class RadarChartBox extends Component {
         let index = current_props.index;
 
         let margin_left = 3;
-        let margin_top = 10;
+        let margin_top = 5;
         let gap_left = 2;
-        let gap_top = 2;
+        let gap_top = 4;
         let top_bias;
         let left_bias;
 
         // 注意，如果要修改这里，记得同步修改 css 中的 .member_block
         let local_width = 30;
-        let local_height = 45;
+        let local_height = 40;
 
 
         left_bias = margin_left + (index % 3) * (gap_left + local_width);
@@ -95,16 +95,31 @@ class RadarChartBox extends Component {
                     fontSize: 12,//字体大小
                     lineHeight: 18,//字体行高
                 },
+
             },
             grid: {
-                top: '50%',
-                left: '20%',
-                right: '20%',
+                top: '5%',
+                left: '0',
+                right: '0',
                 bootom: '0',
             },
             radar: {
                 // shape: 'circle',
                 indicator: indicator,
+                nameGap: 3,
+                radius: 45,
+                name: {
+                    formatter: function (text) {
+                        console.log(text);
+                        let bracket = text.indexOf("(");
+                        if (bracket === -1)  // 不含括号 不是很长 直接return
+                            return text;
+
+                        text = text.slice(0, bracket) + '\n' + text.slice(bracket, text.length);  // 太长了，在中间加个换行符
+                        return text
+                    },
+                },
+
 
             },
             series: [
@@ -140,9 +155,9 @@ class RadarChartBox extends Component {
                     <ReactECharts option={option}
                         style={{
                             position: 'absolute',
-                            left: '5%',
-                            right: '5%',
-                            width: '80%',
+                            left: '0%',
+                            right: '0%',
+                            width: '100%',
                             height: '100%',
                         }} />
                 </div>
