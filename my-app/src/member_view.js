@@ -47,28 +47,86 @@ class SortByBox extends Component {
     }
 }
 
-class RadarChartBox extends Component {
-    render() {
-        // console.log(this.props);
-        let index = this.props.index;
 
-        let margin_left = 7.5;
-        let gap_left = 5;
+class RadarChartBox extends Component {
+
+    get_bias(current_props) {
+        let index = current_props.index;
+
+        let margin_left = 3;
+        let margin_top = 10;
+        let gap_left = 2;
+        let gap_top = 2;
+        let top_bias;
         let left_bias;
 
-        if (index % 3 === 0)
-            left_bias = margin_left;
-        else if (index % 3 === 1)
-            left_bias = margin_left + 25 + gap_left;  // 25 是组件宽度
-        else left_bias = margin_left + 2 * (25 + gap_left);
+        // 注意，如果要修改这里，记得同步修改 css 中的 .member_block
+        let local_width = 30;
+        let local_height = 45;
 
 
-        let margin_top = 10;
-        let gap_top = 5;
-        let top_bias;
-        top_bias = margin_top + Math.floor(index / 3) * (gap_top + 30);
+        left_bias = margin_left + (index % 3) * (gap_left + local_width);
+        top_bias = margin_top + Math.floor(index / 3) * (gap_top + local_height);
 
-        // console.log(index, left_bias, top_bias);
+        return [left_bias, top_bias]
+    }
+
+    setOption(current_props) {
+        let name = current_props.object["name"];
+        let obj_data = current_props.object["data"];
+        let is_valid = current_props.is_valid;
+
+        let indicator = [];
+        let value = [];
+
+        for (let key in obj_data) {
+            indicator.push({
+                name: key,
+            });
+            value.push(obj_data[key]);
+        }
+
+
+        let option = {
+            title: {
+                text: name,
+                textStyle: {
+                    fontStyle: 'normal',//'italic'(倾斜) | 'oblique'(倾斜体) ，字体风格
+                    fontSize: 12,//字体大小
+                    lineHeight: 18,//字体行高
+                },
+            },
+            grid: {
+                top: '50%',
+                left: '20%',
+                right: '20%',
+                bootom: '0',
+            },
+            radar: {
+                // shape: 'circle',
+                indicator: indicator,
+
+            },
+            series: [
+                {
+                    type: 'radar',
+                    data: [{
+                        value: value,
+                        name: name,
+                    },]
+                }
+            ]
+        };
+
+        return option;
+    }
+
+    render() {
+        let [left_bias, top_bias] = this.get_bias(this.props);
+
+        let option = this.setOption(this.props);
+
+        // console.log(option)
 
         return (
             <div className='member_block'
@@ -76,7 +134,19 @@ class RadarChartBox extends Component {
                     left: String(left_bias) + '%',
                     top: String(top_bias) + '%',
 
-                }}>{this.props.object["name"]}</div>
+                }}>
+
+                <div style={{ width: '100%', height: '100%' }}>
+                    <ReactECharts option={option}
+                        style={{
+                            position: 'absolute',
+                            left: '5%',
+                            right: '5%',
+                            width: '80%',
+                            height: '100%',
+                        }} />
+                </div>
+            </div>
         )
     }
 }
@@ -368,7 +438,7 @@ class MemberPic extends Component {
             console.log(this.state.valid_members)
             if (this.state.display_way === 'rendering') {
                 return (
-                    <div className='member_window' style={{ backgroundColor: 'gold' }}>
+                    <div className='member_window' style={{}}>
                         {
                             this.state.data_list.map((item, index) => {
                                 let is_valid = false;
@@ -384,7 +454,7 @@ class MemberPic extends Component {
             }
             else if (this.state.display_way === 'radar') {
                 return (
-                    <div className='member_window' style={{ backgroundColor: 'blue' }}>
+                    <div className='member_window' style={{}}>
 
                         {
                             this.state.data_list.map((item, index) => {
@@ -432,4 +502,4 @@ class MemberPic extends Component {
     }
 }
 
-export { DisplayBox, SortByBox, MemberPic, RadarChartBox }
+export { DisplayBox, SortByBox, MemberPic }
