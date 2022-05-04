@@ -104,6 +104,7 @@ class Bar extends Component {
         let operator = this.props.operator;
         let selected_xAxis_index = this.props.selected_xAxis_index;
 
+        // 如果还没加载 或 还没选择轴，那么不显示bar chart
         if (constrain === undefined || constrain_value === undefined || operator === undefined || selected_xAxis_index === undefined) {
             return (
                 <div id="bar_chart" style={{ display: 'none' }}>
@@ -118,7 +119,12 @@ class Bar extends Component {
         }
         else {
             let option = this.setBarOption(dataset_name, constrain, operator, constrain_value, selected_xAxis_index)
-            // console.log(option);
+
+            if (option.series[0].data.length === 0) {
+                return (<div id="bar_chart" >
+                    NO MATCH
+                </div>)
+            }
             return (
                 <div id="bar_chart" >
                     <ReactECharts option={option}
@@ -204,7 +210,7 @@ class EnsembleEchart extends Component {
                 type: "line",
                 data: members_data[name],
                 smooth: true,
-                symbolSize: 1.5, // 设置节点大小
+                symbolSize: 2, // 设置节点大小
                 lineStyle: {
                     width: 1.5,
                     opacity: 0.7,
@@ -227,6 +233,7 @@ class EnsembleEchart extends Component {
 
             })
         }
+        // 对选择的轴画线
         if (selected_xAxis_index !== undefined) {
             series_data[0]["markLine"]["data"].push({
                 xAxis: selected_xAxis_index,
@@ -245,31 +252,32 @@ class EnsembleEchart extends Component {
             },
             tooltip: {
                 // show: false,
-                trigger: 'axis',
-                confine: true,
-                textStyle: {
-                    fontSize: '12',
-                    extraCssText: 'white-space: normal; word-break: break-all;'
-                },
-                formatter: function (obj_array) {
-                    // if (obj_array instanceof Array) {
-                    //     let str = '';
-                    //     str += obj_array[0].axisValue + '<br/>';
+                trigger: 'item',
+                // trigger: 'axis',
+                // confine: true,
+                // textStyle: {
+                //     fontSize: '12',
+                //     extraCssText: 'white-space: normal; word-break: break-all;'
+                // },
+                // formatter: function (obj_array) {
+                //     if (obj_array instanceof Array) {
+                //         let str = '';
+                //         str += obj_array[0].axisValue + '<br/>';
 
-                    //     obj_array.forEach((obj, index) => {
-                    //         str += '<span style=\"display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:' + obj.color + ';\"></span>'
-                    //         str += obj.seriesName + ':&nbsp&nbsp' + obj.value;
-                    //         if (index % 2 !== 0)
-                    //             str += '<br/>';
-                    //         else {
-                    //             str += '&nbsp&nbsp&nbsp&nbsp&nbsp';
-                    //         }
+                //         obj_array.forEach((obj, index) => {
+                //             str += '<span style=\"display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:' + obj.color + ';\"></span>'
+                //             str += obj.seriesName + ':&nbsp&nbsp' + obj.value;
+                //             if (index % 2 !== 0)
+                //                 str += '<br/>';
+                //             else {
+                //                 str += '&nbsp&nbsp&nbsp&nbsp&nbsp';
+                //             }
 
-                    //     });
-                    //     return str;
-                    // }
-                    return "";
-                }
+                //         });
+                //         return str;
+                //     }
+                //     return "";
+                // }
 
             },
             grid: {
