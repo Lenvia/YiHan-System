@@ -35,12 +35,12 @@
     --driftingSettingViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--driftingSettingHeight));
 
     /* Main View */
-    --upMainViewHeight: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
     --classMainViewTitleContainerHeight: 6vh;
-
+    --upMainViewHeight: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
     --downMainViewHeight: calc((1 - var(--lineViewHeightRatio)) * var(--viewHeight) - 2*var(--marginTop));
 
     /* Right View */
+    --timeViewHeight: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
 }
 
 /* 
@@ -64,6 +64,11 @@
 
 .main_view_titile_container {
     height: var(--classMainViewTitleContainerHeight);
+}
+
+.full_width_height {
+    width: 100%;
+    height: 100%;
 }
 
 /* ------------------------------------------------------------- */
@@ -261,7 +266,7 @@
 }
 
 
-#action_view {
+#time_view {
     position: absolute;
     margin-top: var(--marginTop);
     margin-bottom: var(--marginTop);
@@ -269,10 +274,19 @@
     margin-right: var(--marginLeft);
 
     width: calc(var(--analysisContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
-    height: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
+    height: calc(var(--timeViewHeight) - 2*var(--borderWidth));
 
-    /* background-color: white; */
+    /* background-color: blueviolet; */
 }
+
+#time_pic_container {
+    position: absolute;
+    top: var(--classMainViewTitleContainerHeight);
+    width: 100%;
+    height: calc(var(--timeViewHeight) - var(--classMainViewTitleContainerHeight) - 4*var(--borderWidth));
+    background-color: burlywood;
+}
+
 
 #info_view {
     position: absolute;

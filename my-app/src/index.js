@@ -4,13 +4,13 @@ import ReactDOM from 'react-dom/client';
 import 'bootstrap';  //  引入 Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';  //  引入 Bootstrap 的 css
 import 'bootstrap/dist/js/bootstrap.min.js'
-// import { base, buttons, formsNr, forms, gridsNr, grids, menus, tables } from 'pure-css'
 
 
 import { para_json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
 import { EnsembleEchart, ConstrainBox, Bar } from "./ensemble_view.js"
 import { DisplayBox, SortByBox, MemberPic } from "./member_view.js"
+import { TimePic } from './time_view.js';
 
 import "./main.css"
 import "./react_componet.css"
@@ -30,13 +30,16 @@ class Container extends React.Component {
             // 约束下拉框的选择索引
             current_constrain_index: 0,
 
-            // ensemble 图中选择的 xIndex
+            // ensemble 图中选择的 xIndex（即 t_index）
             selected_xAxis_index: undefined,
 
             // Member View 中 下拉框 Display 名字
             display_way: 'rendering',
             // sort by 索引
             current_sort_index: 0,
+
+            // 在 member view 中选择的 member id
+            selected_member_id: undefined,
         }
     }
 
@@ -84,6 +87,14 @@ class Container extends React.Component {
             current_sort_index: current_sort_index,
         }, () => {
             // console.log(this.state.current_sort_index);
+        })
+    }
+
+    updateSelectedMemberId(selected_member_id) {
+        this.setState({
+            selected_member_id: selected_member_id,
+        }, () => {
+            // console.log(this.state.selected_member_id);
         })
     }
 
@@ -197,13 +208,27 @@ class Container extends React.Component {
 
                                 display_way={this.state.display_way}
 
+                                updateSelectedMemberId={this.updateSelectedMemberId.bind(this)}
                             />
                         </div>
                     </div>
                 </div>
 
                 <div id="analysis_container">
-                    <div className="custom_view" id="action_view"></div>
+                    <div className="custom_view" id="time_view">
+                        <div className="title_container main_view_titile_container" id="time_view_name_container">
+                            <p className="text-left font-weight-bold" id="time_view_name">Time View</p>
+
+                        </div>
+                        <div id="time_pic_container">
+                            <TimePic
+                                dataset_name={this.state.dataset_info["name"]}
+                                selected_xAxis_index={this.state.selected_xAxis_index}
+                                selected_member_id={this.state.selected_member_id}
+                            />
+                        </div>
+
+                    </div>
                     <div className="custom_view" id="info_view"></div>
                 </div>,
             </div>

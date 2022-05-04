@@ -50,6 +50,18 @@ class SortByBox extends Component {
 
 class RadarChartBox extends Component {
 
+    onclick = {
+        'click': this.clickMember.bind(this)
+    }
+
+    clickMember(e) {  // 点击某个Member
+        // 这个方法是安全的！！！！因为
+        let member_id = e.name;
+        this.props.onClickMember(member_id);
+
+    }
+
+
     renderRadarChart(option, is_valid) {
         if (is_valid)
             return (
@@ -73,7 +85,9 @@ class RadarChartBox extends Component {
                         right: '0%',
                         width: '100%',
                         height: '100%',
-                    }} />
+                    }}
+                    onEvents={this.onclick}
+                />
             </div>
         )
 
@@ -156,7 +170,7 @@ class RadarChartBox extends Component {
                     type: 'radar',
                     data: [{
                         value: value,
-                        name: name,
+                        name: name,  // 这个必须设置！！后期点击就是来寻找这个name 来得到member_id
                     },]
                 }
             ]
@@ -189,24 +203,39 @@ class RadarChartBox extends Component {
 }
 
 class RenderingPicture extends Component {
+
+    clickMember(e) {  // 点击某个Member
+        // 这个方法很危险！！！！
+        // 获取的是图片 <img> 的 id，所以在构建的时候 id 一定要注意
+        let redering_img_id = e.target.id;
+
+        // rendering_img_memberxxx，取memberxxx
+        let member_id = redering_img_id.slice(redering_img_id.indexOf("member"), redering_img_id.length);
+        this.props.onClickMember(member_id);
+
+    }
+
     renderRendering(object, is_valid) {
         let name = object["name"];
         let img_src = object["path"];
 
+
+
         // 图片 maxWidth 设置为 98% 是为 border留出宽度
+        // 注：img 的id 千万不能随便改
         if (is_valid)
             return (
-                <div className={("valid_border")} style={{ width: '100%', height: '100%' }}>
+                <div className={("valid_border")} style={{ width: '100%', height: '100%' }} >
                     <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
-                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
+                    <img id={"rendering_img_" + name} onClick={(e) => this.clickMember(e)} src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
                 </div>
 
             )
         else
             return (
-                <div>
+                <div style={{ width: '100%', height: '100%' }}>
                     <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
-                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
+                    <img id={"rendering_img_" + name} onClick={(e) => this.clickMember(e)} src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
                 </div>
             )
     }
@@ -261,11 +290,20 @@ class MemberPic extends Component {
         };
     }
 
+    // 当点击某个member的子视图
+    onClickMember(selected_member_id) {
+        // console.log(selected_member_id);
+        this.props.updateSelectedMemberId(selected_member_id);
+    }
+
+
 
     renderRadar(item, is_valid, index) {
         // console.log(item, is_valid)
         return (
-            <RadarChartBox key={'rdc' + item['name']} object={item} is_valid={is_valid} index={index} />
+            <RadarChartBox key={'rdc' + item['name']} object={item} is_valid={is_valid} index={index}
+                onClickMember={this.onClickMember.bind(this)}
+            />
 
         )
     }
@@ -273,7 +311,9 @@ class MemberPic extends Component {
     renderRendering(item, is_valid, index) {
         // console.log(item, is_valid)
         return (
-            <RenderingPicture key={'rdp' + item['name']} object={item} is_valid={is_valid} index={index} />
+            <RenderingPicture key={'rdp' + item['name']} object={item} is_valid={is_valid} index={index}
+                onClickMember={this.onClickMember.bind(this)}
+            />
 
         )
     }
