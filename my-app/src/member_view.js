@@ -47,18 +47,43 @@ class SortByBox extends Component {
     }
 }
 
-class RadarChart extends Component {
+class RadarChartBox extends Component {
     render() {
-        console.log(this.props);
+        // console.log(this.props);
+        let index = this.props.index;
+
+        let margin_left = 7.5;
+        let gap_left = 5;
+        let left_bias;
+
+        if (index % 3 === 0)
+            left_bias = margin_left;
+        else if (index % 3 === 1)
+            left_bias = margin_left + 25 + gap_left;  // 25 是组件宽度
+        else left_bias = margin_left + 2 * (25 + gap_left);
+
+
+        let margin_top = 10;
+        let gap_top = 5;
+        let top_bias;
+        top_bias = margin_top + Math.floor(index / 3) * (gap_top + 30);
+
+        // console.log(index, left_bias, top_bias);
+
         return (
-            <div></div>
+            <div className='member_block'
+                style={{
+                    left: String(left_bias) + '%',
+                    top: String(top_bias) + '%',
+
+                }}>{this.props.object["name"]}</div>
         )
     }
 }
 
 class RenderingPicture extends Component {
     render() {
-        console.log(this.props);
+        // console.log(this.props);
         return (
             <div></div>
         )
@@ -77,18 +102,18 @@ class MemberPic extends Component {
     }
 
 
-    renderRadar(item, is_valid) {
+    renderRadar(item, is_valid, index) {
         // console.log(item, is_valid)
         return (
-            <RadarChart key={'rdc' + item['name']} object={item} is_valid={is_valid} />
+            <RadarChartBox key={'rdc' + item['name']} object={item} is_valid={is_valid} index={index} />
 
         )
     }
 
-    renderRendering(item, is_valid) {
+    renderRendering(item, is_valid, index) {
         // console.log(item, is_valid)
         return (
-            <RenderingPicture key={'rdp' + item['name']} object={item} is_valid={is_valid} />
+            <RenderingPicture key={'rdp' + item['name']} object={item} is_valid={is_valid} index={index} />
 
         )
     }
@@ -343,18 +368,14 @@ class MemberPic extends Component {
             console.log(this.state.valid_members)
             if (this.state.display_way === 'rendering') {
                 return (
-
-                    // <div style={{ width: "100%", height: "100%", backgroundColor: 'gold' }}>
-                    //     11111111
-                    // </div>
-                    <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
+                    <div className='member_window' style={{ backgroundColor: 'gold' }}>
                         {
                             this.state.data_list.map((item, index) => {
                                 let is_valid = false;
                                 if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
                                     is_valid = true;
                                 }
-                                return this.renderRendering(item, is_valid);
+                                return this.renderRendering(item, is_valid, index);
                             })
                         }
                     </div>
@@ -363,20 +384,18 @@ class MemberPic extends Component {
             }
             else if (this.state.display_way === 'radar') {
                 return (
-                    // <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
-                    //     11111111
-                    // </div>
+                    <div className='member_window' style={{ backgroundColor: 'blue' }}>
 
-                    <div style={{ width: "100%", height: "100%", backgroundColor: 'red' }}>
                         {
                             this.state.data_list.map((item, index) => {
                                 let is_valid = false;
                                 if (this.state.valid_members.indexOf(item['name']) !== -1) {  // 如果当前member是符合约束的，加个框框
                                     is_valid = true;
                                 }
-                                return this.renderRadar(item, is_valid);
+                                return this.renderRadar(item, is_valid, index);
                             })
                         }
+
                     </div>
 
                 )
@@ -413,4 +432,4 @@ class MemberPic extends Component {
     }
 }
 
-export { DisplayBox, SortByBox, MemberPic, RadarChart }
+export { DisplayBox, SortByBox, MemberPic, RadarChartBox }
