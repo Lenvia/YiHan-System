@@ -1,7 +1,7 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { ensemble_json_data } from './global_definer.js'
-import { data } from 'jquery';
+
 
 
 class DisplayBox extends Component {
@@ -198,7 +198,7 @@ class RenderingPicture extends Component {
             return (
                 <div className={("valid_border")} style={{ width: '100%', height: '100%' }}>
                     <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
-                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} />
+                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
                 </div>
 
             )
@@ -206,7 +206,7 @@ class RenderingPicture extends Component {
             return (
                 <div>
                     <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
-                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} />
+                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
                 </div>
             )
     }

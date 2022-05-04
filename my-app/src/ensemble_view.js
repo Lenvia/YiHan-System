@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { ensemble_json_data } from './global_definer.js'
-import { timers } from 'jquery';
+
 
 
 // 注：这个 ConstrainBox 的大小是相对于整个容器
