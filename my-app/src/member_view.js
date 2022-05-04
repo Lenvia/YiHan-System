@@ -50,6 +50,35 @@ class SortByBox extends Component {
 
 class RadarChartBox extends Component {
 
+    renderRadarChart(option, is_valid) {
+        if (is_valid)
+            return (
+                <div className={("valid_border")} style={{ width: '100%', height: '100%' }}>
+                    <ReactECharts option={option}
+                        style={{
+                            position: 'absolute',
+                            left: '0%',
+                            right: '0%',
+                            width: '100%',
+                            height: '100%',
+                        }} />
+                </div>
+            )
+        else return (
+            <div style={{ width: '100%', height: '100%' }}>
+                <ReactECharts option={option}
+                    style={{
+                        position: 'absolute',
+                        left: '0%',
+                        right: '0%',
+                        width: '100%',
+                        height: '100%',
+                    }} />
+            </div>
+        )
+
+    }
+
     get_bias(current_props) {
         let index = current_props.index;
 
@@ -74,7 +103,6 @@ class RadarChartBox extends Component {
     setOption(current_props) {
         let name = current_props.object["name"];
         let obj_data = current_props.object["data"];
-        let is_valid = current_props.is_valid;
 
         let indicator = [];
         let value = [];
@@ -95,7 +123,21 @@ class RadarChartBox extends Component {
                     fontSize: 12,//字体大小
                     lineHeight: 18,//字体行高
                 },
-
+            },
+            triggerEvent: true,
+            tooltip: {
+                trigger: 'item',
+                confine: true,
+                textStyle: {
+                    fontSize: '12',
+                    extraCssText: 'white-space: normal; word-break: break-all;'
+                },
+                // formatter: function (e) {
+                //     console.log(e);
+                // }
+                // axisPointer: {
+                //     type: 'cross'
+                // }
             },
             grid: {
                 top: '5%',
@@ -110,7 +152,7 @@ class RadarChartBox extends Component {
                 radius: 45,
                 name: {
                     formatter: function (text) {
-                        console.log(text);
+                        // console.log(text);
                         let bracket = text.indexOf("(");
                         if (bracket === -1)  // 不含括号 不是很长 直接return
                             return text;
@@ -141,7 +183,8 @@ class RadarChartBox extends Component {
 
         let option = this.setOption(this.props);
 
-        // console.log(option)
+        let is_valid = this.props.is_valid;  // 如果为 true，加边框
+
 
         return (
             <div className='member_block'
@@ -150,17 +193,9 @@ class RadarChartBox extends Component {
                     top: String(top_bias) + '%',
 
                 }}>
-
-                <div style={{ width: '100%', height: '100%' }}>
-                    <ReactECharts option={option}
-                        style={{
-                            position: 'absolute',
-                            left: '0%',
-                            right: '0%',
-                            width: '100%',
-                            height: '100%',
-                        }} />
-                </div>
+                {
+                    this.renderRadarChart(option, is_valid)
+                }
             </div>
         )
     }
@@ -449,8 +484,8 @@ class MemberPic extends Component {
 
     render() {
         if (this.state.isLoad) {
-            console.log(this.state.data_list)
-            console.log(this.state.valid_members)
+            // console.log(this.state.data_list)
+            // console.log(this.state.valid_members)
             if (this.state.display_way === 'rendering') {
                 return (
                     <div className='member_window' style={{}}>
@@ -487,9 +522,8 @@ class MemberPic extends Component {
             }
             else {
                 return (
-
-                    <div style={{ width: "100%", height: "100%", backgroundColor: 'aqua' }}>
-                        22222
+                    <div style={{ width: "100%", height: "100%" }}>
+                        error
                     </div>
 
                 )
@@ -498,8 +532,8 @@ class MemberPic extends Component {
         }
         else {
             return (
-                <div style={{ width: "100%", height: "100%", backgroundColor: 'aqua' }}>
-                    22222
+                <div style={{ width: "100%", height: "100%" }}>
+                    Loading...
                 </div>
             )
         }

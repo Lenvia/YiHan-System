@@ -74,3 +74,9 @@
     width: 30%;
     height: 40%;
 }
+
+.valid_border {
+    border-style: solid;
+    border-width: 1.5px;
+    border-color: black;
+}
