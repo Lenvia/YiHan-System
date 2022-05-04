@@ -66,11 +66,13 @@
 
     position: relative;
     overflow: auto;
+    background-color: #FFF5EE;
 }
 
 .member_block {
     position: absolute;
-    background-color: bisque;
+    /* background-color: bisque; */
+    background-color: white;
     width: 30%;
     height: 40%;
 }

@@ -82,17 +82,13 @@ class RadarChartBox extends Component {
     get_bias(current_props) {
         let index = current_props.index;
 
-        let margin_left = 3;
-        let margin_top = 5;
-        let gap_left = 2;
-        let gap_top = 4;
-        let top_bias;
-        let left_bias;
+        let margin_left = 3, margin_top = 5;
+        let gap_left = 2, gap_top = 4;
+        let left_bias, top_bias;
 
         // 注意，如果要修改这里，记得同步修改 css 中的 .member_block
         let local_width = 30;
         let local_height = 40;
-
 
         left_bias = margin_left + (index % 3) * (gap_left + local_width);
         top_bias = margin_top + Math.floor(index / 3) * (gap_top + local_height);
@@ -114,7 +110,6 @@ class RadarChartBox extends Component {
             value.push(obj_data[key]);
         }
 
-
         let option = {
             title: {
                 text: name,
@@ -131,13 +126,7 @@ class RadarChartBox extends Component {
                 textStyle: {
                     fontSize: '12',
                     extraCssText: 'white-space: normal; word-break: break-all;'
-                },
-                // formatter: function (e) {
-                //     console.log(e);
-                // }
-                // axisPointer: {
-                //     type: 'cross'
-                // }
+                }
             },
             grid: {
                 top: '5%',
@@ -161,8 +150,6 @@ class RadarChartBox extends Component {
                         return text
                     },
                 },
-
-
             },
             series: [
                 {
@@ -202,10 +189,63 @@ class RadarChartBox extends Component {
 }
 
 class RenderingPicture extends Component {
+    renderRendering(object, is_valid) {
+        let name = object["name"];
+        let img_src = object["path"];
+
+        // 图片 maxWidth 设置为 98% 是为 border留出宽度
+        if (is_valid)
+            return (
+                <div className={("valid_border")} style={{ width: '100%', height: '100%' }}>
+                    <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
+                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} />
+                </div>
+
+            )
+        else
+            return (
+                <div>
+                    <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
+                    <img src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} />
+                </div>
+            )
+    }
+    get_bias(current_props) {
+        let index = current_props.index;
+
+        let margin_left = 3, margin_top = 5;
+        let gap_left = 2, gap_top = 4;
+        let left_bias, top_bias;
+
+        // 注意，这里的高度要大一些
+        let local_width = 30;
+        let local_height = 50;
+
+        left_bias = margin_left + (index % 3) * (gap_left + local_width);
+        top_bias = margin_top + Math.floor(index / 3) * (gap_top + local_height);
+
+        return [left_bias, top_bias]
+    }
+
     render() {
-        // console.log(this.props);
+        let [left_bias, top_bias] = this.get_bias(this.props);
+
+
+        let is_valid = this.props.is_valid;  // 如果为 true，加边框
+
+
         return (
-            <div></div>
+            <div className='member_block'
+                style={{
+                    height: '50%',
+                    left: String(left_bias) + '%',
+                    top: String(top_bias) + '%',
+
+                }}>
+                {
+                    this.renderRendering(this.props.object, is_valid)
+                }
+            </div>
         )
     }
 }
@@ -478,11 +518,8 @@ class MemberPic extends Component {
         return data_list;
     }
 
-
-
-
-
     render() {
+
         if (this.state.isLoad) {
             // console.log(this.state.data_list)
             // console.log(this.state.valid_members)
@@ -533,7 +570,7 @@ class MemberPic extends Component {
         else {
             return (
                 <div style={{ width: "100%", height: "100%" }}>
-                    Loading...
+                    DATA NOT READY
                 </div>
             )
         }
