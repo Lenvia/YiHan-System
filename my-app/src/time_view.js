@@ -2,7 +2,22 @@ import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import $ from 'jquery';
 
-
+class DetailChartBox extends Component {
+    render() {
+        return (
+            <div style={{ width: '100%', height: '55%', backgroundColor: "aqua" }}>
+                <div >
+                    <ReactECharts option={{}}
+                    />
+                </div>
+                <div >
+                    <ReactECharts option={{}}
+                    />
+                </div>
+            </div>
+        )
+    }
+}
 
 // 注：在这里更新 t_inde 并不会更改全局！！！
 class TimePic extends Component {
@@ -66,7 +81,7 @@ class TimePic extends Component {
         if (this.state.pic_ready) {
 
             return (
-                <div style={{ width: '100%', height: '100%', backgroundColor: '#FFF5EE' }}>
+                <div id="time_pic">
                     <div id="pic_box" >
                         <img src={this.state.current_img_src} style={{ maxWidth: '98%' }} alt="" />
                     </div>
@@ -91,4 +106,4 @@ class TimePic extends Component {
     }
 }
 
-export { TimePic }
+export { TimePic, DetailChartBox }

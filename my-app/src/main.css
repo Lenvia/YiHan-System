@@ -40,7 +40,8 @@
     --downMainViewHeight: calc((1 - var(--lineViewHeightRatio)) * var(--viewHeight) - 2*var(--marginTop));
 
     /* Right View */
-    --timeViewHeight: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
+    /* --timeViewHeight: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop)); */
+    --timeViewHeight: var(--leftViewHeight);
 }
 
 /* 
@@ -288,7 +289,7 @@
 }
 
 
-#info_view {
+/* #info_view {
     position: absolute;
     top: calc(var(--actionViewHeightRatio)*var(--viewHeight));
 
@@ -300,5 +301,4 @@
     width: calc(var(--analysisContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
     height: calc((1 - var(--actionViewHeightRatio))*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
 
-    /* background-color: white; */
-}
+} */

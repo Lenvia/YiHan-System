@@ -10,7 +10,7 @@ import { para_json_data } from "./global_definer.js"
 import { DatasetIntro, Region, Drifting } from "./system_view.js"
 import { EnsembleEchart, ConstrainBox, Bar } from "./ensemble_view.js"
 import { DisplayBox, SortByBox, MemberPic } from "./member_view.js"
-import { TimePic } from './time_view.js';
+import { TimePic, DetailChartBox } from './time_view.js';
 
 import "./main.css"
 import "./react_componet.css"
@@ -230,7 +230,7 @@ class Container extends React.Component {
                         </div>
 
                     </div>
-                    <div className="custom_view" id="info_view"></div>
+
                 </div>,
             </div>
         )
