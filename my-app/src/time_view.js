@@ -62,12 +62,13 @@ class TimePic extends Component {
     render() {
 
         let time_range = this.props.time_range;
+
         if (this.state.pic_ready) {
-            console.log(this.state);
+            // console.log(this.state);
 
             return (
-                <div style={{ width: '100%', height: '100%' }}>
-                    <div id="pic_box">
+                <div style={{ width: '100%', height: '100%', backgroundColor: '#FFF5EE' }}>
+                    <div id="pic_box" >
                         <img src={this.state.current_img_src} style={{ maxWidth: '98%' }} alt="" />
                     </div>
 
@@ -77,16 +78,12 @@ class TimePic extends Component {
                         onChange={this.handleChange.bind(this)}
                     />
                     <div id="pic_time_label" style={{ whiteSpace: 'pre' }}>{this.state.selected_member_id}           time: {this.state.current_t_index}</div>
-
-
-
-
                 </div>
             )
         }
         else {
             return (
-                <div>
+                <div >
                     NOT READY
                 </div>
             )
