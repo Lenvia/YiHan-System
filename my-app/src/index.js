@@ -227,6 +227,11 @@ class Container extends React.Component {
                                 selected_member_id={this.state.selected_member_id}
                                 time_range={this.state.dataset_info["time_range"]}
                             />
+                            <DetailChartBox
+                                dataset_name={this.state.dataset_info["name"]}
+                                time_range={this.state.dataset_info["time_range"]}
+                                selected_member_id={this.state.selected_member_id}
+                            />
                         </div>
 
                     </div>
