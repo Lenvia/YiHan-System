@@ -64,7 +64,6 @@ class TimePic extends Component {
         let time_range = this.props.time_range;
 
         if (this.state.pic_ready) {
-            // console.log(this.state);
 
             return (
                 <div style={{ width: '100%', height: '100%', backgroundColor: '#FFF5EE' }}>
