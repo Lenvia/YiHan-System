@@ -352,8 +352,9 @@ class MemberPic extends Component {
 
         let display_way = this.props.display_way;  // 显示方式
 
-        if (t_index === undefined)
-            t_index = 0;
+        if (t_index === undefined || constrain === undefined)  // 还没传来数据，禁止加载！
+            return;
+
         if (current_sort_index === 0)
             sort_constrain = 'member_id';
 
@@ -386,7 +387,6 @@ class MemberPic extends Component {
                     // console.log(radar_json)
                     // console.log(sort_constrain);
 
-
                     var data_list = _this.getSortedRadarDataList(
                         dataset_name,
                         member_num,
@@ -394,7 +394,6 @@ class MemberPic extends Component {
                         sort_constrain,
                         t_index,
                         radar_json);
-
 
                     _this.setState({
                         isLoad: true,
@@ -459,6 +458,7 @@ class MemberPic extends Component {
         for (let i = 1; i <= member_num; i++) {
             let name = "member" + String(i);
             // 如果满足条件
+
             let cur = members_data[name][t_index];
 
             // console.log(cur, operator, constrain_value);

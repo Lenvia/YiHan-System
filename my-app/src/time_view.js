@@ -33,9 +33,10 @@ class DetailChartBox extends Component {
 
         let detail_json_path = this.getDetailJsonPath(this.props.dataset_name)
 
+        // 还没有选择id！不要显示
+        if (this.props.selected_member_id === undefined) return;
 
-
-        var _this = this
+        var _this = this;
 
         fetch(detail_json_path, {
             headers: {
@@ -224,6 +225,9 @@ class TimePic extends Component {
             && props.selected_member_id === this.props.selected_member_id
         )
             return;
+
+        // 还没有选择id！不要显示
+        if (this.props.selected_member_id === undefined) return;
 
         // 到这里说明，要么数据集变了，要么member 变了
         // member 变了 必须 触发 current_t_index 更改！

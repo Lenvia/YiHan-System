@@ -197,6 +197,7 @@ class EnsembleEchart extends Component {
 
 
     setOption(dataset_name, current_constrain, current_constrain_value, selected_xAxis_index) {
+
         let members_data = ensemble_json_data[dataset_name][current_constrain];
         var series_data = []
 

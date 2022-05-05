@@ -26,10 +26,7 @@ class DatasetIntro extends React.Component {
     }
 
     datasetChange(event) {
-        // dataset = para_json_data["simulation"][event.target.selectedIndex];
         this.props.updateDataset(event.target.selectedIndex);
-        // console.log(dataset)
-
     }
 
     render() {
@@ -102,6 +99,7 @@ class RegionPara extends React.Component {
         let bg_width = $("#region_background").outerWidth();
         let bg_height = $("#region_background").outerHeight();
 
+        // 如果不合法，就不显示
         if (percent_width < 0 || percent_height < 0 || percent_left_bias < 0 || percent_left_bias > 1 || percent_bottom_bias < 0 || percent_bottom_bias > 1) {
             $("#temp_box").css({
                 display: 'none',
@@ -186,6 +184,21 @@ class RegionPara extends React.Component {
 
 // Region Selection View
 class Region extends React.Component {
+    componentDidUpdate(props) {
+        if (props.dataset_info["name"] === this.props.dataset_info["name"])
+            return;
+
+        // 如果传入了新的数据集，清空输入
+        $("#temp_box").css({
+            display: 'none',
+        })
+        $("#xrange_left").val("");
+        $("#xrange_right").val("");
+        $("#yrange_left").val("");
+        $("#yrange_right").val("");
+
+    }
+
     render() {
         return (
             <div id="region" style={{ weight: '100%', height: '100%' }}>
