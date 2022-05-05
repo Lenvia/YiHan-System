@@ -49,7 +49,7 @@ class DatasetIntro extends React.Component {
                 </div>
                 {this.renderDatasetIntroLine("Member Number: ", this.props.dataset_info["member_number"], '20%')}
                 {this.renderDatasetIntroLine("Location Range: ", String(this.props.dataset_info["location_range"]), '40%')}
-                {this.renderDatasetIntroLine("Time Range: ", String(this.props.dataset_info["time_range"]), '60%')}
+                {this.renderDatasetIntroLine("Time Range: ", '[' + String(this.props.dataset_info["time_range"][0]) + ', ' + String(this.props.dataset_info["time_range"][1]) + ')', '60%')}
                 {this.renderDatasetIntroLine("Object Name: ", this.props.dataset_info["Object_name"], '80%')}
             </div>
         );
@@ -62,15 +62,20 @@ class RegionBg extends React.Component {
     render() {
         let bg = require("./resources/sample/" + this.props.back_img_src);
         return (
-            <div id="region_background"
-                style={{
-                    backgroundImage: "url(" + bg + ")",
-                    // backgroundImage: 'url(require(./resources/sample/bg1.jpg)',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPositionX: 'center',
-                    backgroundPositionY: 'center',
-                    backgroundSize: '100% 100%'
-                }}>
+            <div id="region_background">
+                <div
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        backgroundImage: "url(" + bg + ")",
+                        // backgroundImage: 'url(require(./resources/sample/bg1.jpg)',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPositionX: 'center',
+                        backgroundPositionY: 'center',
+                        backgroundSize: '100% 100%'
+                    }}>
+                </div>
+                <div id="temp_box" style={{ display: 'none' }}></div>
             </div>
         )
     }
@@ -78,21 +83,65 @@ class RegionBg extends React.Component {
 
 // Region Selection View 参数面板
 class RegionPara extends React.Component {
+    regionButtonClick(para) {
 
+        let xrange_left = $("#xrange_left").val();
+        let xrange_right = $("#xrange_right").val();
+        let yrange_left = $("#yrange_left").val();
+        let yrange_right = $("#yrange_right").val();
+
+        let x_range_lenth = para.props.location_range[0];
+        let y_range_lenth = para.props.location_range[1];
+
+        // 百分比
+        let percent_left_bias = xrange_left / x_range_lenth;
+        let percent_width = (xrange_right - xrange_left) / x_range_lenth;
+        let percent_bottom_bias = yrange_left / y_range_lenth;
+        let percent_height = (yrange_right - yrange_left) / y_range_lenth;
+
+        let bg_width = $("#region_background").outerWidth();
+        let bg_height = $("#region_background").outerHeight();
+
+        if (percent_width < 0 || percent_height < 0 || percent_left_bias < 0 || percent_left_bias > 1 || percent_bottom_bias < 0 || percent_bottom_bias > 1) {
+            $("#temp_box").css({
+                display: 'none',
+            })
+        }
+        else {
+            $("#temp_box").css({
+                position: 'absolute',
+                left: percent_left_bias * bg_width + 'px',
+                bottom: percent_bottom_bias * bg_height + 'px',
+
+                height: percent_height * bg_height + 'px',
+                width: percent_width * bg_width + 'px',
+
+                borderStyle: 'solid',
+                borderWidth: '1.5px',
+                borderColor: 'red',
+                display: 'block',
+                backgroundColor: 'transparent',
+            })
+        }
+    }
     render() {
         return (
             <div id="region_para">
-
                 <div id="xrange_label" className="region_para_line" style={{ top: '8%', width: '15%', fontWeight: 'bold' }}>x:</div>
                 <div id="xrange" className="region_para_line" style={{ top: '8%', left: '20%' }}>
                     <form >
                         <div className="form-row">
                             <div className={("col")}>
-                                <input type="text" id="xrange_left" className={("form-control", "custom_form-control")} style={{ top: '0', left: '0%' }} placeholder="" />
+                                <input type="text" id="xrange_left" className={("form-control", "custom_form-control")}
+                                    style={{ top: '0', left: '0%' }}
+                                />
                             </div>
                             <p style={{ position: 'absolute', top: '0', left: '35%' }} >-</p>
                             <div className={("col")}>
-                                <input type="text" id="xrange_right" className={("form-control", "custom_form-control")} style={{ top: '0', left: '45%' }} placeholder="" />
+                                <input type="text" id="xrange_right"
+                                    className={("form-control", "custom_form-control")}
+                                    style={{ top: '0', left: '45%' }}
+                                />
                             </div>
                         </div>
                     </form>
@@ -103,11 +152,15 @@ class RegionPara extends React.Component {
                     <form >
                         <div className="form-row">
                             <div className={("col")} style={{ left: '0%' }}>
-                                <input type="text" id="yrange_left" className={("form-control", "custom_form-control")} style={{ top: '0', left: '0%' }} placeholder="" />
+                                <input type="text" id="yrange_left" className={("form-control", "custom_form-control")}
+                                    style={{ top: '0', left: '0%' }}
+                                />
                             </div>
                             <p style={{ position: 'absolute', top: '0', left: '35%' }} >-</p>
                             <div className={("col")} style={{ left: '0%' }}>
-                                <input type="text" id="yange_right" className={("form-control", "custom_form-control")} style={{ top: '0', left: '45%' }} placeholder="" />
+                                <input type="text" id="yrange_right" className={("form-control", "custom_form-control")}
+                                    style={{ top: '0', left: '45%' }}
+                                />
                             </div>
                         </div>
                     </form>
@@ -125,7 +178,7 @@ class RegionPara extends React.Component {
                         }
                     </select>
                 </div>
-                <button className="btn btn-success" type="submit" style={{ position: 'absolute', top: '68%', left: '60%', width: '25%' }}>Apply</button>
+                <button className="btn btn-success" onClick={(e) => this.regionButtonClick(this)} style={{ position: 'absolute', top: '68%', left: '60%', width: '25%' }}>Apply</button>
             </div>
         )
     }
@@ -137,7 +190,7 @@ class Region extends React.Component {
         return (
             <div id="region" style={{ weight: '100%', height: '100%' }}>
                 <RegionBg back_img_src={this.props.dataset_info['back_img_src']} />
-                <RegionPara layer={this.props.dataset_info['layer']} />
+                <RegionPara location_range={this.props.dataset_info["location_range"]} layer={this.props.dataset_info['layer']} />
             </div>
         )
     }
