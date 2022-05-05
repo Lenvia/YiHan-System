@@ -82,3 +82,32 @@
     border-width: 1.5px;
     border-color: black;
 }
+
+
+/* ------------------------------------------------------------------------------------ */
+#pic_box {
+    position: absolute;
+    left: 10%;
+    top: 5%;
+    width: 80%;
+    height: 75%;
+    /* background-color: aqua; */
+}
+
+#pic_time_range {
+    position: absolute;
+    left: 25%;
+    top: 80%;
+    width: 50%;
+    height: 10%;
+    /* background-color: blue; */
+}
+
+#pic_time_label {
+    position: absolute;
+    left: 25%;
+    top: 90%;
+    width: 50%;
+    height: 10%;
+    /* background-color: blue; */
+}

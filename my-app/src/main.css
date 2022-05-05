@@ -4,8 +4,8 @@
     --viewWidth: 100vw;
 
     --systemContainerWidth: calc(0.2 *(var(--viewWidth)));
-    --mainContainerWidth: calc(0.5 *(var(--viewWidth)));
-    --analysisContainerWidth: calc(0.3 *(var(--viewWidth)));
+    --mainContainerWidth: calc(0.55 *(var(--viewWidth)));
+    --analysisContainerWidth: calc(0.25 *(var(--viewWidth)));
 
     --marginTop: 10px;
     --marginLeft: 10px;
@@ -284,7 +284,7 @@
     top: var(--classMainViewTitleContainerHeight);
     width: 100%;
     height: calc(var(--timeViewHeight) - var(--classMainViewTitleContainerHeight) - 4*var(--borderWidth));
-    background-color: burlywood;
+    /* background-color: burlywood; */
 }
 
 

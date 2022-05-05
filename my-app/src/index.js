@@ -225,6 +225,7 @@ class Container extends React.Component {
                                 dataset_name={this.state.dataset_info["name"]}
                                 selected_xAxis_index={this.state.selected_xAxis_index}
                                 selected_member_id={this.state.selected_member_id}
+                                time_range={this.state.dataset_info["time_range"]}
                             />
                         </div>
 
