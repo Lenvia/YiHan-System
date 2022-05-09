@@ -278,7 +278,7 @@ class TimePic extends Component {
             return (
                 <div id="time_pic">
                     <div id="pic_box" >
-                        <img src={this.state.current_img_src} style={{ maxWidth: '110%' }} alt="" />
+                        <img src={this.state.current_img_src} style={{ maxWidth: '100%' }} alt="" />
                     </div>
 
                     <input id="pic_time_range" type="range"
