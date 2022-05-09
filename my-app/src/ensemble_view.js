@@ -87,7 +87,12 @@ class Bar extends Component {
             series: [
                 {
                     data: yAxis_data,
-                    type: 'bar'
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color:'rgb(89,130,184)'
+                        }
+                    }
                 }
             ]
         };
@@ -225,7 +230,7 @@ class EnsembleEchart extends Component {
                             lineStyle: {
                                 color: 'rgb(255,0,0)',
                                 width: 2,
-                                type: 'solid',
+                                type: 'dash',
                             }
                         }
                     ],
@@ -239,7 +244,7 @@ class EnsembleEchart extends Component {
             series_data[0]["markLine"]["data"].push({
                 xAxis: selected_xAxis_index,
                 lineStyle: {
-                    color: 'rgb(0,0,255)',
+                    color: 'rgb(89,130,184)',
                     width: 2,
                     type: 'dash',
                 }

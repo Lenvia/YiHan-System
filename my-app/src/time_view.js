@@ -73,7 +73,7 @@ class DetailChartBox extends Component {
                         type: 'value',
                         name: keys[0],  // y轴名称
                         nameLocation: 'end',  // y坐标轴名称的位置
-
+                        
                     },
                     dataZoom: [
                         {
@@ -99,7 +99,12 @@ class DetailChartBox extends Component {
                         {
                             // 在这里不给data
                             data: member_data[keys[0]],
-                            type: 'bar'
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+                                    color:'rgb(89,130,184)'
+                                }
+                            }
                         }
                     ]
                 };
@@ -151,7 +156,12 @@ class DetailChartBox extends Component {
                         {
                             // 在这里不给data
                             data: member_data[keys[1]],
-                            type: 'bar'
+                            type: 'bar',
+                            itemStyle: {
+                                normal: {
+                                    color:'rgb(89,130,184)'
+                                }
+                            }
                         }
                     ]
                 };
@@ -268,7 +278,7 @@ class TimePic extends Component {
             return (
                 <div id="time_pic">
                     <div id="pic_box" >
-                        <img src={this.state.current_img_src} style={{ maxWidth: '98%' }} alt="" />
+                        <img src={this.state.current_img_src} style={{ maxWidth: '110%' }} alt="" />
                     </div>
 
                     <input id="pic_time_range" type="range"

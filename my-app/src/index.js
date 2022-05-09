@@ -104,20 +104,19 @@ class Container extends React.Component {
                 <div id="system_container">
                     <div className="custom_view" id="left_view">
                         <div id="system_name_container">
-                            <p className="text-left font-weight-bold" id="system_name">EOPVis</p>
+                            <p className="text-left font-weight-bold" id="system_name">PEViz</p>
                         </div>
-
 
                         <div className="title_container system_view_title_container" id="description_name_container">
                             <p className="text-left font-weight-bold" id="description_name">Simulation Description View</p>
+
                         </div>
 
                         <div id="description_container">
                             <DatasetIntro dataset_info={this.state.dataset_info} updateDataset={this.updateDataset.bind(this)} />
                         </div>
 
-
-                        <div className="title_container system_view_title_container" id="region_name_container">
+                        <div className="title_container system_view_title_container" id="region_name_container"> 
                             <p className="text-left font-weight-bold" id="region_name">Region Selection View</p>
                         </div>
 
