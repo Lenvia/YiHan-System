@@ -1,304 +1,332 @@
 :root {
-    font-size: 14px;
-    --viewHeight: 100vh;
-    --viewWidth: 100vw;
+  font-size: 14px;
+  --viewHeight: 100vh;
+  --viewWidth: 100vw;
 
-    --systemContainerWidth: calc(0.2 *(var(--viewWidth)));
-    --mainContainerWidth: calc(0.55 *(var(--viewWidth)));
-    --analysisContainerWidth: calc(0.25 *(var(--viewWidth)));
+  --systemContainerWidth: calc(0.2 * (var(--viewWidth)));
+  --mainContainerWidth: calc(0.55 * (var(--viewWidth)));
+  --analysisContainerWidth: calc(0.25 * (var(--viewWidth)));
 
-    --marginTop: 10px;
-    --marginLeft: 10px;
-    --borderWidth: 1.5px;
+  --marginTop: 10px;
+  --marginLeft: 10px;
+  --borderWidth: 1.5px;
 
-    --lineViewHeightRatio: 0.45;
-    --actionViewHeightRatio: 0.4;
+  --lineViewHeightRatio: 0.45;
+  --actionViewHeightRatio: 0.4;
 
-    /* ---------------------------------------------------------------------------------- */
+  /* 注：border 的宽度是包含在view里的 */
 
-    /* 注：border 的宽度是包含在view里的 */
+  /* Left View */
+  --leftViewHeight: calc(var(--viewHeight) - 2 * (var(--marginTop)));
 
-    /* Left View */
-    --leftViewHeight: calc(var(--viewHeight) - 2*(var(--marginTop)));
+  --systemNameContainerHeight: 6vh;
 
-    --systemNameContainerHeight: 6vh;
+  --classSystemViewTitleContainerHeight: 4vh;
 
-    --classSystemViewTitleContainerHeight: 4vh;
+  --descriptionHeight: 15vh;
+  --simulationDescriptionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--descriptionHeight));
 
-    --descriptionHeight: 15vh;
-    --simulationDescriptionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--descriptionHeight));
+  --regionHeight: 33vh;
+  --regionSelectionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--regionHeight));
 
-    --regionHeight: 33vh;
-    --regionSelectionViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--regionHeight));
+  --driftingSettingHeight: calc(
+    var(--leftViewHeight) - var(--systemNameContainerHeight) - var(--simulationDescriptionViewHeight) - var(--regionSelectionViewHeight) -
+      var(--classSystemViewTitleContainerHeight) - 2 * var(--borderWidth)
+  );
+  --driftingSettingViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--driftingSettingHeight));
 
-    --driftingSettingHeight: calc(var(--leftViewHeight) - var(--systemNameContainerHeight) - var(--simulationDescriptionViewHeight) - var(--regionSelectionViewHeight) - var(--classSystemViewTitleContainerHeight) - 2*var(--borderWidth));
-    --driftingSettingViewHeight: calc(var(--classSystemViewTitleContainerHeight) + var(--driftingSettingHeight));
+  /* Main View */
+  --classMainViewTitleContainerHeight: 6vh;
+  --upMainViewHeight: calc(var(--lineViewHeightRatio) * var(--viewHeight) - 2 * var(--marginTop));
+  --downMainViewHeight: calc((1 - var(--lineViewHeightRatio)) * var(--viewHeight) - 2 * var(--marginTop));
 
-    /* Main View */
-    --classMainViewTitleContainerHeight: 6vh;
-    --upMainViewHeight: calc(var(--lineViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop));
-    --downMainViewHeight: calc((1 - var(--lineViewHeightRatio)) * var(--viewHeight) - 2*var(--marginTop));
-
-    /* Right View */
-    /* --timeViewHeight: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop)); */
-    --timeViewHeight: var(--leftViewHeight);
+  /* Right View */
+  /* --timeViewHeight: calc(var(--actionViewHeightRatio)*var(--viewHeight) - 2*var(--marginTop)); */
+  --timeViewHeight: var(--leftViewHeight);
 }
 
-/* 
-
-*/
+input {
+  outline: none;
+}
 
 .custom_view {
-    border-style: solid;
-    border-width: var(--borderWidth);
-    border-color: black;
+  border-style: solid;
+  border-width: var(--borderWidth);
+  border-color: #ccc;
 }
 
 .title_container {
-    width: 100%;
-    background-color: aquamarine;
+  width: 100%;
+}
+
+.title_container > p {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 
 .system_view_title_container {
-    height: var(--classSystemViewTitleContainerHeight);
+  height: var(--classSystemViewTitleContainerHeight);
 }
 
 .main_view_titile_container {
-    height: var(--classMainViewTitleContainerHeight);
+  height: var(--classMainViewTitleContainerHeight);
 }
 
 .full_width_height {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* ------------------------------------------------------------- */
 
 #container {
-    position: absolute;
-    right: 0px;
-    top: 0;
-    width: var(--viewWidth);
-    height: var(--viewHeight);
-    /* background-color: #1dbd17; */
+  position: absolute;
+  right: 0px;
+  top: 0;
+  width: var(--viewWidth);
+  height: var(--viewHeight);
+  background-color: #fff;
 }
 
 #system_container {
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    height: 100%;
-    width: var(--systemContainerWidth);
-    /* background-color: #1dbd17; */
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: var(--systemContainerWidth);
 }
 
 #system_name_container {
-    top: 0;
-    width: 100%;
-    height: var(--systemNameContainerHeight);
-    background-color: cadetblue;
+  top: 0;
+  width: 100%;
+  height: var(--systemNameContainerHeight);
+}
+
+#system_name_container > p {
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 23px;
 }
 
 #left_view {
-    position: absolute;
-    margin-top: var(--marginTop);
-    margin-bottom: var(--marginTop);
-    margin-left: var(--marginLeft);
-    margin-right: var(--marginLeft);
+  position: absolute;
+  margin-top: var(--marginTop);
+  margin-bottom: var(--marginTop);
+  margin-left: var(--marginLeft);
+  margin-right: var(--marginLeft);
+  width: calc(var(--systemContainerWidth) - 2 * (var(--marginLeft)));
+  height: var(--leftViewHeight);
+  background-color: #5982b8;
+}
 
-    width: calc(var(--systemContainerWidth) - 2*(var(--marginLeft)));
-    height: var(--leftViewHeight);
+#left_view > .title_container > p {
+  color: #fff;
+}
 
-    /* background-color: white; */
+#left_view .drifting_line,
+#left_view .region_para_line {
+  color: #efefef;
+  font-weight: normal !important;
+  font-size: 12px;
+}
+
+#left_view > #setting_container > #drifting_setting > div > input {
+  color: #333;
 }
 
 #description_name_container {
-    position: absolute;
-    top: var(--systemNameContainerHeight);
+  position: absolute;
+  top: calc(5px + var(--systemNameContainerHeight));
+}
+
+#dataset_intro > .dataset_intro_line:first-of-type select {
+  color: #333;
+  text-align: left;
 }
 
 #description_container {
-    position: absolute;
-    top: calc(var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
-    width: 100%;
-    height: var(--descriptionHeight);
-    background-color: bisque;
+  position: absolute;
+  top: calc(var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
+  width: 100%;
+  height: var(--descriptionHeight);
 }
 
-
 #region_name_container {
-    position: absolute;
-    top: calc(var(--simulationDescriptionViewHeight) + var(--systemNameContainerHeight));
+  position: absolute;
+  top: calc(10px + var(--simulationDescriptionViewHeight) + var(--systemNameContainerHeight));
 }
 
 #region_container {
-    position: absolute;
-    top: calc(var(--simulationDescriptionViewHeight) + var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
-    width: 100%;
-    height: var(--regionHeight);
-    /* background-color: blueviolet; */
+  position: absolute;
+  top: calc(7px + var(--simulationDescriptionViewHeight) + var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
+  width: 100%;
+  height: var(--regionHeight);
 }
 
-
 #setting_name_container {
-    position: absolute;
-    top: calc(var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--systemNameContainerHeight));
+  position: absolute;
+  top: calc(15px + var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--systemNameContainerHeight));
 }
 
 #setting_container {
-    position: absolute;
-    top: calc(var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--classSystemViewTitleContainerHeight) + var(--systemNameContainerHeight));
-    width: 100%;
-    height: var(--driftingSettingHeight);
-    background-color: blueviolet;
+  position: absolute;
+  top: calc(
+    var(--regionSelectionViewHeight) + var(--simulationDescriptionViewHeight) + var(--classSystemViewTitleContainerHeight) +
+      var(--systemNameContainerHeight)
+  );
+  width: 100%;
+  height: var(--driftingSettingHeight);
 }
 
 #drifting_button_container {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
-    height: 15%;
-    background-color: chartreuse;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 100%;
+  height: 15%;
+  /* background-color: chartreuse; */
 }
 
 #lock_button {
-    position: absolute;
-    left: 30%;
-    top: 50%;
-
-    height: 90%;
-    /* 居中 */
-    transform: translate(-50%, -50%);
+  position: absolute;
+  left: 30%;
+  top: 50%;
+  /* height: 90%; */
+  transform: translate(-50%, -50%);
 }
 
 #apply_button {
-    position: absolute;
-    left: 70%;
-    top: 50%;
-
-    height: 90%;
-    /* 居中 */
-    transform: translate(-50%, -50%);
+  position: absolute;
+  left: 70%;
+  top: 50%;
+  /* height: 90%; */
+  transform: translate(-50%, -50%);
 }
 
+.apply-button,
+.lock-button {
+  background-color: #bf0040;
+  color: #efefef;
+  border-radius: 5px;
+  padding: 3px 10px;
+  outline: none;
+  border: none;
+}
 
+button:hover {
+  filter: brightness(80%);
+}
 
 /* -------------------------------------------------------------------- */
 
-
-
-
 #main_container {
-    position: absolute;
-    left: var(--systemContainerWidth);
-    top: 0px;
-    height: 100%;
-    width: var(--mainContainerWidth);
-    /* background-color: aqua; */
+  position: absolute;
+  left: var(--systemContainerWidth);
+  top: 0px;
+  height: 100%;
+  width: var(--mainContainerWidth);
+  /* background-color: aqua; */
+}
+
+#left_view {
+  padding: 10px;
+}
+
+#up_main_view,
+#down_main_view,
+#time_view {
+  background-color: #fafafa;
+}
+
+#up_main_view > .title_container,
+#down_main_view > .title_container,
+#time_view > .title_container {
+  padding: 10px 0 0 15px;
+  color: #5982b8;
 }
 
 #up_main_view {
-    position: absolute;
-    margin-top: var(--marginTop);
-    margin-bottom: var(--marginTop);
-    margin-left: var(--marginLeft);
-    margin-right: var(--marginLeft);
+  position: absolute;
+  margin-top: var(--marginTop);
+  margin-bottom: var(--marginTop);
+  margin-left: var(--marginLeft);
+  margin-right: var(--marginLeft);
 
-    width: calc(var(--mainContainerWidth) - 2 * (var(--marginLeft)));
-    height: var(--upMainViewHeight);
+  width: calc(var(--mainContainerWidth) - 2 * (var(--marginLeft)));
+  height: var(--upMainViewHeight);
 
-    /* background-color: darkgoldenrod; */
+  /* background-color: darkgoldenrod; */
 }
 
-
 #ensemble_chart_container {
-    position: absolute;
-    top: var(--classMainViewTitleContainerHeight);
-    width: 100%;
-    height: calc(var(--upMainViewHeight) - var(--classMainViewTitleContainerHeight) - 2*var(--borderWidth));
-    /* background-color: bisque; */
+  position: absolute;
+  top: var(--classMainViewTitleContainerHeight);
+  width: 100%;
+  height: calc(var(--upMainViewHeight) - var(--classMainViewTitleContainerHeight) - 2 * var(--borderWidth));
+  /* background-color: bisque; */
 }
 
 #bar_chart {
-    position: absolute;
-    top: var(--classMainViewTitleContainerHeight);
-    right: 0;
-    width: 30%;
-    height: 30%;
-    background-color: bisque;
+  position: absolute;
+  top: var(--classMainViewTitleContainerHeight);
+  right: 0;
+  width: 30%;
+  height: 30%;
+  background-color: #eee;
 }
 
-
-
-
-
 #down_main_view {
-    position: absolute;
-    top: calc(var(--lineViewHeightRatio)*var(--viewHeight));
-
-    margin-top: var(--marginTop);
-    margin-bottom: var(--marginTop);
-    margin-left: var(--marginLeft);
-    margin-right: var(--marginLeft);
-
-    width: calc(var(--mainContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
-    height: calc(var(--downMainViewHeight) - 2*var(--borderWidth));
-
-    /* background-color:blueviolet; */
+  position: absolute;
+  top: calc(var(--lineViewHeightRatio) * var(--viewHeight));
+  margin-top: var(--marginTop);
+  margin-bottom: var(--marginTop);
+  margin-left: var(--marginLeft);
+  margin-right: var(--marginLeft);
+  width: calc(var(--mainContainerWidth) - 2 * (var(--marginLeft) + var(--borderWidth)));
+  height: calc(var(--downMainViewHeight) - 2 * var(--borderWidth));
 }
 
 #member_pic_container {
-    position: absolute;
-    top: var(--classMainViewTitleContainerHeight);
-    width: 100%;
-    height: calc(var(--downMainViewHeight) - var(--classMainViewTitleContainerHeight) - 4*var(--borderWidth));
-    /* background-color: burlywood; */
+  position: absolute;
+  top: var(--classMainViewTitleContainerHeight);
+  width: 100%;
+  height: calc(var(--downMainViewHeight) - var(--classMainViewTitleContainerHeight) - 4 * var(--borderWidth));
 }
-
 
 #analysis_container {
-    position: absolute;
-    right: 0;
-    top: 0px;
-    height: 100%;
-    width: var(--analysisContainerWidth);
-    /* background-color: antiquewhite; */
+  position: absolute;
+  right: 0;
+  top: 0px;
+  height: 100%;
+  width: var(--analysisContainerWidth);
 }
 
-
 #time_view {
-    position: absolute;
-    margin-top: var(--marginTop);
-    margin-bottom: var(--marginTop);
-    margin-left: var(--marginLeft);
-    margin-right: var(--marginLeft);
-
-    width: calc(var(--analysisContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
-    height: calc(var(--timeViewHeight) - 2*var(--borderWidth));
-
-    /* background-color: blueviolet; */
+  position: absolute;
+  margin-top: var(--marginTop);
+  margin-bottom: var(--marginTop);
+  margin-left: var(--marginLeft);
+  margin-right: var(--marginLeft);
+  width: calc(var(--analysisContainerWidth) - 2 * (var(--marginLeft) + var(--borderWidth)));
+  height: calc(var(--timeViewHeight) - 2 * var(--borderWidth));
 }
 
 #time_pic_container {
-    position: absolute;
-    top: var(--classMainViewTitleContainerHeight);
-    width: 100%;
-    height: calc(var(--timeViewHeight) - var(--classMainViewTitleContainerHeight) - 4*var(--borderWidth));
-    /* background-color: burlywood; */
+  position: absolute;
+  top: var(--classMainViewTitleContainerHeight);
+  width: 100%;
+  height: calc(var(--timeViewHeight) - var(--classMainViewTitleContainerHeight) - 4 * var(--borderWidth));
 }
-
 
 /* #info_view {
     position: absolute;
     top: calc(var(--actionViewHeightRatio)*var(--viewHeight));
-
     margin-top: var(--marginTop);
     margin-bottom: var(--marginTop);
     margin-left: var(--marginLeft);
     margin-right: var(--marginLeft);
-
     width: calc(var(--analysisContainerWidth) - 2*(var(--marginLeft) + var(--borderWidth)));
     height: calc((1 - var(--actionViewHeightRatio))*var(--viewHeight) - 2*(var(--marginTop) + var(--borderWidth)));
-
 } */

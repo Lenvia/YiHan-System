@@ -12,8 +12,8 @@ class DisplayBox extends Component {
     render() {
         return (
             <div>
-                <div className="drifting_line" style={{ top: '5%', left: '40%', width: '10%', height: '10%' }}>Display: </div>
-                <select id="display_selector" onChange={(event) => this.displayChange(event)} className="drifting_line" style={{ top: '5%', left: '50%', width: '15%', height: '10%' }}>
+                <div className="drifting_line" style={{ top: '10px', left: '40%', width: '10%', height: '10%' }}>Display: </div>
+                <select id="display_selector" onChange={(event) => this.displayChange(event)} className="drifting_line" style={{ top: '10px', left: '50%', width: '15%', height: 'auto' }}>
                     <option key={'option1'} value='rendering'>rendering</option>
                     <option key={'option2'} value='radar'>radar</option>
                 </select>
@@ -31,8 +31,8 @@ class SortByBox extends Component {
     render() {
         return (
             <div>
-                <div className="drifting_line" style={{ top: '5%', left: '70%', width: '10%', height: '10%' }}>Sort by: </div>
-                <select id="sort_by_selector" onChange={(event) => this.sortByChange(event)} className="drifting_line" style={{ top: '5%', left: '80%', width: '15%', height: '10%' }}>
+                <div className="drifting_line" style={{ top: '10px', left: '70%', width: '10%', height: '10%' }}>Sort by: </div>
+                <select id="sort_by_selector" onChange={(event) => this.sortByChange(event)} className="drifting_line" style={{ top: '10px', left: '80%', width: '15%', height: 'auto' }}>
                     <option key={'option0'} value='member_id'>member_id</option>
                     {
                         this.props.constrain_list.map((item, index) => {
@@ -229,7 +229,7 @@ class RenderingPicture extends Component {
             return (
                 <div className={("valid_border")} style={{ width: '100%', height: '100%' }} >
                     <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
-                    <img id={"rendering_img_" + name} onClick={(e) => this.clickMember(e)} src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
+                    <img id={"rendering_img_" + name} onClick={(e) => this.clickMember(e)} src={img_src} style={{ position: 'absolute', top: '10%', left:'5%', maxWidth: '90%', }} alt="" />
                 </div>
 
             )
@@ -237,7 +237,7 @@ class RenderingPicture extends Component {
             return (
                 <div style={{ width: '100%', height: '100%' }}>
                     <p style={{ position: 'absolute', width: '100%', height: '10%' }}>{name}</p>
-                    <img id={"rendering_img_" + name} onClick={(e) => this.clickMember(e)} src={img_src} style={{ position: 'absolute', top: '10%', maxWidth: '98%', }} alt="" />
+                    <img id={"rendering_img_" + name} onClick={(e) => this.clickMember(e)} src={img_src} style={{ position: 'absolute', top: '10%', left:'5%', maxWidth: '90%', }} alt="" />
                 </div>
             )
     }

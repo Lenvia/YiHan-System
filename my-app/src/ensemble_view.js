@@ -14,8 +14,8 @@ class ConstrainBox extends Component {
     render() {
         return (
             <div>
-                <div className="drifting_line" style={{ top: '5%', left: '60%', width: '10%', height: '10%' }}>Value: </div>
-                <select id="constrain_selector" onChange={(event) => this.constrainChange(event)} className="drifting_line" style={{ top: '5%', left: '70%', width: '15%', height: '10%' }}>
+                <div className="drifting_line" style={{ top: '10px', left: '70%', width: '10%', height: '10%' }}>Value: </div>
+                <select id="constrain_selector" onChange={(event) => this.constrainChange(event)} className="drifting_line" style={{ top: '10px', left: '80%', width: '15%', height: 'auto' }}>
                     {
                         this.props.constrain_list.map((item, index) => {
                             return (

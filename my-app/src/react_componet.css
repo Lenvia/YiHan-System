@@ -9,15 +9,18 @@
     left: 0;
     width: 55%;
     height: 100%;
-    background-color: aqua;
+    color: #efefef;
+    font-size: 12px;
 }
 
 .dataset_intro_value {
     position: absolute;
-    right: 0px;
+    right: 20px;
     width: 45%;
     height: 100%;
-    /* background-color: blue; */
+    color: #efefef;
+    font-size: 12px;
+    text-align: right;
 }
 
 .region_para_line {
@@ -25,7 +28,7 @@
     left: 3%;
     width: 60%;
     height: 25%;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 #region_background {
@@ -33,6 +36,7 @@
     top: 0;
     width: 100%;
     height: 60%;
+    left: -10px;
 }
 
 #region_para {
@@ -40,7 +44,7 @@
     top: 60%;
     width: 100%;
     height: 40%;
-    background-color: red;
+    /* background-color: red; */
 }
 
 .custom_form-control {
@@ -54,7 +58,7 @@
     width: 30%;
     height: 8%;
     left: 3%;
-    /* background-color: gold; */
+    color: #333;
 }
 
 
@@ -66,13 +70,24 @@
 
     position: relative;
     overflow: auto;
-    background-color: #FFF5EE;
+    /* background-color: #FFF5EE; */
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #333;
 }
 
 .member_block {
     position: absolute;
     /* background-color: bisque; */
-    background-color: white;
+    /* background-color: white; */
     width: 30%;
     height: 40%;
 }
@@ -90,7 +105,7 @@
     position: absolute;
     width: 100%;
     height: 40%;
-    background-color: #FFF5EE;
+    /* background-color: #FFF5EE; */
 }
 
 #pic_box {
@@ -99,7 +114,6 @@
     top: 3%;
     width: 80%;
     height: 60%;
-    background-color: aqua;
 }
 
 #pic_time_range {
@@ -125,7 +139,7 @@
     top: 40%;
     width: 100%;
     height: 60%;
-    background-color: #B0E0E6;
+    /* background-color: #B0E0E6; */
 }
 
 .detail_chart {
@@ -133,5 +147,5 @@
     width: 80%;
     height: 40%;
     left: 10%;
-    background-color: cadetblue;
+    /* background-color: cadetblue; */
 }
