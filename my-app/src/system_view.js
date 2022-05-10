@@ -125,8 +125,8 @@ class RegionPara extends React.Component {
     render() {
         return (
             <div id="region_para">
-                <div id="xrange_label" className="region_para_line" style={{ top: '8%', width: '15%', fontWeight: 'bold' }}>x:</div>
-                <div id="xrange" className="region_para_line" style={{ top: '8%', left: '20%' }}>
+                <div id="xrange_label" className="region_para_line" style={{ top: '8%', width: '15%', fontWeight: 'bold',  left: '20%' }}>x:</div>
+                <div id="xrange" className="region_para_line" style={{ top: '8%', left: '30%' }}>
                     <form >
                         <div className="form-row">
                             <div className={("col")}>
@@ -145,8 +145,8 @@ class RegionPara extends React.Component {
                     </form>
                 </div>
 
-                <div id="yrange_label" className="region_para_line" style={{ top: '38%', width: '15%', fontWeight: 'bold' }}>y:</div>
-                <div id="yrange" className="region_para_line" style={{ top: '38%', left: '20%' }}>
+                <div id="yrange_label" className="region_para_line" style={{ top: '38%', width: '15%', fontWeight: 'bold',  left: '20%' }}>y:</div>
+                <div id="yrange" className="region_para_line" style={{ top: '38%', left: '30%' }}>
                     <form >
                         <div className="form-row">
                             <div className={("col")} style={{ left: '0%' }}>
@@ -164,7 +164,7 @@ class RegionPara extends React.Component {
                     </form>
                 </div>
 
-                <div id="layer_label" className="region_para_line" style={{ top: '70%', width: '20%', fontWeight: 'bold' }}>layer:</div>
+                {/* <div id="layer_label" className="region_para_line" style={{ top: '70%', width: '20%', fontWeight: 'bold' }}>layer:</div>
                 <div id="layer_box" className="region_para_line" style={{ top: '70%', left: '25%', width: '25%' }}>
                     <select>
                         {
@@ -175,8 +175,8 @@ class RegionPara extends React.Component {
                             })
                         }
                     </select>
-                </div>
-                <button className="btn btn-success" onClick={(e) => this.regionButtonClick(this)} style={{ position: 'absolute', top: '68%', left: '60%', width: '25%' }}>Apply</button>
+                </div> */}
+                <button className="apply-button" onClick={(e) => this.regionButtonClick(this)} style={{ position: 'absolute', top: '68%', left: '36%', width: '25%' }}>Apply</button>
             </div>
         )
     }
@@ -527,8 +527,8 @@ class Drifting extends React.Component {
                 }
 
                 <div id="drifting_button_container">
-                    <button id="lock_button" onClick={(e) => this.lockButtonClick(this)} type="button" className="btn btn-primary">Lock</button>
-                    <button id="apply_button" onClick={(e) => this.applyButtonClick(this)} type="button" className="btn btn-success">Apply</button>
+                    <button id="lock_button" onClick={(e) => this.lockButtonClick(this)} type="button" className="lock-button">Lock</button>
+                    <button id="apply_button" onClick={(e) => this.applyButtonClick(this)} type="button" className="apply-button">Apply</button>
                 </div>
             </div>
         )

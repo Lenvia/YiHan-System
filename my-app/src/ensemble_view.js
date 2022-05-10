@@ -14,8 +14,8 @@ class ConstrainBox extends Component {
     render() {
         return (
             <div>
-                <div className="drifting_line" style={{ top: '5%', left: '60%', width: '10%', height: '10%' }}>Value: </div>
-                <select id="constrain_selector" onChange={(event) => this.constrainChange(event)} className="drifting_line" style={{ top: '5%', left: '70%', width: '15%', height: '10%' }}>
+                <div className="drifting_line" style={{ top: '10px', left: '70%', width: '10%', height: '10%' }}>Value: </div>
+                <select id="constrain_selector" onChange={(event) => this.constrainChange(event)} className="drifting_line" style={{ top: '10px', left: '80%', width: '15%', height: 'auto' }}>
                     {
                         this.props.constrain_list.map((item, index) => {
                             return (
@@ -87,7 +87,12 @@ class Bar extends Component {
             series: [
                 {
                     data: yAxis_data,
-                    type: 'bar'
+                    type: 'bar',
+                    itemStyle: {
+                        normal: {
+                            color:'rgb(89,130,184)'
+                        }
+                    }
                 }
             ]
         };
@@ -225,7 +230,7 @@ class EnsembleEchart extends Component {
                             lineStyle: {
                                 color: 'rgb(255,0,0)',
                                 width: 2,
-                                type: 'solid',
+                                type: 'dash',
                             }
                         }
                     ],
@@ -239,7 +244,7 @@ class EnsembleEchart extends Component {
             series_data[0]["markLine"]["data"].push({
                 xAxis: selected_xAxis_index,
                 lineStyle: {
-                    color: 'rgb(0,0,255)',
+                    color: 'rgb(89,130,184)',
                     width: 2,
                     type: 'dash',
                 }
