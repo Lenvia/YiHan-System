@@ -13,7 +13,7 @@
                 60
             ],
             "Object_name": "Eddy",
-            "back_img_src": "bg1.png",
+            "back_img_src": "bg1.jpg",
             "layer": [
                 0,
                 1,
@@ -78,6 +78,7 @@
                     "v"
                 ],
                 "Eddy": [
+                    "eddy",
                     "vorticity",
                     "size-big",
                     "size-middle",
@@ -101,7 +102,7 @@
                 365
             ],
             "Object_name": "Pathline",
-            "back_img_src": "bg2.png",
+            "back_img_src": "bg2.jpg",
             "layer": [
                 0,
                 1,
@@ -149,6 +150,7 @@
                     "salinity"
                 ],
                 "Pathline": [
+                    "pathline",
                     "distant",
                     "length",
                     "x_off",
