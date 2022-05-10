@@ -116,7 +116,7 @@ class Container extends React.Component {
                             <DatasetIntro dataset_info={this.state.dataset_info} updateDataset={this.updateDataset.bind(this)} />
                         </div>
 
-                        <div className="title_container system_view_title_container" id="region_name_container"> 
+                        <div className="title_container system_view_title_container" id="region_name_container">
                             <p className="text-left font-weight-bold" id="region_name">Region Selection View</p>
                         </div>
 

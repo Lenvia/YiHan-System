@@ -90,7 +90,7 @@ class Bar extends Component {
                     type: 'bar',
                     itemStyle: {
                         normal: {
-                            color:'rgb(89,130,184)'
+                            color: 'rgb(89,130,184)'
                         }
                     }
                 }
@@ -254,6 +254,7 @@ class EnsembleEchart extends Component {
         let xAxis_data = Array.from({ length: time_num }).map((v, k) => k)
 
         let option = {
+            animationDuration: 30000,
             title: {
             },
             tooltip: {
