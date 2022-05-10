@@ -73,7 +73,7 @@ class DetailChartBox extends Component {
                         type: 'value',
                         name: keys[0],  // y轴名称
                         nameLocation: 'end',  // y坐标轴名称的位置
-                        
+
                     },
                     dataZoom: [
                         {
@@ -102,7 +102,7 @@ class DetailChartBox extends Component {
                             type: 'bar',
                             itemStyle: {
                                 normal: {
-                                    color:'rgb(89,130,184)'
+                                    color: 'rgb(89,130,184)'
                                 }
                             }
                         }
@@ -159,7 +159,7 @@ class DetailChartBox extends Component {
                             type: 'bar',
                             itemStyle: {
                                 normal: {
-                                    color:'rgb(89,130,184)'
+                                    color: 'rgb(89,130,184)'
                                 }
                             }
                         }
@@ -211,7 +211,7 @@ class DetailChartBox extends Component {
     }
 }
 
-// 注：在这里更新 t_inde 并不会更改全局！！！
+// 注：在这里更新 t_index 并不会更改全局！！！
 class TimePic extends Component {
     constructor(props) {
         super(props)
@@ -281,6 +281,7 @@ class TimePic extends Component {
                         <img src={this.state.current_img_src} style={{ maxWidth: '100%' }} alt="" />
                     </div>
 
+                    <div id="pic_player"></div>
                     <input id="pic_time_range" type="range"
                         value={this.state.current_t_index} min={time_range[0]} max={time_range[1] - 1}
                         step="1"

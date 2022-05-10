@@ -76,9 +76,11 @@
 ::-webkit-scrollbar {
     width: 12px;
 }
+
 ::-webkit-scrollbar-track {
     border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: #333;
@@ -116,10 +118,28 @@
     height: 60%;
 }
 
+#pic_player {
+    position: absolute;
+    top: 50%;
+    /* background-color: #5982b8; */
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+
+    background-image: url('resources/icons/player.png');
+    background-repeat: no-repeat;
+    background-position-x: center;
+    background-position-y: center;
+    background-size: 100% 100%;
+
+}
+
 #pic_time_range {
     position: absolute;
     left: 10%;
-    top: 55%;
+    top: 58%;
     width: 80%;
     height: 5%;
     background-color: #5982b8;
@@ -128,7 +148,7 @@
 #pic_time_label {
     position: absolute;
     left: 25%;
-    top: 60%;
+    top: 63%;
     width: 50%;
     height: 10%;
     /* background-color: blue; */

@@ -125,7 +125,7 @@ class RegionPara extends React.Component {
     render() {
         return (
             <div id="region_para">
-                <div id="xrange_label" className="region_para_line" style={{ top: '8%', width: '15%', fontWeight: 'bold',  left: '20%' }}>x:</div>
+                <div id="xrange_label" className="region_para_line" style={{ top: '8%', width: '15%', fontWeight: 'bold', left: '20%' }}>x:</div>
                 <div id="xrange" className="region_para_line" style={{ top: '8%', left: '30%' }}>
                     <form >
                         <div className="form-row">
@@ -145,7 +145,7 @@ class RegionPara extends React.Component {
                     </form>
                 </div>
 
-                <div id="yrange_label" className="region_para_line" style={{ top: '38%', width: '15%', fontWeight: 'bold',  left: '20%' }}>y:</div>
+                <div id="yrange_label" className="region_para_line" style={{ top: '38%', width: '15%', fontWeight: 'bold', left: '20%' }}>y:</div>
                 <div id="yrange" className="region_para_line" style={{ top: '38%', left: '30%' }}>
                     <form >
                         <div className="form-row">
