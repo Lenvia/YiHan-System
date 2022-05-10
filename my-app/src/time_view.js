@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ReactECharts from 'echarts-for-react';
 import $ from 'jquery';
+import { format } from 'echarts';
+
+
 
 class DetailChartBox extends Component {
     constructor(props) {
@@ -269,6 +272,72 @@ class TimePic extends Component {
         });
     }
 
+
+
+    handleClick(event) {
+        let _this = this;
+        const timer = ms => new Promise(res => setTimeout(res, ms))
+        async function load() { // We need to wrap the loop into an async function for this to work
+            for (let i = _this.state.current_t_index; i < _this.props.time_range[1]; i++) {
+
+                if (_this.state.playing_flag === false) { // 如果中途检测到终止信号，那么立刻停止
+                    console.log("检测到终止操作")
+                    return;
+                }
+
+                let current_img_src = _this.state.dataset_name + '/OneMemberTimeSample/' + _this.state.selected_member_id + '/t' + i + '.png';
+
+                _this.setState({
+                    current_t_index: i,
+                    current_img_src: current_img_src,
+                    pic_ready: true,
+                })
+                // console.log(i);
+                await timer(1000);
+            }
+
+        }
+
+
+        let playing_flag = this.state.playing_flag;
+        // 如果原先未播放
+        if (playing_flag === undefined || playing_flag === false) {
+            $("#pic_player").css(
+                'background-image', 'url(' + require("./resources/icons/pause.png") + ')'
+            )
+            this.setState({
+                playing_flag: true,
+            }, () => {
+                console.log("开始播放");
+                load();
+            })
+
+
+        }
+        else {  // 原先正在播放，那么现在是终止，并返回
+            $("#pic_player").css(
+                'background-image', 'url(' + require("./resources/icons/play.png") + ')'
+            )
+            this.setState({
+                playing_flag: false,
+            }, () => {
+                console.log("终止播放")
+            })
+
+
+            return;
+        }
+
+
+
+
+
+
+
+
+
+    }
+
     render() {
 
         let time_range = this.props.time_range;
@@ -281,7 +350,7 @@ class TimePic extends Component {
                         <img src={this.state.current_img_src} style={{ maxWidth: '100%' }} alt="" />
                     </div>
 
-                    <div id="pic_player"></div>
+                    <div id="pic_player" onClick={this.handleClick.bind(this)}></div>
                     <input id="pic_time_range" type="range"
                         value={this.state.current_t_index} min={time_range[0]} max={time_range[1] - 1}
                         step="1"

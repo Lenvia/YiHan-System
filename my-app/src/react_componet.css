@@ -126,9 +126,10 @@
     height: 30px;
     left: 50%;
     transform: translate(-50%, 0);
+    cursor: pointer;
 
 
-    background-image: url('resources/icons/player.png');
+    background-image: url('resources/icons/play.png');
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: center;
