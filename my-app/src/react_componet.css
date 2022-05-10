@@ -138,15 +138,15 @@
     position: absolute;
     top: 38%;
     width: 100%;
-    height: 70%;
+    height: 62%;
     /* background-color: #B0E0E6; */
 }
 
 .detail_chart {
     position: absolute;
     width: 100%;
-    height: 43%;
-    left: 0%;
-    margin-top: -5%;
+    height: 45%;
+    left: -2%;
+    margin-top: 0%;
     /* background-color: cadetblue; */
 }

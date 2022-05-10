@@ -189,7 +189,7 @@ class DetailChartBox extends Component {
                             }}
                         />
                     </div>
-                    <div className='detail_chart' style={{ top: '47%' }}>
+                    <div className='detail_chart' style={{ top: '50%' }}>
                         <ReactECharts option={this.state.option2}
                             style={{
                                 positoin: 'absolute',
