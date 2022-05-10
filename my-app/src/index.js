@@ -106,6 +106,7 @@ class Container extends React.Component {
                         <div id="system_name_container">
                             <p className="text-left font-weight-bold" id="system_name">PEViz</p>
                         </div>
+                        <div id="system_name_dividing_line" />
 
                         <div className="title_container system_view_title_container" id="description_name_container">
                             <p className="text-left font-weight-bold" id="description_name">Simulation Description View</p>
