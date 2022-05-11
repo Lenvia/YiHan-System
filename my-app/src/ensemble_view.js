@@ -254,7 +254,7 @@ class EnsembleEchart extends Component {
         let xAxis_data = Array.from({ length: time_num }).map((v, k) => k)
 
         let option = {
-            animationDuration: 30000,
+            // animationDuration: 10000,
             title: {
             },
             tooltip: {

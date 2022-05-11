@@ -281,7 +281,7 @@ class TimePic extends Component {
             for (let i = _this.state.current_t_index; i < _this.props.time_range[1]; i++) {
 
                 if (_this.state.playing_flag === false) { // 如果中途检测到终止信号，那么立刻停止
-                    console.log("检测到终止操作")
+                    console.log("watch the operator for abort! ")
                     return;
                 }
 
@@ -293,7 +293,7 @@ class TimePic extends Component {
                     pic_ready: true,
                 })
                 // console.log(i);
-                await timer(1000);
+                await timer(20);
             }
 
         }
@@ -308,7 +308,7 @@ class TimePic extends Component {
             this.setState({
                 playing_flag: true,
             }, () => {
-                console.log("开始播放");
+                console.log("begin to play");
                 load();
             })
 
@@ -321,7 +321,7 @@ class TimePic extends Component {
             this.setState({
                 playing_flag: false,
             }, () => {
-                console.log("终止播放")
+                console.log("stop to play")
             })
 
 

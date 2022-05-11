@@ -127,7 +127,7 @@ class Container extends React.Component {
 
 
                         <div className="title_container system_view_title_container" id="setting_name_container">
-                            <p className="text-left font-weight-bold" id="setting_name">Object Drifting Setting</p>
+                            <p className="text-left font-weight-bold" id="setting_name"> Drifting Object Settings</p>
                         </div>
 
                         <div id="setting_container">

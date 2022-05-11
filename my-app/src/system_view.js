@@ -33,7 +33,7 @@ class DatasetIntro extends React.Component {
         return (
             <div id="dataset_intro" style={{ width: '100%', height: '100%' }}>
                 <div className="dataset_intro_line">
-                    <div className="dataset_intro_key">Dataset Name: </div>
+                    <div className="dataset_intro_key">Simulation Name: </div>
                     <select className="dataset_intro_value" onChange={(event) => this.datasetChange(event)}>
                         {
                             para_json_data["simulation"].map((item, index) => {
